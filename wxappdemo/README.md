@@ -8,4 +8,5 @@ User selectByPrimaryKey(Integer id) thorws SQLException	按主键查询
 int updateByPrimaryKey(User record) 	按主键更新  
 int updateByPrimaryKeySelective(User record) 	按主键更新值不为null的字段
 
-Cancer：第一次提交测试
+Cancer：将application.properties改为application.yml，并增加mysql连接配置。
+        注释掉jdbc.properties配置
