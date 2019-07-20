@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.wxappdemo.mapper.TbCityMapper">
+  <resultMap id="BaseResultMap" type="com.example.wxappdemo.entity.TbCity">
+    <id column="city_id" jdbcType="INTEGER" property="cityId" />
+    <result column="city_name" jdbcType="CHAR" property="cityName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    city_id, city_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_city
+    where city_id = #{cityId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_city
+    where city_id = #{cityId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.wxappdemo.entity.TbCity">
+    insert into tb_city (city_id, city_name)
+    values (#{cityId,jdbcType=INTEGER}, #{cityName,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.wxappdemo.entity.TbCity">
+    insert into tb_city
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cityId != null">
+        city_id,
+      </if>
+      <if test="cityName != null">
+        city_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cityId != null">
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="cityName != null">
+        #{cityName,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.wxappdemo.entity.TbCity">
+    update tb_city
+    <set>
+      <if test="cityName != null">
+        city_name = #{cityName,jdbcType=CHAR},
+      </if>
+    </set>
+    where city_id = #{cityId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.wxappdemo.entity.TbCity">
+    update tb_city
+    set city_name = #{cityName,jdbcType=CHAR}
+    where city_id = #{cityId,jdbcType=INTEGER}
+  </update>
+</mapper>
