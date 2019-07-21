@@ -1,7 +1,7 @@
 这里你可以说一下代码改动和更新;
 
 Cancer：将application.properties改为application.yml，并增加mysql连接配置。
-        注释掉jdbc.properties配置
+        注释掉jdbc.properties配置,在启动类增加@MapperScan
         
 yy: 用逆向工程生成了dao层的相关代码（mapper、mapper.xml、entity）  
 基本方法说明(详细自己去百度)：  
