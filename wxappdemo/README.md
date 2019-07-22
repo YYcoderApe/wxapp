@@ -1,5 +1,7 @@
 这里你可以说一下代码改动和更新;
 
+yy:增加了问答表，并在application.yml中添加了mybatis加载mapper的地址
+
 Cancer：将application.properties改为application.yml，并增加mysql连接配置。
         注释掉jdbc.properties配置,在启动类增加@MapperScan
         
