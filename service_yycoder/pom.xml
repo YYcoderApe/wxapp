@@ -36,12 +36,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--service模块 引入entity模块-->
-        <dependency>
-            <groupId>com.zczp</groupId>
-            <artifactId>entity</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
         <!--service模块 引入dao模块-->
         <dependency>
             <groupId>com.zczp</groupId>

@@ -42,10 +42,10 @@
         <artifactId>spring-boot-starter-test</artifactId>
         <scope>test</scope>
     </dependency>
-    <!--web模块 引入entity模块-->
+    <!--引入config模块-->
     <dependency>
         <groupId>com.zczp</groupId>
-        <artifactId>entity</artifactId>
+        <artifactId>config</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </dependency>
     <!--web模块 引入service模块-->
@@ -54,13 +54,6 @@
         <artifactId>service_yycoder</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </dependency>
-    <!--web模块 引入dao模块-->
-    <dependency>
-        <groupId>com.zczp</groupId>
-        <artifactId>dao</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-
 
 </dependencies>
 
