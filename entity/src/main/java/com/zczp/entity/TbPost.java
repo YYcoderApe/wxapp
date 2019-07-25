@@ -17,7 +17,7 @@ public class TbPost {
 
     private Date postTime;
 
-    private Integer internshipTime;
+    private String internshipTime;
 
     private Date entryTime;
 
@@ -28,6 +28,10 @@ public class TbPost {
     private Integer userId;
 
     private Integer state;
+
+    private String title;
+
+    private String requirement;
 
     public Integer getPostId() {
         return postId;
@@ -85,12 +89,12 @@ public class TbPost {
         this.postTime = postTime;
     }
 
-    public Integer getInternshipTime() {
+    public String getInternshipTime() {
         return internshipTime;
     }
 
-    public void setInternshipTime(Integer internshipTime) {
-        this.internshipTime = internshipTime;
+    public void setInternshipTime(String internshipTime) {
+        this.internshipTime = internshipTime == null ? null : internshipTime.trim();
     }
 
     public Date getEntryTime() {
@@ -131,5 +135,21 @@ public class TbPost {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
+    }
+
+    public String getRequirement() {
+        return requirement;
+    }
+
+    public void setRequirement(String requirement) {
+        this.requirement = requirement == null ? null : requirement.trim();
     }
 }

@@ -42,6 +42,12 @@
         <!--引入config模块-->
         <dependency>
             <groupId>com.zczp</groupId>
+            <artifactId>util</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <!--引入config模块-->
+        <dependency>
+            <groupId>com.zczp</groupId>
             <artifactId>config</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>

@@ -1,7 +1,6 @@
 package com.zczp.controller_cancer;
 
 
-import com.zczp.entity.TbUser;
 import com.zczp.service_cancer.Impl.TbUserServiceImpl;
 import com.zczp.service_cancer.ServiceTest;
 import io.swagger.annotations.Api;

@@ -1,11 +1,9 @@
-package com.zczp.dao;
+package com.zczp.service_cancer;
 
 import com.zczp.entity.TbPost;
 import com.zczp.entity.TbPostWithBLOBs;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface TbPostMapper {
+public interface TbPostService {
     int deleteByPrimaryKey(Integer postId);
 
     int insert(TbPostWithBLOBs record);
