@@ -5,7 +5,7 @@ import java.util.Date;
 public class TbPost {
     private Integer postId;
 
-    private String postType;
+    private Integer typeId;
 
     private Integer companyId;
 
@@ -41,12 +41,12 @@ public class TbPost {
         this.postId = postId;
     }
 
-    public String getPostType() {
-        return postType;
+    public Integer getTypeId() {
+        return typeId;
     }
 
-    public void setPostType(String postType) {
-        this.postType = postType == null ? null : postType.trim();
+    public void setTypeId(Integer typeId) {
+        this.typeId = typeId;
     }
 
     public Integer getCompanyId() {

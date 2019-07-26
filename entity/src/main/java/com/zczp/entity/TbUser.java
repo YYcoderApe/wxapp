@@ -21,6 +21,8 @@ public class TbUser {
 
     private Integer collectId;
 
+    private String userImage;
+
     public Integer getUserId() {
         return userId;
     }
@@ -99,5 +101,13 @@ public class TbUser {
 
     public void setCollectId(Integer collectId) {
         this.collectId = collectId;
+    }
+
+    public String getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(String userImage) {
+        this.userImage = userImage == null ? null : userImage.trim();
     }
 }

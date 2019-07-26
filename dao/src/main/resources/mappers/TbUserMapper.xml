@@ -12,10 +12,11 @@
     <result column="user_signature" jdbcType="VARCHAR" property="userSignature" />
     <result column="user_company" jdbcType="VARCHAR" property="userCompany" />
     <result column="collect_id" jdbcType="INTEGER" property="collectId" />
+    <result column="user_image" jdbcType="VARCHAR" property="userImage" />
   </resultMap>
   <sql id="Base_Column_List">
     user_id, user_name, user_phone, user_password, user_gender, user_school, post_type_id, 
-    user_signature, user_company, collect_id
+    user_signature, user_company, collect_id, user_image
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -31,11 +32,11 @@
     insert into tb_user (user_id, user_name, user_phone, 
       user_password, user_gender, user_school, 
       post_type_id, user_signature, user_company, 
-      collect_id)
+      collect_id, user_image)
     values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userPhone,jdbcType=INTEGER}, 
       #{userPassword,jdbcType=VARCHAR}, #{userGender,jdbcType=INTEGER}, #{userSchool,jdbcType=VARCHAR}, 
       #{postTypeId,jdbcType=INTEGER}, #{userSignature,jdbcType=VARCHAR}, #{userCompany,jdbcType=VARCHAR}, 
-      #{collectId,jdbcType=INTEGER})
+      #{collectId,jdbcType=INTEGER}, #{userImage,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zczp.entity.TbUser">
     insert into tb_user
@@ -70,6 +71,9 @@
       <if test="collectId != null">
         collect_id,
       </if>
+      <if test="userImage != null">
+        user_image,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -101,6 +105,9 @@
       </if>
       <if test="collectId != null">
         #{collectId,jdbcType=INTEGER},
+      </if>
+      <if test="userImage != null">
+        #{userImage,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -134,6 +141,9 @@
       <if test="collectId != null">
         collect_id = #{collectId,jdbcType=INTEGER},
       </if>
+      <if test="userImage != null">
+        user_image = #{userImage,jdbcType=VARCHAR},
+      </if>
     </set>
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
@@ -147,7 +157,8 @@
       post_type_id = #{postTypeId,jdbcType=INTEGER},
       user_signature = #{userSignature,jdbcType=VARCHAR},
       user_company = #{userCompany,jdbcType=VARCHAR},
-      collect_id = #{collectId,jdbcType=INTEGER}
+      collect_id = #{collectId,jdbcType=INTEGER},
+      user_image = #{userImage,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -1,9 +1,7 @@
 package com.zczp.dao;
 
 import com.zczp.entity.TbUser;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface TbUserMapper {
     int deleteByPrimaryKey(Integer userId);
 
