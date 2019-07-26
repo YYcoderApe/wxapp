@@ -15,6 +15,8 @@ public class TbComment {
 
     private Date commentTime;
 
+    private Integer replyId;
+
     public Integer getCommentId() {
         return commentId;
     }
@@ -61,5 +63,13 @@ public class TbComment {
 
     public void setCommentTime(Date commentTime) {
         this.commentTime = commentTime;
+    }
+
+    public Integer getReplyId() {
+        return replyId;
+    }
+
+    public void setReplyId(Integer replyId) {
+        this.replyId = replyId;
     }
 }

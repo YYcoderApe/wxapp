@@ -4,19 +4,18 @@
   <resultMap id="BaseResultMap" type="com.zczp.entity.TbUser">
     <id column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
-    <result column="user_phone" jdbcType="INTEGER" property="userPhone" />
+    <result column="user_phone" jdbcType="BIGINT" property="userPhone" />
     <result column="user_password" jdbcType="VARCHAR" property="userPassword" />
-    <result column="user_gender" jdbcType="INTEGER" property="userGender" />
+    <result column="user_gender" jdbcType="CHAR" property="userGender" />
     <result column="user_school" jdbcType="VARCHAR" property="userSchool" />
     <result column="post_type_id" jdbcType="INTEGER" property="postTypeId" />
     <result column="user_signature" jdbcType="VARCHAR" property="userSignature" />
     <result column="user_company" jdbcType="VARCHAR" property="userCompany" />
-    <result column="collect_id" jdbcType="INTEGER" property="collectId" />
     <result column="user_image" jdbcType="VARCHAR" property="userImage" />
   </resultMap>
   <sql id="Base_Column_List">
     user_id, user_name, user_phone, user_password, user_gender, user_school, post_type_id, 
-    user_signature, user_company, collect_id, user_image
+    user_signature, user_company, user_image
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -32,11 +31,11 @@
     insert into tb_user (user_id, user_name, user_phone, 
       user_password, user_gender, user_school, 
       post_type_id, user_signature, user_company, 
-      collect_id, user_image)
-    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userPhone,jdbcType=INTEGER}, 
-      #{userPassword,jdbcType=VARCHAR}, #{userGender,jdbcType=INTEGER}, #{userSchool,jdbcType=VARCHAR}, 
+      user_image)
+    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userPhone,jdbcType=BIGINT}, 
+      #{userPassword,jdbcType=VARCHAR}, #{userGender,jdbcType=CHAR}, #{userSchool,jdbcType=VARCHAR}, 
       #{postTypeId,jdbcType=INTEGER}, #{userSignature,jdbcType=VARCHAR}, #{userCompany,jdbcType=VARCHAR}, 
-      #{collectId,jdbcType=INTEGER}, #{userImage,jdbcType=VARCHAR})
+      #{userImage,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zczp.entity.TbUser">
     insert into tb_user
@@ -68,9 +67,6 @@
       <if test="userCompany != null">
         user_company,
       </if>
-      <if test="collectId != null">
-        collect_id,
-      </if>
       <if test="userImage != null">
         user_image,
       </if>
@@ -83,13 +79,13 @@
         #{userName,jdbcType=VARCHAR},
       </if>
       <if test="userPhone != null">
-        #{userPhone,jdbcType=INTEGER},
+        #{userPhone,jdbcType=BIGINT},
       </if>
       <if test="userPassword != null">
         #{userPassword,jdbcType=VARCHAR},
       </if>
       <if test="userGender != null">
-        #{userGender,jdbcType=INTEGER},
+        #{userGender,jdbcType=CHAR},
       </if>
       <if test="userSchool != null">
         #{userSchool,jdbcType=VARCHAR},
@@ -103,9 +99,6 @@
       <if test="userCompany != null">
         #{userCompany,jdbcType=VARCHAR},
       </if>
-      <if test="collectId != null">
-        #{collectId,jdbcType=INTEGER},
-      </if>
       <if test="userImage != null">
         #{userImage,jdbcType=VARCHAR},
       </if>
@@ -118,13 +111,13 @@
         user_name = #{userName,jdbcType=VARCHAR},
       </if>
       <if test="userPhone != null">
-        user_phone = #{userPhone,jdbcType=INTEGER},
+        user_phone = #{userPhone,jdbcType=BIGINT},
       </if>
       <if test="userPassword != null">
         user_password = #{userPassword,jdbcType=VARCHAR},
       </if>
       <if test="userGender != null">
-        user_gender = #{userGender,jdbcType=INTEGER},
+        user_gender = #{userGender,jdbcType=CHAR},
       </if>
       <if test="userSchool != null">
         user_school = #{userSchool,jdbcType=VARCHAR},
@@ -138,9 +131,6 @@
       <if test="userCompany != null">
         user_company = #{userCompany,jdbcType=VARCHAR},
       </if>
-      <if test="collectId != null">
-        collect_id = #{collectId,jdbcType=INTEGER},
-      </if>
       <if test="userImage != null">
         user_image = #{userImage,jdbcType=VARCHAR},
       </if>
@@ -150,14 +140,13 @@
   <update id="updateByPrimaryKey" parameterType="com.zczp.entity.TbUser">
     update tb_user
     set user_name = #{userName,jdbcType=VARCHAR},
-      user_phone = #{userPhone,jdbcType=INTEGER},
+      user_phone = #{userPhone,jdbcType=BIGINT},
       user_password = #{userPassword,jdbcType=VARCHAR},
-      user_gender = #{userGender,jdbcType=INTEGER},
+      user_gender = #{userGender,jdbcType=CHAR},
       user_school = #{userSchool,jdbcType=VARCHAR},
       post_type_id = #{postTypeId,jdbcType=INTEGER},
       user_signature = #{userSignature,jdbcType=VARCHAR},
       user_company = #{userCompany,jdbcType=VARCHAR},
-      collect_id = #{collectId,jdbcType=INTEGER},
       user_image = #{userImage,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>

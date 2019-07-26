@@ -9,6 +9,8 @@ public class TbCompany {
 
     private String companyLogo;
 
+    private Integer count;
+
     public Integer getCompanyId() {
         return companyId;
     }
@@ -39,5 +41,13 @@ public class TbCompany {
 
     public void setCompanyLogo(String companyLogo) {
         this.companyLogo = companyLogo == null ? null : companyLogo.trim();
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 }

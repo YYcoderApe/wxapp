@@ -5,11 +5,11 @@ public class TbUser {
 
     private String userName;
 
-    private Integer userPhone;
+    private Long userPhone;
 
     private String userPassword;
 
-    private Integer userGender;
+    private String userGender;
 
     private String userSchool;
 
@@ -18,8 +18,6 @@ public class TbUser {
     private String userSignature;
 
     private String userCompany;
-
-    private Integer collectId;
 
     private String userImage;
 
@@ -39,11 +37,11 @@ public class TbUser {
         this.userName = userName == null ? null : userName.trim();
     }
 
-    public Integer getUserPhone() {
+    public Long getUserPhone() {
         return userPhone;
     }
 
-    public void setUserPhone(Integer userPhone) {
+    public void setUserPhone(Long userPhone) {
         this.userPhone = userPhone;
     }
 
@@ -55,12 +53,12 @@ public class TbUser {
         this.userPassword = userPassword == null ? null : userPassword.trim();
     }
 
-    public Integer getUserGender() {
+    public String getUserGender() {
         return userGender;
     }
 
-    public void setUserGender(Integer userGender) {
-        this.userGender = userGender;
+    public void setUserGender(String userGender) {
+        this.userGender = userGender == null ? null : userGender.trim();
     }
 
     public String getUserSchool() {
@@ -93,14 +91,6 @@ public class TbUser {
 
     public void setUserCompany(String userCompany) {
         this.userCompany = userCompany == null ? null : userCompany.trim();
-    }
-
-    public Integer getCollectId() {
-        return collectId;
-    }
-
-    public void setCollectId(Integer collectId) {
-        this.collectId = collectId;
     }
 
     public String getUserImage() {

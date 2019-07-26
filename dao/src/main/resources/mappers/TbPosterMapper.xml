@@ -10,10 +10,15 @@
     poster_id, poster_image, poster_address
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from tb_poster
     where poster_id = #{posterId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAllPoster" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_poster
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_poster

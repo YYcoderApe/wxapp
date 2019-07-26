@@ -2,9 +2,7 @@ package com.zczp.dao;
 
 import com.zczp.entity.TbPost;
 import com.zczp.entity.TbPostWithBLOBs;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface TbPostMapper {
     int deleteByPrimaryKey(Integer postId);
 

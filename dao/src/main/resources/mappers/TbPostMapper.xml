@@ -9,13 +9,12 @@
     <result column="reliability" jdbcType="INTEGER" property="reliability" />
     <result column="city_id" jdbcType="INTEGER" property="cityId" />
     <result column="post_time" jdbcType="TIMESTAMP" property="postTime" />
+    <result column="entry_time" jdbcType="VARCHAR" property="entryTime" />
     <result column="Internship_time" jdbcType="VARCHAR" property="internshipTime" />
-    <result column="entry_time" jdbcType="TIMESTAMP" property="entryTime" />
     <result column="delivery_method" jdbcType="VARCHAR" property="deliveryMethod" />
-    <result column="comment_id" jdbcType="INTEGER" property="commentId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="state" jdbcType="INTEGER" property="state" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="requirement" jdbcType="VARCHAR" property="requirement" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.zczp.entity.TbPostWithBLOBs">
@@ -23,8 +22,8 @@
     <result column="work_address" jdbcType="LONGVARCHAR" property="workAddress" />
   </resultMap>
   <sql id="Base_Column_List">
-    post_id, type_id, company_id, job_type, reliability, city_id, post_time, Internship_time, 
-    entry_time, delivery_method, comment_id, user_id, state, title, requirement
+    post_id, type_id, company_id, job_type, reliability, city_id, post_time, entry_time, 
+    Internship_time, delivery_method, title, user_id, state, requirement
   </sql>
   <sql id="Blob_Column_List">
     job_description, work_address
@@ -44,16 +43,16 @@
   <insert id="insert" parameterType="com.zczp.entity.TbPostWithBLOBs">
     insert into tb_post (post_id, type_id, company_id, 
       job_type, reliability, city_id, 
-      post_time, Internship_time, entry_time, 
-      delivery_method, comment_id, user_id, 
-      state, title, requirement, 
-      job_description, work_address)
+      post_time, entry_time, Internship_time, 
+      delivery_method, title, user_id, 
+      state, requirement, job_description, 
+      work_address)
     values (#{postId,jdbcType=INTEGER}, #{typeId,jdbcType=INTEGER}, #{companyId,jdbcType=INTEGER}, 
       #{jobType,jdbcType=VARCHAR}, #{reliability,jdbcType=INTEGER}, #{cityId,jdbcType=INTEGER}, 
-      #{postTime,jdbcType=TIMESTAMP}, #{internshipTime,jdbcType=VARCHAR}, #{entryTime,jdbcType=TIMESTAMP}, 
-      #{deliveryMethod,jdbcType=VARCHAR}, #{commentId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
-      #{state,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{requirement,jdbcType=VARCHAR}, 
-      #{jobDescription,jdbcType=LONGVARCHAR}, #{workAddress,jdbcType=LONGVARCHAR})
+      #{postTime,jdbcType=TIMESTAMP}, #{entryTime,jdbcType=VARCHAR}, #{internshipTime,jdbcType=VARCHAR}, 
+      #{deliveryMethod,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+      #{state,jdbcType=INTEGER}, #{requirement,jdbcType=VARCHAR}, #{jobDescription,jdbcType=LONGVARCHAR}, 
+      #{workAddress,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zczp.entity.TbPostWithBLOBs">
     insert into tb_post
@@ -79,26 +78,23 @@
       <if test="postTime != null">
         post_time,
       </if>
-      <if test="internshipTime != null">
-        Internship_time,
-      </if>
       <if test="entryTime != null">
         entry_time,
+      </if>
+      <if test="internshipTime != null">
+        Internship_time,
       </if>
       <if test="deliveryMethod != null">
         delivery_method,
       </if>
-      <if test="commentId != null">
-        comment_id,
+      <if test="title != null">
+        title,
       </if>
       <if test="userId != null">
         user_id,
       </if>
       <if test="state != null">
         state,
-      </if>
-      <if test="title != null">
-        title,
       </if>
       <if test="requirement != null">
         requirement,
@@ -132,26 +128,23 @@
       <if test="postTime != null">
         #{postTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="entryTime != null">
+        #{entryTime,jdbcType=VARCHAR},
+      </if>
       <if test="internshipTime != null">
         #{internshipTime,jdbcType=VARCHAR},
-      </if>
-      <if test="entryTime != null">
-        #{entryTime,jdbcType=TIMESTAMP},
       </if>
       <if test="deliveryMethod != null">
         #{deliveryMethod,jdbcType=VARCHAR},
       </if>
-      <if test="commentId != null">
-        #{commentId,jdbcType=INTEGER},
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
       </if>
       <if test="userId != null">
         #{userId,jdbcType=INTEGER},
       </if>
       <if test="state != null">
         #{state,jdbcType=INTEGER},
-      </if>
-      <if test="title != null">
-        #{title,jdbcType=VARCHAR},
       </if>
       <if test="requirement != null">
         #{requirement,jdbcType=VARCHAR},
@@ -185,26 +178,23 @@
       <if test="postTime != null">
         post_time = #{postTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="entryTime != null">
+        entry_time = #{entryTime,jdbcType=VARCHAR},
+      </if>
       <if test="internshipTime != null">
         Internship_time = #{internshipTime,jdbcType=VARCHAR},
-      </if>
-      <if test="entryTime != null">
-        entry_time = #{entryTime,jdbcType=TIMESTAMP},
       </if>
       <if test="deliveryMethod != null">
         delivery_method = #{deliveryMethod,jdbcType=VARCHAR},
       </if>
-      <if test="commentId != null">
-        comment_id = #{commentId,jdbcType=INTEGER},
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
       </if>
       <if test="userId != null">
         user_id = #{userId,jdbcType=INTEGER},
       </if>
       <if test="state != null">
         state = #{state,jdbcType=INTEGER},
-      </if>
-      <if test="title != null">
-        title = #{title,jdbcType=VARCHAR},
       </if>
       <if test="requirement != null">
         requirement = #{requirement,jdbcType=VARCHAR},
@@ -226,13 +216,12 @@
       reliability = #{reliability,jdbcType=INTEGER},
       city_id = #{cityId,jdbcType=INTEGER},
       post_time = #{postTime,jdbcType=TIMESTAMP},
+      entry_time = #{entryTime,jdbcType=VARCHAR},
       Internship_time = #{internshipTime,jdbcType=VARCHAR},
-      entry_time = #{entryTime,jdbcType=TIMESTAMP},
       delivery_method = #{deliveryMethod,jdbcType=VARCHAR},
-      comment_id = #{commentId,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=INTEGER},
       state = #{state,jdbcType=INTEGER},
-      title = #{title,jdbcType=VARCHAR},
       requirement = #{requirement,jdbcType=VARCHAR},
       job_description = #{jobDescription,jdbcType=LONGVARCHAR},
       work_address = #{workAddress,jdbcType=LONGVARCHAR}
@@ -246,13 +235,12 @@
       reliability = #{reliability,jdbcType=INTEGER},
       city_id = #{cityId,jdbcType=INTEGER},
       post_time = #{postTime,jdbcType=TIMESTAMP},
+      entry_time = #{entryTime,jdbcType=VARCHAR},
       Internship_time = #{internshipTime,jdbcType=VARCHAR},
-      entry_time = #{entryTime,jdbcType=TIMESTAMP},
       delivery_method = #{deliveryMethod,jdbcType=VARCHAR},
-      comment_id = #{commentId,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=INTEGER},
       state = #{state,jdbcType=INTEGER},
-      title = #{title,jdbcType=VARCHAR},
       requirement = #{requirement,jdbcType=VARCHAR}
     where post_id = #{postId,jdbcType=INTEGER}
   </update>

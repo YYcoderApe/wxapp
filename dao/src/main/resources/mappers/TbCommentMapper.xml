@@ -8,9 +8,10 @@
     <result column="from_id" jdbcType="INTEGER" property="fromId" />
     <result column="to_id" jdbcType="INTEGER" property="toId" />
     <result column="comment_time" jdbcType="TIMESTAMP" property="commentTime" />
+    <result column="reply_id" jdbcType="INTEGER" property="replyId" />
   </resultMap>
   <sql id="Base_Column_List">
-    comment_id, post_id, content, from_id, to_id, comment_time
+    comment_id, post_id, content, from_id, to_id, comment_time, reply_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -24,11 +25,11 @@
   </delete>
   <insert id="insert" parameterType="com.zczp.entity.TbComment">
     insert into tb_comment (comment_id, post_id, content, 
-      from_id, to_id, comment_time
-      )
+      from_id, to_id, comment_time, 
+      reply_id)
     values (#{commentId,jdbcType=INTEGER}, #{postId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
-      #{fromId,jdbcType=INTEGER}, #{toId,jdbcType=INTEGER}, #{commentTime,jdbcType=TIMESTAMP}
-      )
+      #{fromId,jdbcType=INTEGER}, #{toId,jdbcType=INTEGER}, #{commentTime,jdbcType=TIMESTAMP}, 
+      #{replyId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.zczp.entity.TbComment">
     insert into tb_comment
@@ -51,6 +52,9 @@
       <if test="commentTime != null">
         comment_time,
       </if>
+      <if test="replyId != null">
+        reply_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="commentId != null">
@@ -70,6 +74,9 @@
       </if>
       <if test="commentTime != null">
         #{commentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="replyId != null">
+        #{replyId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -91,6 +98,9 @@
       <if test="commentTime != null">
         comment_time = #{commentTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="replyId != null">
+        reply_id = #{replyId,jdbcType=INTEGER},
+      </if>
     </set>
     where comment_id = #{commentId,jdbcType=INTEGER}
   </update>
@@ -100,7 +110,8 @@
       content = #{content,jdbcType=VARCHAR},
       from_id = #{fromId,jdbcType=INTEGER},
       to_id = #{toId,jdbcType=INTEGER},
-      comment_time = #{commentTime,jdbcType=TIMESTAMP}
+      comment_time = #{commentTime,jdbcType=TIMESTAMP},
+      reply_id = #{replyId,jdbcType=INTEGER}
     where comment_id = #{commentId,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -9,3 +9,5 @@ yy:创建好了分包
     web:程序入口
     只需要开启web模块下的webapplication即可，即可访问web,公共配置
     也直接在web模块下application.property配置就行了
+    
+yy:增加一个Ajax包装类在util中，只要在controller引入依赖就能使用了

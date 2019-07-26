@@ -4,9 +4,10 @@
   <resultMap id="BaseResultMap" type="com.zczp.entity.TbCollect">
     <id column="collect_id" jdbcType="INTEGER" property="collectId" />
     <result column="post_id" jdbcType="INTEGER" property="postId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
   </resultMap>
   <sql id="Base_Column_List">
-    collect_id, post_id
+    collect_id, post_id, user_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -19,8 +20,10 @@
     where collect_id = #{collectId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zczp.entity.TbCollect">
-    insert into tb_collect (collect_id, post_id)
-    values (#{collectId,jdbcType=INTEGER}, #{postId,jdbcType=INTEGER})
+    insert into tb_collect (collect_id, post_id, user_id
+      )
+    values (#{collectId,jdbcType=INTEGER}, #{postId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.zczp.entity.TbCollect">
     insert into tb_collect
@@ -31,6 +34,9 @@
       <if test="postId != null">
         post_id,
       </if>
+      <if test="userId != null">
+        user_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="collectId != null">
@@ -38,6 +44,9 @@
       </if>
       <if test="postId != null">
         #{postId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -47,12 +56,16 @@
       <if test="postId != null">
         post_id = #{postId,jdbcType=INTEGER},
       </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
     </set>
     where collect_id = #{collectId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zczp.entity.TbCollect">
     update tb_collect
-    set post_id = #{postId,jdbcType=INTEGER}
+    set post_id = #{postId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER}
     where collect_id = #{collectId,jdbcType=INTEGER}
   </update>
 </mapper>

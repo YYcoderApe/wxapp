@@ -17,19 +17,17 @@ public class TbPost {
 
     private Date postTime;
 
-    private String internshipTime;
+    private String entryTime;
 
-    private Date entryTime;
+    private String internshipTime;
 
     private String deliveryMethod;
 
-    private Integer commentId;
+    private String title;
 
     private Integer userId;
 
     private Integer state;
-
-    private String title;
 
     private String requirement;
 
@@ -89,20 +87,20 @@ public class TbPost {
         this.postTime = postTime;
     }
 
+    public String getEntryTime() {
+        return entryTime;
+    }
+
+    public void setEntryTime(String entryTime) {
+        this.entryTime = entryTime == null ? null : entryTime.trim();
+    }
+
     public String getInternshipTime() {
         return internshipTime;
     }
 
     public void setInternshipTime(String internshipTime) {
         this.internshipTime = internshipTime == null ? null : internshipTime.trim();
-    }
-
-    public Date getEntryTime() {
-        return entryTime;
-    }
-
-    public void setEntryTime(Date entryTime) {
-        this.entryTime = entryTime;
     }
 
     public String getDeliveryMethod() {
@@ -113,12 +111,12 @@ public class TbPost {
         this.deliveryMethod = deliveryMethod == null ? null : deliveryMethod.trim();
     }
 
-    public Integer getCommentId() {
-        return commentId;
+    public String getTitle() {
+        return title;
     }
 
-    public void setCommentId(Integer commentId) {
-        this.commentId = commentId;
+    public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
     }
 
     public Integer getUserId() {
@@ -135,14 +133,6 @@ public class TbPost {
 
     public void setState(Integer state) {
         this.state = state;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
     }
 
     public String getRequirement() {

@@ -5,6 +5,8 @@ public class TbCollect {
 
     private Integer postId;
 
+    private Integer userId;
+
     public Integer getCollectId() {
         return collectId;
     }
@@ -19,5 +21,13 @@ public class TbCollect {
 
     public void setPostId(Integer postId) {
         this.postId = postId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }
