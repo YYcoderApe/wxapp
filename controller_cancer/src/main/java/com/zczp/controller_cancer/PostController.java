@@ -1,5 +1,6 @@
 package com.zczp.controller_cancer;
 
+import com.zczp.entity.TbComment;
 import com.zczp.entity.TbPostWithBLOBs;
 import com.zczp.service_cancer.Impl.TbPostServiceImpl;
 import com.zczp.util.AjaxResult;
@@ -21,11 +22,28 @@ public class PostController {
         TbPostWithBLOBs tbPostWithBLOBs=tbPostService.selectByPrimaryKey(post_id);
         return ajaxResult.ok(tbPostWithBLOBs);
     }
-//    @ApiOperation("招聘信息详情")
-//    @GetMapping("/postDetail")
-//    public TbPostWithBLOBs postDetail(@RequestParam int post_id){
-////        AjaxResult ajaxResult=new AjaxResult();
-//        TbPostWithBLOBs tbPostWithBLOBs=tbPostService.selectByPrimaryKey(post_id);
-//        return tbPostWithBLOBs;
-//    }
+
+    @ApiOperation("评论")
+    @PostMapping("/comment")
+    public  AjaxResult Comment(){
+        return null;
+    }
+
+    @ApiOperation("修改可信度")
+    @GetMapping("/comment")
+    public  AjaxResult reliability(){
+        return null;
+    }
+
+    @ApiOperation("收藏招聘信息")
+    @GetMapping("/collect")
+    public  AjaxResult collect(){
+        return null;
+    }
+
+    @ApiOperation("生成海报")
+    @GetMapping("/poster")
+    public  AjaxResult poster(){
+        return null;
+    }
 }
