@@ -5,6 +5,8 @@ import com.zczp.service_yycoder.PosterService;
 import com.zczp.util.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,18 +20,20 @@ import java.util.List;
 @Api(tags = "海报轮播图")
 @RequestMapping("poster")
 public class PosterController {
-
+    Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private PosterService posterService;
 
     @GetMapping("/getAllPoster")
     @ApiOperation("获取所有海报轮播图")
-    public AjaxResult getAllposter(HttpServletRequest request){
+    public AjaxResult getAllposter(){
         List<TbPoster> userList =posterService.getAllPoster();
-        request.setAttribute("userList",userList);
-        return new AjaxResult().ok(userList);
-
+        if(userList!=null){
+            return new AjaxResult().ok(userList);
+        }
+        return new AjaxResult().error("库存中没有海报图");
     }
+
     @GetMapping("/getPoster")
     @ApiOperation("获取post_id对应海报轮播图")
     public AjaxResult getPoster(@RequestParam("post_id") Integer post_id){

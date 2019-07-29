@@ -41,7 +41,6 @@ public class UploadController {
     @Value("${qiniu.path}")
     private String Path;
 
-
     @PostMapping(value = "/uploadImg")
     @ApiOperation(value = "单个图片上传到七牛云")
     public Map<String,Object> uploadImg(@RequestParam(value = "file")MultipartFile upfile) throws IOException {

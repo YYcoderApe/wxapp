@@ -28,7 +28,6 @@ import java.io.File;
 @EnableConfigurationProperties(MultipartProperties.class)
 public class FileUploadConfig {
 
-
     private final MultipartProperties multipartProperties;
 
     @Value("${baseUploadUrl}")
