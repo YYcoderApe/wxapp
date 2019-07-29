@@ -1,10 +1,8 @@
-package com.zczp.dao;
+package com.zczp.service_cancer;
 
 import com.zczp.entity.TbCollect;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface TbCollectMapper {
+public interface TbCollectService {
     int deleteByPrimaryKey(Integer collectId);
 
     int insert(TbCollect record);

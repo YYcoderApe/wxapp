@@ -1,20 +1,29 @@
 package com.zczp.entity;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 
 public class TbComment {
+    @ApiModelProperty("评论Id")
     private Integer commentId;
 
+    @ApiModelProperty("招聘信息Id")
     private Integer postId;
 
+    @ApiModelProperty("内容")
     private String content;
 
+    @ApiModelProperty("用户ID")
     private Integer fromId;
 
+    @ApiModelProperty("回复的用户ID")
     private Integer toId;
 
+    @ApiModelProperty("评论时间")
     private Date commentTime;
 
+    @ApiModelProperty("回复的评论ID")
     private Integer replyId;
 
     public Integer getCommentId() {

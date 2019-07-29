@@ -39,16 +39,10 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--引入config模块-->
+        <!--引入util模块-->
         <dependency>
             <groupId>com.zczp</groupId>
             <artifactId>util</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <!--引入config模块-->
-        <dependency>
-            <groupId>com.zczp</groupId>
-            <artifactId>config</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <!--引入service模块-->

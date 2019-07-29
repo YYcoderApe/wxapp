@@ -1,12 +1,10 @@
-package com.zczp.dao;
+package com.zczp.service_cancer;
 
 import com.zczp.entity.TbCity;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public interface TbCityMapper {
+public interface TbCityService {
     int deleteByPrimaryKey(Integer cityId);
 
     int insert(TbCity record);

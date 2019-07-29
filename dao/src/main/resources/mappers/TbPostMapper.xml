@@ -36,22 +36,35 @@
     from tb_post
     where post_id = #{postId,jdbcType=INTEGER}
   </select>
+  <select id="selectDetailByPrimaryKey" parameterType="java.lang.Integer" resultType="com.zczp.vo_cancer.PostDetailVo">
+    select
+    tp.post_id as postId, tp.title ,tp.requirement , tp.user_id as userId ,tp.job_type as jobType ,
+    tp.reliability ,tp.post_time as postTime , tp.Internship_time as internshipTime ,tp.entry_time as entryTime ,
+    tp.delivery_method as deliveryMethod , tp.state ,tp.job_description as jobDescription ,tp.work_address as workAddress,
+    tpt.type_name as typeName , tpt.type_name as typeName , tc.company_name as companyName , tc.company_logo as companyLogo,
+    t.city_name as cityName
+    from tb_post tp
+    left join tb_post_type tpt on tp.type_id = tpt.type_id
+    left join tb_company tc on tp.company_id = tc.company_id
+    left join tb_city t on tp.city_id = t.city_id
+    where post_id = #{postId,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_post
     where post_id = #{postId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zczp.entity.TbPostWithBLOBs">
-    insert into tb_post (post_id, type_id, company_id, 
+    insert into tb_post (type_id, company_id,
       job_type, reliability, city_id, 
       post_time, entry_time, Internship_time, 
       delivery_method, title, user_id, 
-      state, requirement, job_description, 
+      requirement, job_description,
       work_address)
-    values (#{postId,jdbcType=INTEGER}, #{typeId,jdbcType=INTEGER}, #{companyId,jdbcType=INTEGER}, 
+    values (#{typeId,jdbcType=INTEGER}, #{companyId,jdbcType=INTEGER},
       #{jobType,jdbcType=VARCHAR}, #{reliability,jdbcType=INTEGER}, #{cityId,jdbcType=INTEGER}, 
       #{postTime,jdbcType=TIMESTAMP}, #{entryTime,jdbcType=VARCHAR}, #{internshipTime,jdbcType=VARCHAR}, 
       #{deliveryMethod,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
-      #{state,jdbcType=INTEGER}, #{requirement,jdbcType=VARCHAR}, #{jobDescription,jdbcType=LONGVARCHAR}, 
+      #{requirement,jdbcType=VARCHAR}, #{jobDescription,jdbcType=LONGVARCHAR},
       #{workAddress,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zczp.entity.TbPostWithBLOBs">

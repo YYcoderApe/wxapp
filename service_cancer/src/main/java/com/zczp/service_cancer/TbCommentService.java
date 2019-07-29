@@ -1,13 +1,12 @@
-package com.zczp.dao;
+package com.zczp.service_cancer;
 
 import com.zczp.entity.TbComment;
 import com.zczp.vo_cancer.CommentVo;
 import com.zczp.vo_cancer.CommentsVo;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
-@Repository
-public interface TbCommentMapper {
+
+public interface TbCommentService {
     int deleteByPrimaryKey(Integer commentId);
 
     int insert(CommentVo commentVo);

@@ -39,6 +39,11 @@
         </javaClientGenerator>
 
         <!-- 数据库表名 -->
+        <!--<table tableName= "tb_reliability"   enableCountByExample="false"-->
+               <!--enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false"></table>-->
         <!--<table tableName= "tb_city"   enableCountByExample="false"-->
                <!--enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false"-->
@@ -59,11 +64,11 @@
                <!--enableDeleteByExample="false"-->
                <!--enableSelectByExample="false"-->
                <!--selectByExampleQueryId="false"></table>-->
-        <table tableName= "tb_post"   enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false"></table>
+        <!--<table tableName= "tb_post"   enableCountByExample="false"-->
+               <!--enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false"></table>-->
         <!--<table tableName= "tb_post_type"   enableCountByExample="false"-->
                <!--enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false"-->
@@ -74,11 +79,11 @@
                <!--enableDeleteByExample="false"-->
                <!--enableSelectByExample="false"-->
                <!--selectByExampleQueryId="false"></table>-->
-        <table tableName= "tb_user"   enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false"></table>
+        <!--<table tableName= "tb_user"   enableCountByExample="false"-->
+               <!--enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false"></table>-->
         <!--<table tableName= "tb_ask_reply"   enableCountByExample="false"-->
                <!--enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false"-->
