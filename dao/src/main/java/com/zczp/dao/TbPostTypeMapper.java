@@ -2,7 +2,7 @@ package com.zczp.dao;
 
 import com.zczp.entity.TbPostType;
 
-public interface TbPostTypeMapper {
+public interface TbPostTypeMapper extends BaseMapper<TbPostType> {
     int deleteByPrimaryKey(Integer typeId);
 
     int insert(TbPostType record);

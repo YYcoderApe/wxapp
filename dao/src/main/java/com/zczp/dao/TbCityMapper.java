@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TbCityMapper {
+public interface TbCityMapper extends BaseMapper<TbCity>{
     int deleteByPrimaryKey(Integer cityId);
 
     int insert(TbCity record);

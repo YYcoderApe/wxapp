@@ -1,9 +1,10 @@
-package com.zczp.vo_cancer;
 
+package com.zczp.vo;
+
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.awt.*;
 import java.util.Date;
 import java.util.List;
 
@@ -32,11 +33,8 @@ public class PostDetailVo {
 
     @ApiModelProperty("公司名称")
     private String companyName;
-//图片获取
-    @ApiModelProperty("公司logo")
-    private String companyLogo;
 
-    @ApiModelProperty("招聘类型（实习 校招）")
+    @ApiModelProperty("招聘类型（1-实习 2-校招）")
     private String jobType;
 
     @ApiModelProperty("可信度")
@@ -52,27 +50,14 @@ public class PostDetailVo {
     private String internshipTime;
 
     @ApiModelProperty("入职时间")
-    private String entryTime;
+    private Date entryTime;
 
     @ApiModelProperty("投递方式")
     private String deliveryMethod;
 
-
     @ApiModelProperty("状态（0-待审核 1-通过审核 2-已删除）")
     private Integer state;
 
-    @ApiModelProperty("招聘描述")
-    private String jobDescription;
-
-    @ApiModelProperty("工作地址")
-    private String workAddress;
-
-    @ApiModelProperty("可信度Id 0-未点击可信 x-已点击")
-    private int reliabilityId;
-
-    @ApiModelProperty("收藏Id 0-未收藏 x-已收藏")
-    private int collectId;
-
     @ApiModelProperty("评论列表")
-    private List<CommentsVo> commentsVoList;
+    private  List<CommentsVo> commentsVoList;
 }

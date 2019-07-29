@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class PosterServiceImpl implements PosterService {
 
-    @Autowired
+    @Autowired(required = false)
     private TbPosterMapper tbPosterMapper;
 
     @Override

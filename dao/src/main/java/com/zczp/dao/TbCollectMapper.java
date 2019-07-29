@@ -4,7 +4,7 @@ import com.zczp.entity.TbCollect;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TbCollectMapper {
+public interface TbCollectMapper extends BaseMapper<TbCollect>{
     int deleteByPrimaryKey(Integer collectId);
 
     int insert(TbCollect record);

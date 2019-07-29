@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
-public interface TbCommentMapper {
+public interface TbCommentMapper extends BaseMapper<TbComment>{
     int deleteByPrimaryKey(Integer commentId);
 
     int insert(CommentVo commentVo);

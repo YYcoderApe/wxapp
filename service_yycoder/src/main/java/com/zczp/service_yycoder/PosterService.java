@@ -8,6 +8,7 @@ import com.zczp.entity.TbPoster;
 import java.util.List;
 
 public interface PosterService {
+
     //查询所有海报轮播图
     List<TbPoster> getAllPoster();
 

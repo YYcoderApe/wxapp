@@ -7,8 +7,7 @@ import com.zczp.service_cancer.Impl.TbPostServiceImpl;
 import com.zczp.service_cancer.Impl.TbReliabilityServiceImpl;
 import com.zczp.util.AjaxResult;
 import com.zczp.vo_cancer.CommentVo;
-import com.zczp.vo_cancer.CommentsVo;
-import com.zczp.vo_cancer.PostDetailVo;
+import com.zczp.vo_cancer.PostDetailsVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -34,10 +33,10 @@ public class PostController {
     public AjaxResult postDetail(
             @RequestParam @ApiParam("招聘信息Id") int post_id,
             @RequestParam @ApiParam ("当前用户Id") int userId){
-        PostDetailVo postDetailVo =tbPostService.selectDetailByPrimaryKey(post_id);
-        postDetailVo.setCollectId(tbCollectService.selectByPostIdAndUserId(post_id,userId));
-        postDetailVo.setReliabilityId(tbReliabilityService.selectByPostIdAndUserId(post_id,userId));
-        return ajaxResult.ok(postDetailVo);
+        PostDetailsVo postDetailsVo =tbPostService.selectDetailByPrimaryKey(post_id);
+        postDetailsVo.setCollectId(tbCollectService.selectByPostIdAndUserId(post_id,userId));
+        postDetailsVo.setReliabilityId(tbReliabilityService.selectByPostIdAndUserId(post_id,userId));
+        return ajaxResult.ok(postDetailsVo);
     }
 
     @ApiOperation("评论")
