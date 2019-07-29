@@ -1,22 +1,32 @@
 package com.zczp.controller_cancer;
 
+import com.zczp.service_cancer.Impl.TbPostServiceImpl;
 import com.zczp.util.AjaxResult;
+import com.zczp.vo_yycoder.PostDetailVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Api(tags = "搜索功能模块")
 @RequestMapping("/api/search")
 public class SearchController {
+    @Autowired
+    private TbPostServiceImpl tbPostService;
 
+    AjaxResult ajaxResult=new AjaxResult();
     @ApiOperation("查询招聘岗位")
     @GetMapping("/searchPost")
-    public AjaxResult searchPost(){
-        return null;
+    public AjaxResult searchPost(@RequestParam @ApiParam("标题") String title){
+        List<PostDetailVo> postDetailVoList=tbPostService.selectByTitle(title);
+        if (postDetailVoList!=null){
+            return ajaxResult.ok(postDetailVoList);
+        }
+        return ajaxResult.error("没有该招聘信息");
     }
 
     @ApiOperation("历史记录")

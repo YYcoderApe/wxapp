@@ -49,6 +49,17 @@
     left join tb_city t on tp.city_id = t.city_id
     where post_id = #{postId,jdbcType=INTEGER}
   </select>
+    <select id="selectByTitle" parameterType="java.lang.String" resultType="com.zczp.vo_yycoder.PostDetailVo">
+        select
+        tp.post_id as  'postId', tp.title,tpt.type_name as 'postType',tc.company_name as 'companyName',
+        tc.company_logo as 'companyLogo',tp.job_type as 'jobType',reliability , tcy.city_name as 'cityName',
+        tp.post_time as 'postTime' ,tp.Internship_time as 'internshipTime',entry_time as 'entryTime'
+        from tb_post tp
+        LEFT JOIN tb_company tc on tp.company_id=tc.company_id
+        LEFT JOIN tb_post_type tpt on tp.type_id =tpt.type_id
+        LEFT JOIN tb_city tcy  on tcy.city_id=tp.city_id
+        where title like CONCAT(CONCAT('%',#{title},'%'))
+    </select>
     <select id="getPostDetail" resultType="com.zczp.vo_yycoder.PostDetailVo">
         select
         tp.post_id as  'postId', tp.title,tpt.type_name as 'postType',tc.company_name as 'companyName',

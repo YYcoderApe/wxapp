@@ -25,6 +25,8 @@ public interface TbPostService {
 
     PostDetailsVo selectDetailByPrimaryKey(Integer postId);
 
+    List<PostDetailVo> selectByTitle(String title);
+
     //取出Post表中字段信息展现在首页
     List<PostDetailVo> getPostDetail();
 

@@ -67,6 +67,12 @@ public class TbPostServiceImpl implements TbPostService {
     }
 
     @Override
+    public List<PostDetailVo> selectByTitle(String title){
+        return tbPostMapper.selectByTitle(title);
+    }
+
+
+    @Override
     public List<PostDetailVo> getPostDetail() {
         return null;
     }

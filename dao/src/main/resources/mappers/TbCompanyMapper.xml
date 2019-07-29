@@ -17,6 +17,19 @@
     from tb_company
     where company_id = #{companyId,jdbcType=INTEGER}
   </select>
+  <select id="selectByName" parameterType="java.lang.String" resultType="com.zczp.vo_cancer.CompanyVo">
+    select
+    company_id AS companyId,company_logo as companyLogo,company_name as companyName,count
+    from tb_company
+    where company_name like CONCAT(CONCAT('%',#{companyName},'%'))
+  </select>
+  <select id="selectByCount"  resultType="com.zczp.vo_cancer.CompanyVo">
+    select
+    company_id AS companyId,company_logo as companyLogo,company_name as companyName,count
+    from tb_company
+    order by count desc
+    limit 0,12
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_company
     where company_id = #{companyId,jdbcType=INTEGER}
