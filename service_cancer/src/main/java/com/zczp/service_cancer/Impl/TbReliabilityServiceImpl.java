@@ -3,6 +3,7 @@ package com.zczp.service_cancer.Impl;
 import com.zczp.dao.TbReliabilityMapper;
 import com.zczp.entity.TbReliability;
 import com.zczp.service_cancer.TbReliabilityService;
+import com.zczp.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 public class TbReliabilityServiceImpl implements TbReliabilityService {
     @Autowired
     private TbReliabilityMapper tbReliabilityMapper;
+    @Autowired
+    RedisUtil redisUtil;
     @Override
     public int deleteByPrimaryKey(Integer reliabilityId) {
         return 0;
@@ -27,6 +30,7 @@ public class TbReliabilityServiceImpl implements TbReliabilityService {
 
     @Override
     public TbReliability selectByPrimaryKey(Integer reliabilityId) {
+        redisUtil.set("测试","手动阀",1);
         return null;
     }
 

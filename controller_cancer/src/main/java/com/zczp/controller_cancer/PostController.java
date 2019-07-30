@@ -52,10 +52,8 @@ public class PostController {
     @ApiOperation("修改可信度")
     @PostMapping("/reliability")
     public  AjaxResult reliability(
-            @RequestParam @ApiParam("0-取消 1-可信") int r,
-            @RequestParam @ApiParam("招聘信息表Id") int post_id,
-            @RequestBody @ApiParam ("用户Id") int user_id){
-            TbReliability tbReliability = new TbReliability(post_id,user_id);
+            @RequestParam @ApiParam("0-取消 1-可信") int r){
+            tbReliabilityService.selectByPrimaryKey(r);
         return null;
     }
 
