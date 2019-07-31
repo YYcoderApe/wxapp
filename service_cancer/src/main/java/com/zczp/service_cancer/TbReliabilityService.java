@@ -16,4 +16,11 @@ public interface TbReliabilityService {
     int updateByPrimaryKey(TbReliability record);
 
     Integer selectByPostIdAndUserId(int postId, int userId);
+
+    void saveReliabilityState(int userId,int postId);
+
+    void delReliabilityState(int userId,int postId);
+
+    void transReliabilityToDB();
+
 }

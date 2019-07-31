@@ -4,7 +4,8 @@ import com.zczp.entity.TbPost;
 import com.zczp.entity.TbPostWithBLOBs;
 import com.zczp.vo_cancer.PostDetailsVo;
 import com.zczp.vo_yycoder.PostDetailVo;
-import org.springframework.data.repository.query.Param;
+import org.apache.ibatis.annotations.Param;
+
 
 import java.util.List;
 
@@ -23,9 +24,11 @@ public interface TbPostService {
 
     int updateByPrimaryKey(TbPost record);
 
-    PostDetailsVo selectDetailByPrimaryKey(Integer postId);
+    PostDetailsVo selectDetailByPrimaryKey(Integer postId,Integer userId);
 
     List<PostDetailVo> selectByTitle(String title);
+
+    void transReliabilityCountToDB();
 
     //取出Post表中字段信息展现在首页
     List<PostDetailVo> getPostDetail();

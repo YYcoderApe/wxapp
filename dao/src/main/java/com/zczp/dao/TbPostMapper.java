@@ -21,6 +21,8 @@ public interface TbPostMapper extends BaseMapper<TbPostWithBLOBs>{
 
     int updateByPrimaryKeyWithBLOBs(TbPostWithBLOBs record);
 
+    int updateReliabilityByPrimaryKey(TbPostWithBLOBs record);
+
     int updateByPrimaryKey(TbPost record);
 
     PostDetailsVo selectDetailByPrimaryKey(Integer postId);

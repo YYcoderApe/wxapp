@@ -100,6 +100,12 @@
             <artifactId>controller_cancer</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <!--web模块 引入config模块-->
+        <dependency>
+            <groupId>com.zczp</groupId>
+            <artifactId>config</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>com.zczp</groupId>
             <artifactId>controller_yycoder</artifactId>

@@ -57,7 +57,6 @@ public class PostDetailsVo {
     @ApiModelProperty("投递方式")
     private String deliveryMethod;
 
-
     @ApiModelProperty("状态（0-待审核 1-通过审核 2-已删除）")
     private Integer state;
 
@@ -67,8 +66,8 @@ public class PostDetailsVo {
     @ApiModelProperty("工作地址")
     private String workAddress;
 
-    @ApiModelProperty("可信度Id 0-未点击可信 x-已点击")
-    private int reliabilityId;
+    @ApiModelProperty("可信度Id 0-未点击可信 1-已点击")
+    private int reliabilityState;
 
     @ApiModelProperty("收藏Id 0-未收藏 x-已收藏")
     private int collectId;

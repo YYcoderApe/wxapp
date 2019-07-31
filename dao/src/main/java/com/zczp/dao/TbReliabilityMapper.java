@@ -17,5 +17,7 @@ public interface TbReliabilityMapper {
 
     int updateByPrimaryKey(TbReliability record);
 
+    int updateByUserIdAndPostId(TbReliability record);
+
     Integer selectByPostIdAndUserId(int postId, int userId);
 }

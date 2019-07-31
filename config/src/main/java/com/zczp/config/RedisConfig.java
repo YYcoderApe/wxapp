@@ -2,7 +2,6 @@ package com.zczp.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -46,7 +45,9 @@ public class RedisConfig {
         jedisPoolConfig.setBlockWhenExhausted(blockWhenExhausted);
         // 是否启用pool的jmx管理功能, 默认true
         jedisPoolConfig.setJmxEnabled(true);
-        JedisPool jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout, password);
+        //JedisPool jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout，password);
+        JedisPool jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout);
+        log.info("连接成功");
         return jedisPool;
     }
 

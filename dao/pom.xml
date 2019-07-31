@@ -47,7 +47,12 @@
             <artifactId>entity</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
+        <!--dao 模块 引入util模块-->
+        <dependency>
+            <groupId>com.zczp</groupId>
+            <artifactId>util</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 </project>

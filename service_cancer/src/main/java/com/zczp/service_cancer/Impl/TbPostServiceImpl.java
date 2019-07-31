@@ -4,6 +4,8 @@ import com.zczp.dao.TbPostMapper;
 import com.zczp.entity.TbPost;
 import com.zczp.entity.TbPostWithBLOBs;
 import com.zczp.service_cancer.TbPostService;
+import com.zczp.util.RedisKeyUtil;
+import com.zczp.util.RedisUtil;
 import com.zczp.vo_cancer.CommentsVo;
 import com.zczp.vo_cancer.PostDetailsVo;
 import com.zczp.vo_yycoder.PostDetailVo;
@@ -20,6 +22,8 @@ public class TbPostServiceImpl implements TbPostService {
     private TbCommentServiceImpl tbCommentService;
     @Autowired
     private TbCollectServiceImpl tbCollectService;
+    @Autowired
+    RedisUtil redisUtil;
     @Override
     public int deleteByPrimaryKey(Integer postId) {
         return 0;
@@ -56,19 +60,46 @@ public class TbPostServiceImpl implements TbPostService {
     }
 
     @Override
-    public PostDetailsVo selectDetailByPrimaryKey(Integer postId) {
+    public PostDetailsVo selectDetailByPrimaryKey(Integer postId,Integer userId) {
         PostDetailsVo postDetailsVo=tbPostMapper.selectDetailByPrimaryKey(postId);
         List<CommentsVo> commentsVoList =tbCommentService.selectAllByPrimaryPostId(postDetailsVo.getPostId());
         for (CommentsVo commentVo:commentsVoList){
             commentVo.setCommentList(tbCommentService.selectAllByPrimaryReplyId(commentVo.getCommentId()));
         }
         postDetailsVo.setCommentsVoList(commentsVoList);
+        String key =RedisKeyUtil.getKey(userId,postId);
+        int reliabilityState;
+        String sate=redisUtil.hget(RedisKeyUtil.MAP_KEY_RELIABILITY,key);
+        if (sate!=null){
+             reliabilityState=Integer.valueOf(sate);
+        }else {
+            reliabilityState = tbCollectService.selectByPostIdAndUserId(postId,userId);
+            redisUtil.hset(RedisKeyUtil.MAP_KEY_RELIABILITY,key,String.valueOf(reliabilityState));
+        }
+        postDetailsVo.setReliabilityState(reliabilityState);
+        String reliability =redisUtil.hget(RedisKeyUtil.MAP_KEY_RELIABILITY_COUNT,postId.toString());
+        if (reliability!=null){
+            postDetailsVo.setReliability(postDetailsVo.getReliability()+Integer.valueOf(reliability));
+        }
         return postDetailsVo;
     }
 
     @Override
     public List<PostDetailVo> selectByTitle(String title){
         return tbPostMapper.selectByTitle(title);
+    }
+
+    //更新可信度数到数据库
+    public void transReliabilityCountToDB() {
+        Map<String,String> reliabilityCount=redisUtil.hgetall(RedisKeyUtil.MAP_KEY_RELIABILITY_COUNT,0);
+        for (Map.Entry<String,String> entry:reliabilityCount.entrySet()){
+            int postId=Integer.valueOf(entry.getKey());
+            int count=Integer.valueOf(entry.getValue());
+            TbPostWithBLOBs tbPostWithBLOBs=tbPostMapper.selectByPrimaryKey(postId);
+            tbPostWithBLOBs.setReliability(tbPostWithBLOBs.getReliability()+count);
+            tbPostMapper.updateReliabilityByPrimaryKey(tbPostWithBLOBs);
+            redisUtil.hdel(RedisKeyUtil.MAP_KEY_RELIABILITY_COUNT,entry.getKey());
+        }
     }
 
 

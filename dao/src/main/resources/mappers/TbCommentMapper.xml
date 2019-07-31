@@ -22,7 +22,8 @@
   <select id="selectAllByPrimaryPostId" parameterType="java.lang.Integer" resultType="com.zczp.vo_cancer.CommentsVo">
     select
     tc.comment_id as commentId , tc.post_id as postId ,tc.content, tc.from_id as fromId,
-    tc.comment_time as commentTime ,tc.reply_id as replyId , tu.user_name as userName
+    tc.comment_time as commentTime ,tc.reply_id as replyId , tu.user_name as userName,
+    tu.user_image as userImage
     from tb_comment tc
     left join tb_user tu on tc.from_id = tu.user_id
     where tc.post_id = #{postId,jdbcType=INTEGER} and tc.reply_id is null order by tc.comment_time desc
@@ -30,7 +31,8 @@
   <select id="selectAllByPrimaryReplyId" parameterType="java.lang.Integer" resultType="com.zczp.vo_cancer.CommentsVo">
     select
     tc.comment_id as commentId , tc.post_id as postId ,tc.content, tc.from_id as fromId,
-    tc.comment_time as commentTime ,tc.reply_id as replyId , tu.user_name as userName
+    tc.comment_time as commentTime ,tc.reply_id as replyId , tu.user_name as userName,
+    tu.user_image as userImage
     from tb_comment tc
     left join tb_user tu on tc.from_id = tu.user_id
     where tc.reply_id = #{replyId,jdbcType=INTEGER} order by tc.comment_time desc

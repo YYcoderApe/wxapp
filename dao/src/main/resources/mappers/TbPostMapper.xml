@@ -288,6 +288,11 @@
       work_address = #{workAddress,jdbcType=LONGVARCHAR}
     where post_id = #{postId,jdbcType=INTEGER}
   </update>
+    <update id="updateReliabilityByPrimaryKey" parameterType="com.zczp.entity.TbPostWithBLOBs">
+    update tb_post
+    set  reliability = #{reliability,jdbcType=INTEGER}
+    where post_id = #{postId,jdbcType=INTEGER}
+  </update>
   <update id="updateByPrimaryKey" parameterType="com.zczp.entity.TbPost">
     update tb_post
     set type_id = #{typeId,jdbcType=INTEGER},

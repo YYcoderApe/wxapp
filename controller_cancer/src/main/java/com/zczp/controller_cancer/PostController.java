@@ -31,11 +31,10 @@ public class PostController {
     @ApiOperation("招聘信息详情")
     @GetMapping("/postDetail")
     public AjaxResult postDetail(
-            @RequestParam @ApiParam("招聘信息Id") int post_id,
+            @RequestParam @ApiParam("招聘信息Id") int postId,
             @RequestParam @ApiParam ("当前用户Id") int userId){
-        PostDetailsVo postDetailsVo =tbPostService.selectDetailByPrimaryKey(post_id);
-        postDetailsVo.setCollectId(tbCollectService.selectByPostIdAndUserId(post_id,userId));
-        postDetailsVo.setReliabilityId(tbReliabilityService.selectByPostIdAndUserId(post_id,userId));
+        PostDetailsVo postDetailsVo =tbPostService.selectDetailByPrimaryKey(postId,userId);
+        postDetailsVo.setCollectId(tbCollectService.selectByPostIdAndUserId(postId,userId));
         return ajaxResult.ok(postDetailsVo);
     }
 
@@ -52,9 +51,17 @@ public class PostController {
     @ApiOperation("修改可信度")
     @PostMapping("/reliability")
     public  AjaxResult reliability(
-            @RequestParam @ApiParam("0-取消 1-可信") int r){
-            tbReliabilityService.selectByPrimaryKey(r);
-        return null;
+            @RequestParam @ApiParam("0-取消 1-可信") int r,
+            @RequestParam @ApiParam("招聘信息表Id") int postId,
+            @RequestParam @ApiParam ("用户Id") int userId){
+            if (r==1){
+                tbReliabilityService.saveReliabilityState(userId,postId);
+                return ajaxResult.ok("点击可信");
+            }else if (r==0){
+                tbReliabilityService.delReliabilityState(userId,postId);
+                return ajaxResult.ok("取消可信");
+            }
+        return ajaxResult.error("操作失败");
     }
 
     @ApiOperation("收藏招聘信息")

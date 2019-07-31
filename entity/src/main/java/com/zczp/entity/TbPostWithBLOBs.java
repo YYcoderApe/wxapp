@@ -3,6 +3,8 @@ package com.zczp.entity;
 import io.swagger.annotations.ApiModelProperty;
 
 public class TbPostWithBLOBs extends TbPost {
+
+
     @ApiModelProperty("招聘描述")
     private String jobDescription;
 
