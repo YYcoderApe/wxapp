@@ -9,13 +9,13 @@ public class RedisKeyUtil {
 
     /**
      * 拼接点可信的用户id和被点招聘信息的id作为key。格式 222222::333333
-     * @param userId 可信的用户id
+     * @param openId 可信的用户id
      * @param postId 被点招聘信息的id
      * @return
      */
-    public static String getKey(int userId, int postId){
+    public static String getKey(String openId, int postId){
         StringBuilder builder = new StringBuilder();
-        builder.append(userId);
+        builder.append(openId);
         builder.append("::");
         builder.append(postId);
         return builder.toString();

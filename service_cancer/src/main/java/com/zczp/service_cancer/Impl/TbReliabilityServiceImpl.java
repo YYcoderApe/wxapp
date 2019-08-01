@@ -61,8 +61,8 @@ public class TbReliabilityServiceImpl implements TbReliabilityService {
     }
 
     @Override
-    public Integer selectByPostIdAndUserId(int postId, int userId) {
-        Integer reliabilityId =tbReliabilityMapper.selectByPostIdAndUserId(postId,userId);
+    public Integer selectByPostIdAndUserId(int postId, String openId) {
+        Integer reliabilityId =tbReliabilityMapper.selectByPostIdAndUserId(postId,openId);
         if (reliabilityId!=null){
             return reliabilityId;
         }
@@ -70,8 +70,8 @@ public class TbReliabilityServiceImpl implements TbReliabilityService {
     }
 
     //保存已点击可信状态
-    public void saveReliabilityState(int userId,int postId) {
-        String key=RedisKeyUtil.getKey(userId,postId);
+    public void saveReliabilityState(String openId,int postId) {
+        String key=RedisKeyUtil.getKey(openId,postId);
         Long value=new Long(1);
         String postid=String.valueOf(postId);
         redisUtil.hset(RedisKeyUtil.MAP_KEY_RELIABILITY,key, ReliabilityStatusEnum.RELIABILITY.getCode().toString());
@@ -79,8 +79,8 @@ public class TbReliabilityServiceImpl implements TbReliabilityService {
     }
 
     //保存取消点击可信状态
-    public void delReliabilityState(int userId,int postId) {
-        String key=RedisKeyUtil.getKey(userId,postId);
+    public void delReliabilityState(String openId,int postId) {
+        String key=RedisKeyUtil.getKey(openId,postId);
         Long value=new Long(-1);
         String postid=String.valueOf(postId);
         redisUtil.hset(RedisKeyUtil.MAP_KEY_RELIABILITY,key, ReliabilityStatusEnum.UNRELIABILITY.getCode().toString());
@@ -96,16 +96,16 @@ public class TbReliabilityServiceImpl implements TbReliabilityService {
             String key = entry.getKey();
             //分离出 uerId，postId
             String[] split = key.split("::");
-            int userId = Integer.valueOf(split[0]);
+            String openId = split[0];
             int postId = Integer.valueOf(split[1]);
             int value =Integer.valueOf(entry.getValue());
 
             //组装成 TbReliability 对象
-            TbReliability tbReliability = new TbReliability(postId,userId,value);
+            TbReliability tbReliability = new TbReliability(postId,openId,value);
             //存到 list 后从 Redis 中删除
             redisUtil.hdel(RedisKeyUtil.MAP_KEY_RELIABILITY,entry.getKey());
             //查询数据库并更新
-            Integer result=tbReliabilityMapper.selectByPostIdAndUserId(postId,userId);
+            Integer result=tbReliabilityMapper.selectByPostIdAndUserId(postId,openId);
             if (result==null){
                 tbReliabilityMapper.insert(tbReliability);
             }else {

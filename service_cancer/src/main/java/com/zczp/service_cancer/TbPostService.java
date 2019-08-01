@@ -24,7 +24,7 @@ public interface TbPostService {
 
     int updateByPrimaryKey(TbPost record);
 
-    PostDetailsVo selectDetailByPrimaryKey(Integer postId,Integer userId);
+    PostDetailsVo selectDetailByPrimaryKey(Integer postId,String openId);
 
     List<PostDetailVo> selectByTitle(String title);
 

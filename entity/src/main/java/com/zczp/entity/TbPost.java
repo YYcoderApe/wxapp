@@ -1,34 +1,50 @@
 package com.zczp.entity;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 
 public class TbPost {
+    @ApiModelProperty("岗位ID")
     private Integer postId;
 
+    @ApiModelProperty("岗位类型Id")
     private Integer typeId;
 
+    @ApiModelProperty("公司Id")
     private Integer companyId;
 
+    @ApiModelProperty("招聘类型（实习 校招）")
     private String jobType;
 
+    @ApiModelProperty("可信度")
     private Integer reliability;
 
+    @ApiModelProperty("城市Id")
     private Integer cityId;
 
+    @ApiModelProperty("发布时间")
     private Date postTime;
 
-    private String internshipTime;
-
+    @ApiModelProperty("入职时间")
     private String entryTime;
 
+    @ApiModelProperty("实习时长")
+    private String internshipTime;
+
+    @ApiModelProperty("投递方式")
     private String deliveryMethod;
 
+    @ApiModelProperty("标题")
     private String title;
 
+    @ApiModelProperty("发布用户ID")
     private String openId;
 
+    @ApiModelProperty("状态 0-待审核")
     private Integer state;
 
+    @ApiModelProperty("岗位要求")
     private String requirement;
 
     public Integer getPostId() {
@@ -87,20 +103,20 @@ public class TbPost {
         this.postTime = postTime;
     }
 
-    public String getInternshipTime() {
-        return internshipTime;
-    }
-
-    public void setInternshipTime(String internshipTime) {
-        this.internshipTime = internshipTime == null ? null : internshipTime.trim();
-    }
-
     public String getEntryTime() {
         return entryTime;
     }
 
     public void setEntryTime(String entryTime) {
         this.entryTime = entryTime == null ? null : entryTime.trim();
+    }
+
+    public String getInternshipTime() {
+        return internshipTime;
+    }
+
+    public void setInternshipTime(String internshipTime) {
+        this.internshipTime = internshipTime == null ? null : internshipTime.trim();
     }
 
     public String getDeliveryMethod() {

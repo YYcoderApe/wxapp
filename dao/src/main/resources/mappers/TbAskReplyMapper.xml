@@ -21,9 +21,9 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zczp.entity.TbAskReply">
-    insert into tb_ask_reply (id, open_id, post_id, 
+    insert into tb_ask_reply (id, open_id, post_id,
       time)
-    values (#{id,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, #{postId,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, #{postId,jdbcType=INTEGER},
       #{time,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.zczp.entity.TbAskReply">

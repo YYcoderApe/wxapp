@@ -15,11 +15,11 @@ public interface TbReliabilityService {
 
     int updateByPrimaryKey(TbReliability record);
 
-    Integer selectByPostIdAndUserId(int postId, int userId);
+    Integer selectByPostIdAndUserId(int postId, String openId);
 
-    void saveReliabilityState(int userId,int postId);
+    void saveReliabilityState(String openId,int postId);
 
-    void delReliabilityState(int userId,int postId);
+    void delReliabilityState(String openId,int postId);
 
     void transReliabilityToDB();
 

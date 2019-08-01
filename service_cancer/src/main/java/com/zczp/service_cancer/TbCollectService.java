@@ -15,5 +15,5 @@ public interface TbCollectService {
 
     int updateByPrimaryKey(TbCollect record);
 
-    Integer selectByPostIdAndUserId(Integer postId, Integer userId);
+    Integer selectByPostIdAndUserId(Integer postId, String openId);
 }

@@ -28,7 +28,7 @@ public class PostDetailsVo {
     private String typeName;
 
     @ApiModelProperty("发布用户ID")
-    private Integer userId;
+    private Integer openId;
 
     @ApiModelProperty("公司名称")
     private String companyName;

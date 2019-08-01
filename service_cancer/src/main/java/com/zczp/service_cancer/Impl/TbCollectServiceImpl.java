@@ -41,8 +41,8 @@ public class TbCollectServiceImpl implements TbCollectService {
     }
 
     @Override
-    public Integer selectByPostIdAndUserId(Integer postId, Integer userId) {
-        Integer collectId = tbCollectMapper.selectByPostIdAndUserId(postId,userId);
+    public Integer selectByPostIdAndUserId(Integer postId, String openId) {
+        Integer collectId = tbCollectMapper.selectByPostIdAndUserId(postId,openId);
         if (collectId!=null){
             return collectId;
         }

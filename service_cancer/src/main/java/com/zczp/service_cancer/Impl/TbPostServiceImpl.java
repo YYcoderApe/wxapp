@@ -23,6 +23,8 @@ public class TbPostServiceImpl implements TbPostService {
     @Autowired
     private TbCollectServiceImpl tbCollectService;
     @Autowired
+    private TbReliabilityServiceImpl tbReliabilityService;
+    @Autowired
     RedisUtil redisUtil;
     @Override
     public int deleteByPrimaryKey(Integer postId) {
@@ -60,20 +62,20 @@ public class TbPostServiceImpl implements TbPostService {
     }
 
     @Override
-    public PostDetailsVo selectDetailByPrimaryKey(Integer postId,Integer userId) {
+    public PostDetailsVo selectDetailByPrimaryKey(Integer postId,String openId) {
         PostDetailsVo postDetailsVo=tbPostMapper.selectDetailByPrimaryKey(postId);
         List<CommentsVo> commentsVoList =tbCommentService.selectAllByPrimaryPostId(postDetailsVo.getPostId());
         for (CommentsVo commentVo:commentsVoList){
             commentVo.setCommentList(tbCommentService.selectAllByPrimaryReplyId(commentVo.getCommentId()));
         }
         postDetailsVo.setCommentsVoList(commentsVoList);
-        String key =RedisKeyUtil.getKey(userId,postId);
+        String key =RedisKeyUtil.getKey(openId,postId);
         int reliabilityState;
         String sate=redisUtil.hget(RedisKeyUtil.MAP_KEY_RELIABILITY,key);
         if (sate!=null){
              reliabilityState=Integer.valueOf(sate);
         }else {
-            reliabilityState = tbCollectService.selectByPostIdAndUserId(postId,userId);
+            reliabilityState = tbReliabilityService.selectByPostIdAndUserId(postId,openId);
             redisUtil.hset(RedisKeyUtil.MAP_KEY_RELIABILITY,key,String.valueOf(reliabilityState));
         }
         postDetailsVo.setReliabilityState(reliabilityState);

@@ -1,6 +1,12 @@
 package com.zczp.entity;
 
 public class TbReliability {
+    public TbReliability(Integer postId, String openId, Integer state) {
+        this.postId = postId;
+        this.openId = openId;
+        this.state = state;
+    }
+
     private Integer reliabilityId;
 
     private Integer postId;
@@ -30,7 +36,7 @@ public class TbReliability {
     }
 
     public void setOpenId(String openId) {
-        this.openId = openId == null ? null : openId.trim();
+        this.openId = openId;
     }
 
     public Integer getState() {

@@ -22,7 +22,7 @@
     <result column="work_address" jdbcType="LONGVARCHAR" property="workAddress" />
   </resultMap>
   <sql id="Base_Column_List">
-    post_id, type_id, company_id, job_type, reliability, city_id, post_time, Internship_time, 
+    post_id, type_id, company_id, job_type, reliability, city_id, post_time, Internship_time,
     entry_time, delivery_method, title, open_id, state, requirement
   </sql>
   <sql id="Blob_Column_List">
@@ -36,22 +36,83 @@
     from tb_post
     where post_id = #{postId,jdbcType=INTEGER}
   </select>
+  <select id="selectDetailByPrimaryKey" parameterType="java.lang.Integer" resultType="com.zczp.vo_cancer.PostDetailsVo">
+    select
+    tp.post_id as postId, tp.title ,tp.requirement , tp.open_id as openId ,tp.job_type as jobType ,
+    tp.reliability ,tp.post_time as postTime , tp.Internship_time as internshipTime ,tp.entry_time as entryTime ,
+    tp.delivery_method as deliveryMethod , tp.state ,tp.job_description as jobDescription ,tp.work_address as workAddress,
+    tpt.type_name as typeName , tpt.type_name as typeName , tc.company_name as companyName , tc.company_logo as companyLogo,
+    t.city_name as cityName
+    from tb_post tp
+    left join tb_post_type tpt on tp.type_id = tpt.type_id
+    left join tb_company tc on tp.company_id = tc.company_id
+    left join tb_city t on tp.city_id = t.city_id
+    where post_id = #{postId,jdbcType=INTEGER}
+  </select>
+    <select id="selectByTitle" parameterType="java.lang.String" resultType="com.zczp.vo_yycoder.PostDetailVo">
+        select
+        tp.post_id as  'postId', tp.title,tpt.type_name as 'postType',tc.company_name as 'companyName',
+        tc.company_logo as 'companyLogo',tp.job_type as 'jobType',reliability , tcy.city_name as 'cityName',
+        tp.post_time as 'postTime' ,tp.Internship_time as 'internshipTime',entry_time as 'entryTime'
+        from tb_post tp
+        LEFT JOIN tb_company tc on tp.company_id=tc.company_id
+        LEFT JOIN tb_post_type tpt on tp.type_id =tpt.type_id
+        LEFT JOIN tb_city tcy  on tcy.city_id=tp.city_id
+        where title like CONCAT(CONCAT('%',#{title},'%'))
+    </select>
+    <select id="getPostDetail" resultType="com.zczp.vo_yycoder.PostDetailVo">
+        select
+        tp.post_id as  'postId', tp.title,tpt.type_name as 'postType',tc.company_name as 'companyName',
+        tc.company_logo as 'companyLogo',tp.job_type as 'jobType',reliability , tcy.city_name as 'cityName',
+        tp.post_time as 'postTime' ,tp.Internship_time as 'internshipTime',entry_time as 'entryTime'
+        from tb_post tp
+        LEFT JOIN tb_company tc on tp.company_id=tc.company_id
+        LEFT JOIN tb_post_type tpt on tp.type_id =tpt.type_id
+        LEFT JOIN tb_city tcy  on tcy.city_id=tp.city_id
+        where tp.state=1
+        order by  tp.post_time desc
+    </select>
+    <select id="getPostByCityName"  parameterType="java.lang.String" resultType="com.zczp.vo_yycoder.PostDetailVo">
+        select
+        tp.post_id as  'postId', tp.title,tpt.type_name as 'postType',tc.company_name as 'companyName',
+        tc.company_logo as 'companyLogo',tp.job_type as 'jobType',reliability , tcy.city_name as 'cityName',
+        tp.post_time as 'postTime' ,tp.Internship_time as 'internshipTime',entry_time as 'entryTime'
+        from tb_post tp
+        LEFT JOIN tb_company tc on tp.company_id=tc.company_id
+        LEFT JOIN tb_post_type tpt on tp.type_id =tpt.type_id
+        LEFT JOIN tb_city tcy  on tcy.city_id=tp.city_id
+        <where>
+            tp.state=1
+            <if test="cityName != null and cityName != ''and cityName!='全国'">
+                and tcy.city_name = #{cityName}
+            </if>
+            <if test="jobType != null and jobType!=''and jobType!='综合'">
+                and tp.job_type=#{jobType}
+            </if>
+            <if test="postType != null and postType!=''and postType!='全部'">
+                and tpt.type_name = #{postType}
+            </if>
+
+        </where>
+        order by  tp.post_time desc
+
+    </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_post
     where post_id = #{postId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zczp.entity.TbPostWithBLOBs">
-    insert into tb_post (post_id, type_id, company_id, 
+    insert into tb_post (post_id, type_id, company_id,
       job_type, reliability, city_id, 
-      post_time, Internship_time, entry_time, 
-      delivery_method, title, open_id, 
-      state, requirement, job_description, 
+      post_time, Internship_time, entry_time,
+      delivery_method, title, open_id,
+      state, requirement, job_description,
       work_address)
-    values (#{postId,jdbcType=INTEGER}, #{typeId,jdbcType=INTEGER}, #{companyId,jdbcType=INTEGER}, 
+    values (#{postId,jdbcType=INTEGER}, #{typeId,jdbcType=INTEGER}, #{companyId,jdbcType=INTEGER},
       #{jobType,jdbcType=VARCHAR}, #{reliability,jdbcType=INTEGER}, #{cityId,jdbcType=INTEGER}, 
-      #{postTime,jdbcType=TIMESTAMP}, #{internshipTime,jdbcType=VARCHAR}, #{entryTime,jdbcType=VARCHAR}, 
-      #{deliveryMethod,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, 
-      #{state,jdbcType=INTEGER}, #{requirement,jdbcType=VARCHAR}, #{jobDescription,jdbcType=LONGVARCHAR}, 
+      #{postTime,jdbcType=TIMESTAMP}, #{internshipTime,jdbcType=VARCHAR}, #{entryTime,jdbcType=VARCHAR},
+      #{deliveryMethod,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR},
+      #{state,jdbcType=INTEGER}, #{requirement,jdbcType=VARCHAR}, #{jobDescription,jdbcType=LONGVARCHAR},
       #{workAddress,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zczp.entity.TbPostWithBLOBs">
@@ -225,6 +286,11 @@
       requirement = #{requirement,jdbcType=VARCHAR},
       job_description = #{jobDescription,jdbcType=LONGVARCHAR},
       work_address = #{workAddress,jdbcType=LONGVARCHAR}
+    where post_id = #{postId,jdbcType=INTEGER}
+  </update>
+    <update id="updateReliabilityByPrimaryKey" parameterType="com.zczp.entity.TbPostWithBLOBs">
+    update tb_post
+    set  reliability = #{reliability,jdbcType=INTEGER}
     where post_id = #{postId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zczp.entity.TbPost">

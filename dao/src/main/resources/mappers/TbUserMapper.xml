@@ -17,7 +17,7 @@
     <result column="country" jdbcType="VARCHAR" property="country" />
   </resultMap>
   <sql id="Base_Column_List">
-    open_id, user_name, user_phone, user_gender, user_school, user_postType, user_signature, 
+    open_id, user_name, user_phone, user_gender, user_school, user_postType, user_signature,
     user_company, user_image, language, city, province, country
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -31,15 +31,15 @@
     where open_id = #{openId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.zczp.entity.TbUser">
-    insert into tb_user (open_id, user_name, user_phone, 
-      user_gender, user_school, user_postType, 
-      user_signature, user_company, user_image, 
-      language, city, province, 
+    insert into tb_user (open_id, user_name, user_phone,
+      user_gender, user_school, user_postType,
+      user_signature, user_company, user_image,
+      language, city, province,
       country)
-    values (#{openId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{userPhone,jdbcType=BIGINT}, 
-      #{userGender,jdbcType=CHAR}, #{userSchool,jdbcType=VARCHAR}, #{userPosttype,jdbcType=VARCHAR}, 
-      #{userSignature,jdbcType=VARCHAR}, #{userCompany,jdbcType=VARCHAR}, #{userImage,jdbcType=VARCHAR}, 
-      #{language,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
+    values (#{openId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{userPhone,jdbcType=BIGINT},
+      #{userGender,jdbcType=CHAR}, #{userSchool,jdbcType=VARCHAR}, #{userPosttype,jdbcType=VARCHAR},
+      #{userSignature,jdbcType=VARCHAR}, #{userCompany,jdbcType=VARCHAR}, #{userImage,jdbcType=VARCHAR},
+      #{language,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR},
       #{country,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zczp.entity.TbUser">
@@ -53,6 +53,9 @@
       </if>
       <if test="userPhone != null">
         user_phone,
+      </if>
+      <if test="userPassword != null">
+        user_password,
       </if>
       <if test="userGender != null">
         user_gender,
