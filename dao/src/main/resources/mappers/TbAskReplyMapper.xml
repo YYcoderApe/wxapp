@@ -3,12 +3,12 @@
 <mapper namespace="com.zczp.dao.TbAskReplyMapper">
   <resultMap id="BaseResultMap" type="com.zczp.entity.TbAskReply">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
     <result column="post_id" jdbcType="INTEGER" property="postId" />
     <result column="time" jdbcType="TIMESTAMP" property="time" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_id, post_id, time
+    id, open_id, post_id, time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -21,9 +21,9 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zczp.entity.TbAskReply">
-    insert into tb_ask_reply (id, user_id, post_id, 
+    insert into tb_ask_reply (id, open_id, post_id, 
       time)
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{postId,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, #{postId,jdbcType=INTEGER}, 
       #{time,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.zczp.entity.TbAskReply">
@@ -32,8 +32,8 @@
       <if test="id != null">
         id,
       </if>
-      <if test="userId != null">
-        user_id,
+      <if test="openId != null">
+        open_id,
       </if>
       <if test="postId != null">
         post_id,
@@ -46,8 +46,8 @@
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
       </if>
       <if test="postId != null">
         #{postId,jdbcType=INTEGER},
@@ -60,8 +60,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.zczp.entity.TbAskReply">
     update tb_ask_reply
     <set>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=INTEGER},
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=VARCHAR},
       </if>
       <if test="postId != null">
         post_id = #{postId,jdbcType=INTEGER},
@@ -74,7 +74,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zczp.entity.TbAskReply">
     update tb_ask_reply
-    set user_id = #{userId,jdbcType=INTEGER},
+    set open_id = #{openId,jdbcType=VARCHAR},
       post_id = #{postId,jdbcType=INTEGER},
       time = #{time,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

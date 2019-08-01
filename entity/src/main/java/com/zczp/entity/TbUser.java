@@ -1,19 +1,17 @@
 package com.zczp.entity;
 
 public class TbUser {
-    private Integer userId;
+    private String openId;
 
     private String userName;
 
     private Long userPhone;
 
-    private String userPassword;
-
     private String userGender;
 
     private String userSchool;
 
-    private Integer postTypeId;
+    private String userPosttype;
 
     private String userSignature;
 
@@ -21,12 +19,20 @@ public class TbUser {
 
     private String userImage;
 
-    public Integer getUserId() {
-        return userId;
+    private String language;
+
+    private String city;
+
+    private String province;
+
+    private String country;
+
+    public String getOpenId() {
+        return openId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setOpenId(String openId) {
+        this.openId = openId == null ? null : openId.trim();
     }
 
     public String getUserName() {
@@ -45,14 +51,6 @@ public class TbUser {
         this.userPhone = userPhone;
     }
 
-    public String getUserPassword() {
-        return userPassword;
-    }
-
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword == null ? null : userPassword.trim();
-    }
-
     public String getUserGender() {
         return userGender;
     }
@@ -69,12 +67,12 @@ public class TbUser {
         this.userSchool = userSchool == null ? null : userSchool.trim();
     }
 
-    public Integer getPostTypeId() {
-        return postTypeId;
+    public String getUserPosttype() {
+        return userPosttype;
     }
 
-    public void setPostTypeId(Integer postTypeId) {
-        this.postTypeId = postTypeId;
+    public void setUserPosttype(String userPosttype) {
+        this.userPosttype = userPosttype == null ? null : userPosttype.trim();
     }
 
     public String getUserSignature() {
@@ -99,5 +97,37 @@ public class TbUser {
 
     public void setUserImage(String userImage) {
         this.userImage = userImage == null ? null : userImage.trim();
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language == null ? null : language.trim();
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city == null ? null : city.trim();
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province == null ? null : province.trim();
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country == null ? null : country.trim();
     }
 }

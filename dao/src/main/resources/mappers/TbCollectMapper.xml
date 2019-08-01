@@ -4,10 +4,10 @@
   <resultMap id="BaseResultMap" type="com.zczp.entity.TbCollect">
     <id column="collect_id" jdbcType="INTEGER" property="collectId" />
     <result column="post_id" jdbcType="INTEGER" property="postId" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
   </resultMap>
   <sql id="Base_Column_List">
-    collect_id, post_id, user_id
+    collect_id, post_id, open_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -15,20 +15,14 @@
     from tb_collect
     where collect_id = #{collectId,jdbcType=INTEGER}
   </select>
-  <select id="selectByPostIdAndUserId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-    select
-    collect_id
-    from tb_collect
-    where post_id = #{postId,jdbcType=INTEGER} and  user_id = #{userId}
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_collect
     where collect_id = #{collectId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zczp.entity.TbCollect">
-    insert into tb_collect (collect_id, post_id, user_id
+    insert into tb_collect (collect_id, post_id, open_id
       )
-    values (#{collectId,jdbcType=INTEGER}, #{postId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}
+    values (#{collectId,jdbcType=INTEGER}, #{postId,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zczp.entity.TbCollect">
@@ -40,8 +34,8 @@
       <if test="postId != null">
         post_id,
       </if>
-      <if test="userId != null">
-        user_id,
+      <if test="openId != null">
+        open_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -51,8 +45,8 @@
       <if test="postId != null">
         #{postId,jdbcType=INTEGER},
       </if>
-      <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -62,8 +56,8 @@
       <if test="postId != null">
         post_id = #{postId,jdbcType=INTEGER},
       </if>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=INTEGER},
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=VARCHAR},
       </if>
     </set>
     where collect_id = #{collectId,jdbcType=INTEGER}
@@ -71,7 +65,7 @@
   <update id="updateByPrimaryKey" parameterType="com.zczp.entity.TbCollect">
     update tb_collect
     set post_id = #{postId,jdbcType=INTEGER},
-      user_id = #{userId,jdbcType=INTEGER}
+      open_id = #{openId,jdbcType=VARCHAR}
     where collect_id = #{collectId,jdbcType=INTEGER}
   </update>
 </mapper>

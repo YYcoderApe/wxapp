@@ -1,10 +1,8 @@
 package com.zczp.dao;
 
 import com.zczp.entity.TbCollect;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface TbCollectMapper extends BaseMapper<TbCollect>{
+public interface TbCollectMapper {
     int deleteByPrimaryKey(Integer collectId);
 
     int insert(TbCollect record);
@@ -16,6 +14,4 @@ public interface TbCollectMapper extends BaseMapper<TbCollect>{
     int updateByPrimaryKeySelective(TbCollect record);
 
     int updateByPrimaryKey(TbCollect record);
-
-    Integer selectByPostIdAndUserId(Integer postId, Integer userId);
 }

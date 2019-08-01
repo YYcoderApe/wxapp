@@ -1,12 +1,17 @@
 package com.zczp.dao;
 
 import com.zczp.entity.TbUser;
-import com.zczp.vo_yycoder.UserDetailVo;
 
-import java.util.List;
+public interface TbUserMapper {
+    int deleteByPrimaryKey(String openId);
 
-public interface TbUserMapper extends BaseMapper<TbUser>{
+    int insert(TbUser record);
 
-    //根据登录传来的openid展示用户信息
-    List<UserDetailVo> getUserById(Integer id);
+    int insertSelective(TbUser record);
+
+    TbUser selectByPrimaryKey(String openId);
+
+    int updateByPrimaryKeySelective(TbUser record);
+
+    int updateByPrimaryKey(TbUser record);
 }

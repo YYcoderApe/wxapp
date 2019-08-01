@@ -5,7 +5,7 @@ public class TbCollect {
 
     private Integer postId;
 
-    private Integer userId;
+    private String openId;
 
     public Integer getCollectId() {
         return collectId;
@@ -23,11 +23,11 @@ public class TbCollect {
         this.postId = postId;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getOpenId() {
+        return openId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setOpenId(String openId) {
+        this.openId = openId == null ? null : openId.trim();
     }
 }

@@ -1,9 +1,7 @@
 package com.zczp.dao;
 
 import com.zczp.entity.TbReliability;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface TbReliabilityMapper {
     int deleteByPrimaryKey(Integer reliabilityId);
 
@@ -16,8 +14,4 @@ public interface TbReliabilityMapper {
     int updateByPrimaryKeySelective(TbReliability record);
 
     int updateByPrimaryKey(TbReliability record);
-
-    int updateByUserIdAndPostId(TbReliability record);
-
-    Integer selectByPostIdAndUserId(int postId, int userId);
 }

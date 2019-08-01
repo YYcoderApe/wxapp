@@ -4,11 +4,11 @@
   <resultMap id="BaseResultMap" type="com.zczp.entity.TbReliability">
     <id column="reliability_id" jdbcType="INTEGER" property="reliabilityId" />
     <result column="post_id" jdbcType="INTEGER" property="postId" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
     <result column="state" jdbcType="INTEGER" property="state" />
   </resultMap>
   <sql id="Base_Column_List">
-    reliability_id, post_id, user_id, state
+    reliability_id, post_id, open_id, state
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -16,19 +16,14 @@
     from tb_reliability
     where reliability_id = #{reliabilityId,jdbcType=INTEGER}
   </select>
-  <select id="selectByPostIdAndUserId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-    select state
-    from tb_reliability
-    where post_id = #{postId,jdbcType=INTEGER} and user_id=#{userId}
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_reliability
     where reliability_id = #{reliabilityId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zczp.entity.TbReliability">
-    insert into tb_reliability ( post_id, user_id,
+    insert into tb_reliability (reliability_id, post_id, open_id, 
       state)
-    values ( #{postId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER},
+    values (#{reliabilityId,jdbcType=INTEGER}, #{postId,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, 
       #{state,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.zczp.entity.TbReliability">
@@ -40,8 +35,8 @@
       <if test="postId != null">
         post_id,
       </if>
-      <if test="userId != null">
-        user_id,
+      <if test="openId != null">
+        open_id,
       </if>
       <if test="state != null">
         state,
@@ -54,8 +49,8 @@
       <if test="postId != null">
         #{postId,jdbcType=INTEGER},
       </if>
-      <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
       </if>
       <if test="state != null">
         #{state,jdbcType=INTEGER},
@@ -68,8 +63,8 @@
       <if test="postId != null">
         post_id = #{postId,jdbcType=INTEGER},
       </if>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=INTEGER},
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=VARCHAR},
       </if>
       <if test="state != null">
         state = #{state,jdbcType=INTEGER},
@@ -80,13 +75,8 @@
   <update id="updateByPrimaryKey" parameterType="com.zczp.entity.TbReliability">
     update tb_reliability
     set post_id = #{postId,jdbcType=INTEGER},
-      user_id = #{userId,jdbcType=INTEGER},
+      open_id = #{openId,jdbcType=VARCHAR},
       state = #{state,jdbcType=INTEGER}
     where reliability_id = #{reliabilityId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByUserIdAndPostId" parameterType="com.zczp.entity.TbReliability">
-    update tb_reliability
-    set state = #{state,jdbcType=INTEGER}
-    where post_id = #{postId,jdbcType=INTEGER} and  user_id = #{userId,jdbcType=INTEGER}
   </update>
 </mapper>

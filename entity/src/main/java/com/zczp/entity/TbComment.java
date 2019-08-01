@@ -1,29 +1,20 @@
 package com.zczp.entity;
 
-import io.swagger.annotations.ApiModelProperty;
-
 import java.util.Date;
 
 public class TbComment {
-    @ApiModelProperty("评论Id")
     private Integer commentId;
 
-    @ApiModelProperty("招聘信息Id")
     private Integer postId;
 
-    @ApiModelProperty("内容")
     private String content;
 
-    @ApiModelProperty("用户ID")
-    private Integer fromId;
+    private String fromId;
 
-    @ApiModelProperty("回复的用户ID")
-    private Integer toId;
+    private String toId;
 
-    @ApiModelProperty("评论时间")
     private Date commentTime;
 
-    @ApiModelProperty("回复的评论ID")
     private Integer replyId;
 
     public Integer getCommentId() {
@@ -50,20 +41,20 @@ public class TbComment {
         this.content = content == null ? null : content.trim();
     }
 
-    public Integer getFromId() {
+    public String getFromId() {
         return fromId;
     }
 
-    public void setFromId(Integer fromId) {
-        this.fromId = fromId;
+    public void setFromId(String fromId) {
+        this.fromId = fromId == null ? null : fromId.trim();
     }
 
-    public Integer getToId() {
+    public String getToId() {
         return toId;
     }
 
-    public void setToId(Integer toId) {
-        this.toId = toId;
+    public void setToId(String toId) {
+        this.toId = toId == null ? null : toId.trim();
     }
 
     public Date getCommentTime() {

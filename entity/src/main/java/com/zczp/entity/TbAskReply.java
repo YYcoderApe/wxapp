@@ -5,7 +5,7 @@ import java.util.Date;
 public class TbAskReply {
     private Integer id;
 
-    private Integer userId;
+    private String openId;
 
     private Integer postId;
 
@@ -19,12 +19,12 @@ public class TbAskReply {
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getOpenId() {
+        return openId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setOpenId(String openId) {
+        this.openId = openId == null ? null : openId.trim();
     }
 
     public Integer getPostId() {
