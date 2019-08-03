@@ -8,17 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface TbCommentMapper extends BaseMapper<TbComment>{
-    int deleteByPrimaryKey(Integer commentId);
-
-    int insert(CommentVo commentVo);
-
-    int insertSelective(TbComment record);
-
-    TbComment selectByPrimaryKey(Integer commentId);
-
-    int updateByPrimaryKeySelective(TbComment record);
-
-    int updateByPrimaryKey(TbComment record);
 
     List<CommentsVo> selectAllByPrimaryPostId(Integer postId);
 

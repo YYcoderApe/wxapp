@@ -18,4 +18,6 @@ public interface TbCollectMapper extends BaseMapper<TbCollect>{
     int updateByPrimaryKey(TbCollect record);
 
     Integer selectByPostIdAndUserId(Integer postId, String openId);
+
+    int updateByPostIdAndOpenId(TbCollect tbCollect);
 }

@@ -1,9 +1,12 @@
 package com.zczp.controller_cancer;
 
+import com.zczp.entity.TbCity;
+import com.zczp.entity.TbPostType;
 import com.zczp.entity.TbPostWithBLOBs;
 import com.zczp.service_cancer.Impl.TbCityServiceImpl;
 import com.zczp.service_cancer.Impl.TbCompanyServiceImpl;
 import com.zczp.service_cancer.Impl.TbPostServiceImpl;
+import com.zczp.service_cancer.Impl.TbPostTypeServiceImpl;
 import com.zczp.util.AjaxResult;
 import com.zczp.vo_cancer.CompanyVo;
 import io.swagger.annotations.Api;
@@ -24,6 +27,8 @@ public class PushController {
     private TbCityServiceImpl tbCityService;
     @Autowired
     private TbCompanyServiceImpl tbCompanyService;
+    @Autowired
+    private TbPostTypeServiceImpl tbPostTypeService;
     AjaxResult ajaxResult=new AjaxResult();
     @ApiOperation("发布招聘岗位")
     @PostMapping("/pushPost")
@@ -37,8 +42,14 @@ public class PushController {
 
     @ApiOperation("开放城市")
     @GetMapping("/city")
-    public AjaxResult searchCity(){
-        return ajaxResult.ok(tbCityService.selectAll());
+    public List<TbCity> searchCity(){
+       return tbCityService.selectAll();
+    }
+
+    @ApiOperation("职业类型")
+    @GetMapping("/postType")
+    public List<TbPostType> searchPostType(){
+        return tbPostTypeService.selectAll();
     }
 
     @ApiOperation("搜索公司")

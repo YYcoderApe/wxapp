@@ -10,19 +10,10 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface TbPostService {
-    int deleteByPrimaryKey(Integer postId);
 
     int insert(TbPostWithBLOBs record);
 
-    int insertSelective(TbPostWithBLOBs record);
-
     TbPostWithBLOBs selectByPrimaryKey(Integer postId);
-
-    int updateByPrimaryKeySelective(TbPostWithBLOBs record);
-
-    int updateByPrimaryKeyWithBLOBs(TbPostWithBLOBs record);
-
-    int updateByPrimaryKey(TbPost record);
 
     PostDetailsVo selectDetailByPrimaryKey(Integer postId,String openId);
 
@@ -30,14 +21,4 @@ public interface TbPostService {
 
     void transReliabilityCountToDB();
 
-    //取出Post表中字段信息展现在首页
-    List<PostDetailVo> getPostDetail();
-
-    //根据条件展示招聘信息
-    List<PostDetailVo> getPostByCityName(
-            @Param("cityName") String cityName,
-            @Param("jobType")String jobType,
-            @Param("postType") String postType);
-
-    List<TbPost> getAllPost();
 }

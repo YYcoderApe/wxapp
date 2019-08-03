@@ -21,44 +21,6 @@ public class TbReliabilityServiceImpl implements TbReliabilityService {
     @Autowired
     RedisUtil redisUtil;
 
-    @Override
-    public int deleteByPrimaryKey(Integer reliabilityId) {
-        return 0;
-    }
-
-    @Override
-    public int insert(TbReliability record) {
-        return 0;
-    }
-
-    @Override
-    public int insertSelective(TbReliability record) {
-        return 0;
-    }
-
-    @Override
-    public TbReliability selectByPrimaryKey(Integer reliabilityId) {
-//        if(reliabilityId==1){
-//            redisUtil.incr("测试");
-//            System.out.println(redisUtil.get("测试",0));
-//        }else if(reliabilityId==0){
-//            redisUtil.decr("测试");
-//            System.out.println(redisUtil.get("测试",0));
-//        }else {
-//            redisUtil.set("测试","161",0);
-//        }
-        return null;
-    }
-
-    @Override
-    public int updateByPrimaryKeySelective(TbReliability record) {
-        return 0;
-    }
-
-    @Override
-    public int updateByPrimaryKey(TbReliability record) {
-        return 0;
-    }
 
     @Override
     public Integer selectByPostIdAndUserId(int postId, String openId) {
@@ -91,7 +53,6 @@ public class TbReliabilityServiceImpl implements TbReliabilityService {
     //同步点击可信度数据到数据库
     public void transReliabilityToDB() {
         Map<String,String> reliabiltys= redisUtil.hgetall(RedisKeyUtil.MAP_KEY_RELIABILITY,0);
-        List<TbReliability> list = new ArrayList<>();
         for (Map.Entry<String, String> entry : reliabiltys.entrySet()){
             String key = entry.getKey();
             //分离出 uerId，postId

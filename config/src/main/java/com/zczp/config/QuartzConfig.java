@@ -1,6 +1,6 @@
 package com.zczp.config;
 
-import com.zczp.util.ReliabilityTask;
+import com.zczp.util.TaskUtil;
 import org.quartz.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,11 +8,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class QuartzConfig {
 
-    private static final String RELIABILITY_TASK_IDENTITY = "ReliabilityTaskQuartz";
+    private static final String TASK_IDENTITY = "TaskQuartz";
 
     @Bean
     public JobDetail quartzDetail(){
-        return JobBuilder.newJob(ReliabilityTask.class).withIdentity(RELIABILITY_TASK_IDENTITY).storeDurably().build();
+        return JobBuilder.newJob(TaskUtil.class).withIdentity(TASK_IDENTITY).storeDurably().build();
     }
 
     @Bean
@@ -22,7 +22,7 @@ public class QuartzConfig {
                 .withIntervalInHours(2)  //两个小时执行一次
                 .repeatForever();
         return TriggerBuilder.newTrigger().forJob(quartzDetail())
-                .withIdentity(RELIABILITY_TASK_IDENTITY)
+                .withIdentity(TASK_IDENTITY)
                 .withSchedule(scheduleBuilder)
                 .build();
     }

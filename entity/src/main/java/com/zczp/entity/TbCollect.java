@@ -1,11 +1,19 @@
 package com.zczp.entity;
 
 public class TbCollect {
+    public TbCollect(Integer postId, String openId, Integer state) {
+        this.postId = postId;
+        this.openId = openId;
+        this.state = state;
+    }
+
     private Integer collectId;
 
     private Integer postId;
 
     private String openId;
+
+    private Integer state;
 
     public Integer getCollectId() {
         return collectId;
@@ -29,5 +37,13 @@ public class TbCollect {
 
     public void setOpenId(String openId) {
         this.openId = openId == null ? null : openId.trim();
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

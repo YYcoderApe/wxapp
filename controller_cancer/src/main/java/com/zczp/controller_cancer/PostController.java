@@ -34,7 +34,6 @@ public class PostController {
             @RequestParam @ApiParam("招聘信息Id") int postId,
             @RequestParam @ApiParam ("当前用户Id") String openId){
         PostDetailsVo postDetailsVo =tbPostService.selectDetailByPrimaryKey(postId,openId);
-        postDetailsVo.setCollectId(tbCollectService.selectByPostIdAndUserId(postId,openId));
         return ajaxResult.ok(postDetailsVo);
     }
 
@@ -67,26 +66,23 @@ public class PostController {
     @ApiOperation("收藏招聘信息")
     @PostMapping("/collect")
     public  AjaxResult collect(
-            @RequestBody TbCollect tbCollect,
-            @RequestParam @ApiParam("0-取消收藏 1-收藏") int collect) {
-        int result;
-        if(collect==1){
-            result = tbCollectService.insertSelective(tbCollect);
-            if (result==1){
-                return ajaxResult.ok();
-            }
-        }else if(collect==0){
-            result = tbCollectService.deleteByPrimaryKey(tbCollect.getCollectId());
-            if (result==1){
-                return ajaxResult.ok();
-            }
+            @RequestParam @ApiParam("0-取消收藏 1-收藏") int collect,
+            @RequestParam @ApiParam("招聘信息表Id") int postId,
+            @RequestParam @ApiParam("用户ID" ) String openId)
+    {
+        if (collect==1){
+            tbCollectService.saveCollectState(postId,openId);
+            return ajaxResult.ok("点击收藏");
+        }else if (collect==0){
+            tbCollectService.delCollectState(postId,openId);
+            return ajaxResult.ok("取消收藏");
         }
         return ajaxResult.error("操作失败");
     }
 
-    @ApiOperation("生成海报")
-    @GetMapping("/poster")
-    public  AjaxResult poster(){
-        return null;
-    }
+//    @ApiOperation("生成海报")
+//    @GetMapping("/poster")
+//    public  AjaxResult poster(){
+//        return null;
+//    }
 }

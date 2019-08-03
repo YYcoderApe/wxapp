@@ -9,11 +9,11 @@ public interface TbCollectService {
 
     int insertSelective(TbCollect record);
 
-    TbCollect selectByPrimaryKey(Integer collectId);
-
-    int updateByPrimaryKeySelective(TbCollect record);
-
-    int updateByPrimaryKey(TbCollect record);
-
     Integer selectByPostIdAndUserId(Integer postId, String openId);
+
+    void saveCollectState(int postId, String openId);
+
+    void delCollectState(int postId, String openId);
+
+    void transCollectToDB();
 }

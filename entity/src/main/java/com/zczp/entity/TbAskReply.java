@@ -3,6 +3,12 @@ package com.zczp.entity;
 import java.util.Date;
 
 public class TbAskReply {
+    public TbAskReply(String openId, Integer postId, Date time) {
+        this.openId = openId;
+        this.postId = postId;
+        this.time = time;
+    }
+
     private Integer id;
 
     private String openId;

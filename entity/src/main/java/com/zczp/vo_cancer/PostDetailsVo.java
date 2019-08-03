@@ -69,8 +69,8 @@ public class PostDetailsVo {
     @ApiModelProperty("可信度Id 0-未点击可信 1-已点击")
     private int reliabilityState;
 
-    @ApiModelProperty("收藏Id 0-未收藏 x-已收藏")
-    private int collectId;
+    @ApiModelProperty("收藏Id 0-未收藏 1-已收藏")
+    private int collectState;
 
     @ApiModelProperty("评论列表")
     private List<CommentsVo> commentsVoList;

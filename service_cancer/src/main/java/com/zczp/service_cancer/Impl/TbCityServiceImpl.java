@@ -12,35 +12,7 @@ import java.util.List;
 public class TbCityServiceImpl implements TbCityService {
     @Autowired
     private TbCityMapper tbCityMapper;
-    @Override
-    public int deleteByPrimaryKey(Integer cityId) {
-        return 0;
-    }
 
-    @Override
-    public int insert(TbCity record) {
-        return 0;
-    }
-
-    @Override
-    public int insertSelective(TbCity record) {
-        return 0;
-    }
-
-    @Override
-    public TbCity selectByPrimaryKey(Integer cityId) {
-        return null;
-    }
-
-    @Override
-    public int updateByPrimaryKeySelective(TbCity record) {
-        return 0;
-    }
-
-    @Override
-    public int updateByPrimaryKey(TbCity record) {
-        return 0;
-    }
 
     @Override
     public List<TbCity> selectAll() {

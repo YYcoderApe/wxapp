@@ -26,40 +26,18 @@ public class TbPostServiceImpl implements TbPostService {
     private TbReliabilityServiceImpl tbReliabilityService;
     @Autowired
     RedisUtil redisUtil;
-    @Override
-    public int deleteByPrimaryKey(Integer postId) {
-        return 0;
-    }
 
     @Override
     public int insert(TbPostWithBLOBs record) {
         return tbPostMapper.insert(record);
     }
 
-    @Override
-    public int insertSelective(TbPostWithBLOBs record) {
-        return 0;
-    }
 
     @Override
     public TbPostWithBLOBs selectByPrimaryKey(Integer postId) {
         return tbPostMapper.selectByPrimaryKey(postId);
     }
 
-    @Override
-    public int updateByPrimaryKeySelective(TbPostWithBLOBs record) {
-        return 0;
-    }
-
-    @Override
-    public int updateByPrimaryKeyWithBLOBs(TbPostWithBLOBs record) {
-        return 0;
-    }
-
-    @Override
-    public int updateByPrimaryKey(TbPost record) {
-        return 0;
-    }
 
     @Override
     public PostDetailsVo selectDetailByPrimaryKey(Integer postId,String openId) {
@@ -70,6 +48,7 @@ public class TbPostServiceImpl implements TbPostService {
         }
         postDetailsVo.setCommentsVoList(commentsVoList);
         String key =RedisKeyUtil.getKey(openId,postId);
+        //查询可信度状态
         int reliabilityState;
         String sate=redisUtil.hget(RedisKeyUtil.MAP_KEY_RELIABILITY,key);
         if (sate!=null){
@@ -79,10 +58,21 @@ public class TbPostServiceImpl implements TbPostService {
             redisUtil.hset(RedisKeyUtil.MAP_KEY_RELIABILITY,key,String.valueOf(reliabilityState));
         }
         postDetailsVo.setReliabilityState(reliabilityState);
+        //查询可信度数
         String reliability =redisUtil.hget(RedisKeyUtil.MAP_KEY_RELIABILITY_COUNT,postId.toString());
         if (reliability!=null){
             postDetailsVo.setReliability(postDetailsVo.getReliability()+Integer.valueOf(reliability));
         }
+        //查询收藏状态
+        int collectState;
+        String state1 = redisUtil.hget(RedisKeyUtil.MAP_KEY_COLLECT,key);
+        if(state1!=null){
+            collectState=Integer.valueOf(state1);
+        }else {
+            collectState =tbCollectService.selectByPostIdAndUserId(postId,openId);
+            redisUtil.hset(RedisKeyUtil.MAP_KEY_COLLECT,key,String.valueOf(collectState));
+        }
+        postDetailsVo.setCollectState(collectState);
         return postDetailsVo;
     }
 
@@ -102,21 +92,5 @@ public class TbPostServiceImpl implements TbPostService {
             tbPostMapper.updateReliabilityByPrimaryKey(tbPostWithBLOBs);
             redisUtil.hdel(RedisKeyUtil.MAP_KEY_RELIABILITY_COUNT,entry.getKey());
         }
-    }
-
-
-    @Override
-    public List<PostDetailVo> getPostDetail() {
-        return null;
-    }
-
-    @Override
-    public List<PostDetailVo> getPostByCityName(String cityName, String jobType, String postType) {
-        return null;
-    }
-
-    @Override
-    public List<TbPost> getAllPost() {
-        return null;
     }
 }
