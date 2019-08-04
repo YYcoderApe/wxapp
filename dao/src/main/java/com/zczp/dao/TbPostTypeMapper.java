@@ -2,16 +2,9 @@ package com.zczp.dao;
 
 import com.zczp.entity.TbPostType;
 
+import java.util.List;
+
 public interface TbPostTypeMapper extends BaseMapper<TbPostType> {
-    int deleteByPrimaryKey(Integer typeId);
-
-    int insert(TbPostType record);
-
-    int insertSelective(TbPostType record);
-
-    TbPostType selectByPrimaryKey(Integer typeId);
-
-    int updateByPrimaryKeySelective(TbPostType record);
-
-    int updateByPrimaryKey(TbPostType record);
+    //查询所有岗位类型的分类
+    List<TbPostType> getAllJobType();
 }

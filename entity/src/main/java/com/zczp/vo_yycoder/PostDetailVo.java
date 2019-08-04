@@ -8,8 +8,9 @@ import java.util.Date;
 
 @Data
 public class PostDetailVo {
-    @ApiModelProperty("post_id")
+    @ApiModelProperty("postId")
     private Integer postId;
+
     @ApiModelProperty("招聘的title")
     private String title;
 

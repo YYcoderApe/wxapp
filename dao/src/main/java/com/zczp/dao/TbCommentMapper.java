@@ -1,26 +1,26 @@
 package com.zczp.dao;
 
 import com.zczp.entity.TbComment;
-import com.zczp.vo_cancer.CommentVo;
 import com.zczp.vo_cancer.CommentsVo;
-import org.springframework.stereotype.Repository;
+import com.zczp.vo_yycoder.TbCommentsVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-@Repository
+
 public interface TbCommentMapper extends BaseMapper<TbComment>{
-    int deleteByPrimaryKey(Integer commentId);
+    List<CommentsVo> selectAllByPrimaryPostId(@Param("postId") Integer postId);
 
-    int insert(CommentVo commentVo);
+    List<CommentsVo> selectAllByPrimaryReplyId(@Param("replyId") Integer replyId);
 
-    int insertSelective(TbComment record);
+    //查询提问
+    List<TbCommentsVo> selectTbCommentList(TbComment tbComment);
 
-    TbComment selectByPrimaryKey(Integer commentId);
+    //查询回复
+    List<TbCommentsVo> selectCommentList(TbComment tbComment);
 
-    int updateByPrimaryKeySelective(TbComment record);
+    //获取评论信息
+    List<TbCommentsVo> getCommentByPostId(@Param("postId") Integer postId);
 
-    int updateByPrimaryKey(TbComment record);
-
-    List<CommentsVo> selectAllByPrimaryPostId(Integer postId);
-
-    List<CommentsVo> selectAllByPrimaryReplyId(Integer replyId);
+    //删除评论
+    int  deleteTbCommentById(@Param("commentId") Integer commentId);
 }

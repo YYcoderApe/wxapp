@@ -15,12 +15,42 @@
     from tb_collect
     where collect_id = #{collectId,jdbcType=INTEGER}
   </select>
+  <select id="getPostDetailById" parameterType="java.lang.String" resultType="com.zczp.vo_yycoder.CollectPostDetailVo">
+    select
+      tp.post_id as 'postId',tp.title,tpt.type_name as 'postType',tcp.company_name as 'companyName',
+    tcp.company_logo as 'companyLogo',tp.job_type as 'jobType',reliability , tcy.city_name as 'cityName',
+    tp.post_time as 'postTime' ,tp.Internship_time as 'internshipTime',tp.entry_time as 'entryTime',tp.state as 'state'
+    from tb_collect tc
+    LEFT JOIN tb_post tp on tp.post_id = tc.post_id
+    LEFT JOIN tb_company tcp on tp.company_id=tcp.company_id
+    LEFT JOIN tb_post_type tpt on tp.type_id =tpt.type_id
+    LEFT JOIN tb_city tcy  on tcy.city_id=tp.city_id
+    LEFT JOIN tb_user tu on tu.open_id=tc.open_id
+    <where>
+      <if test="openId !=null">
+        and tu.open_id=#{openId,jdbcType=VARCHAR}
+      </if>
+    </where>
+    order by  tp.post_time desc
+  </select>
   <select id="selectByPostIdAndUserId"  resultType="java.lang.Integer">
     select
     collect_id
     from tb_collect
     where post_id = #{postId,jdbcType=INTEGER} and  open_id = #{openId}
   </select>
+  <delete id="deleteCollectionById"  >
+    delete from tb_collect
+    <where>
+      <if test="openId!=null">
+        and open_id = #{openId,jdbcType=VARCHAR}
+      </if>
+      <if test="postId!=null">
+        and post_id=#{postId,jdbcType=INTEGER}
+      </if>
+    </where>
+
+  </delete>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_collect
     where collect_id = #{collectId,jdbcType=INTEGER}
