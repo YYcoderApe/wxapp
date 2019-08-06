@@ -1,5 +1,7 @@
 package com.zczp.controller_yycoder;
 
+import com.zczp.entity.TbCity;
+import com.zczp.entity.TbPostType;
 import com.zczp.service_yycoder.HomeService;
 import com.zczp.util.AjaxResult;
 import com.zczp.vo_yycoder.PostDetailVo;
@@ -8,7 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 
 @RestController
@@ -16,11 +18,9 @@ import java.util.List;
 @RequestMapping("home")
 public class HomeController {
 
-
     @Autowired
     private HomeService homeService;
 
-    //主页界面展示（）
     @GetMapping(value="/index")
     @ApiOperation("主页展示的信息详情")
     public AjaxResult getAllPost() {
@@ -37,12 +37,39 @@ public class HomeController {
             @RequestParam("cityName") String cityName,
             @RequestParam("jobType") String jobType,
             @RequestParam("postType") String postType) {
-        List<PostDetailVo> postDetailVos = homeService.getPostByCityName(cityName,jobType,postType);
+        List<PostDetailVo> postDetailVos = homeService.getPostByCondition(cityName,jobType,postType);
         if(postDetailVos!=null){
             return new AjaxResult().ok(postDetailVos);
         }
         return new AjaxResult().error("你输入的信息有误");
     }
 
+    @GetMapping("city")
+    @ApiOperation("获取城市的分类")
+    public AjaxResult getCitySort(){
+        List<TbCity> tbCityList = homeService.getAllCitySort();
+        if(tbCityList!=null){
+            return new AjaxResult().ok(tbCityList);
+        }
+        return new AjaxResult().error("数据库中没有相应的城市分类");
+    }
 
+    @GetMapping("postType")
+    @ApiOperation("获取招聘类型")
+    public  AjaxResult getPostTypeSort(){
+        List<String> list = new ArrayList<String>();
+        list.add("实习");
+        list.add("校招");
+        return new AjaxResult().ok(list);
+    }
+
+    @GetMapping("jobType")
+    @ApiOperation("获取职位类型")
+    public AjaxResult getJobTypeSort(){
+        List<TbPostType> tbPostTypeList = homeService.getAllJobTypeSort();
+        if(tbPostTypeList!=null){
+            return new AjaxResult().ok(tbPostTypeList);
+        }
+        return new AjaxResult().error("数据库中没有职位类型");
+    }
 }

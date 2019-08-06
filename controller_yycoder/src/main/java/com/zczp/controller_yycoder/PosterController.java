@@ -35,9 +35,9 @@ public class PosterController {
     }
 
     @GetMapping("/getPoster")
-    @ApiOperation("获取post_id对应海报轮播图")
-    public AjaxResult getPoster(@RequestParam("post_id") Integer post_id){
-        TbPoster tbPoster=posterService.getPosterById(post_id);
+    @ApiOperation("获取poster_id对应海报轮播图")
+    public AjaxResult getPoster(@RequestParam("poster_id") Integer poster_id){
+        TbPoster tbPoster=posterService.getPosterById(poster_id);
         if(tbPoster!=null){
             return new AjaxResult().ok(tbPoster);
         }

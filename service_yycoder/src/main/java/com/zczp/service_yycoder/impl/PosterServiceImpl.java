@@ -26,6 +26,7 @@ public class PosterServiceImpl implements PosterService {
     }
 
     @Override
+    @Transactional
     public TbPoster getPosterById(Integer posterId) {
         TbPoster tbPoster = tbPosterMapper.selectByPrimaryKey(posterId);
         if(tbPoster!=null){

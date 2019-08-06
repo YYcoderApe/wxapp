@@ -37,10 +37,51 @@
     left join tb_user tu on tc.from_id = tu.open_id
     where tc.reply_id = #{replyId,jdbcType=INTEGER} order by tc.comment_time desc
   </select>
+
+  <select id="selectTbCommentList" parameterType="com.zczp.entity.TbComment" resultType="com.zczp.vo_yycoder.TbCommentsVo">
+    select
+    tc.comment_id as commentId , tc.post_id as postId ,tc.content, tc.from_id as fromId,
+    tc.comment_time as commentTime ,tc.reply_id as replyId , tu.user_name as userName,
+    tu.user_image as userImage
+    from tb_comment tc
+    left join tb_user tu on tc.from_id = tu.open_id
+    where tc.post_id = #{postId,jdbcType=INTEGER}
+    and tc.from_id = #{fromId,jdbcType=VARCHAR}
+    and tc.reply_id is null
+    order by tc.comment_time desc
+  </select>
+  <select id="selectCommentList" parameterType="com.zczp.entity.TbComment" resultType="com.zczp.vo_yycoder.TbCommentsVo">
+    select
+    tc.comment_id as commentId , tc.post_id as postId ,tc.content, tc.from_id as fromId,
+    tc.comment_time as commentTime ,tc.reply_id as replyId , tu.user_name as userName,
+    tu.user_image as userImage
+    from tb_comment tc
+    left join tb_user tu on tc.from_id = tu.open_id
+    where tc.post_id = #{postId,jdbcType=INTEGER}
+     and tc.reply_id=#{replyId,jdbcType=INTEGER}
+     and tc.to_id=#{toId,jdbcType=VARCHAR}
+     order by tc.comment_time desc
+  </select>
+  <select id="getCommentByPostId" parameterType="java.lang.Integer" resultType="com.zczp.vo_yycoder.TbCommentsVo">
+    select
+    tc.comment_id as commentId , tc.post_id as postId ,tc.content, tc.from_id as fromId,
+    tc.comment_time as commentTime ,tc.reply_id as replyId , tu.user_name as userName,
+    tu.user_image as userImage
+    from tb_comment tc
+    left join tb_user tu on tc.from_id = tu.open_id
+    where tc.post_id = #{postId,jdbcType=INTEGER} and tc.reply_id is null order by tc.comment_time desc
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_comment
     where comment_id = #{commentId,jdbcType=INTEGER}
   </delete>
+
+  <delete id="deleteTbCommentById" parameterType="java.lang.Integer">
+    delete from tb_comment
+    where reply_id =#{commentId,jdbcType=INTEGER}
+    or comment_id = #{commentId,jdbcType=INTEGER}
+</delete>
   <insert id="insert" parameterType="com.zczp.vo_cancer.CommentVo">
     insert into tb_comment ( post_id, content,
       from_id, to_id, comment_time, 

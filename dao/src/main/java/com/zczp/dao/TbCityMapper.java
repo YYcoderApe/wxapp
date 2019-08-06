@@ -1,12 +1,14 @@
 package com.zczp.dao;
 
 import com.zczp.entity.TbCity;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface TbCityMapper extends BaseMapper<TbCity>{
 
+    //cancer的
     List<TbCity> selectAll();
+
+    //查看所有城市的分类
+    List<TbCity> selectAllCity();
 }

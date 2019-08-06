@@ -1,42 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zczp.dao.TbPostMapper">
-  <resultMap id="BaseResultMap" type="com.zczp.entity.TbPost">
-    <id column="post_id" jdbcType="INTEGER" property="postId" />
-    <result column="type_id" jdbcType="INTEGER" property="typeId" />
-    <result column="company_id" jdbcType="INTEGER" property="companyId" />
-    <result column="job_type" jdbcType="VARCHAR" property="jobType" />
-    <result column="reliability" jdbcType="INTEGER" property="reliability" />
-    <result column="city_id" jdbcType="INTEGER" property="cityId" />
-    <result column="post_time" jdbcType="TIMESTAMP" property="postTime" />
-    <result column="Internship_time" jdbcType="VARCHAR" property="internshipTime" />
-    <result column="entry_time" jdbcType="VARCHAR" property="entryTime" />
-    <result column="delivery_method" jdbcType="VARCHAR" property="deliveryMethod" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="open_id" jdbcType="VARCHAR" property="openId" />
-    <result column="state" jdbcType="INTEGER" property="state" />
-    <result column="requirement" jdbcType="VARCHAR" property="requirement" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.zczp.entity.TbPostWithBLOBs">
-    <result column="job_description" jdbcType="LONGVARCHAR" property="jobDescription" />
-    <result column="work_address" jdbcType="LONGVARCHAR" property="workAddress" />
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="com.zczp.entity.TbPost">
+        <id column="post_id" jdbcType="INTEGER" property="postId"/>
+        <result column="type_id" jdbcType="INTEGER" property="typeId"/>
+        <result column="company_id" jdbcType="INTEGER" property="companyId"/>
+        <result column="job_type" jdbcType="VARCHAR" property="jobType"/>
+        <result column="reliability" jdbcType="INTEGER" property="reliability"/>
+        <result column="city_id" jdbcType="INTEGER" property="cityId"/>
+        <result column="post_time" jdbcType="TIMESTAMP" property="postTime"/>
+        <result column="Internship_time" jdbcType="VARCHAR" property="internshipTime"/>
+        <result column="entry_time" jdbcType="VARCHAR" property="entryTime"/>
+        <result column="delivery_method" jdbcType="VARCHAR" property="deliveryMethod"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="open_id" jdbcType="VARCHAR" property="openId"/>
+        <result column="state" jdbcType="INTEGER" property="state"/>
+        <result column="requirement" jdbcType="VARCHAR" property="requirement"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.zczp.entity.TbPostWithBLOBs">
+        <result column="job_description" jdbcType="LONGVARCHAR" property="jobDescription"/>
+        <result column="work_address" jdbcType="LONGVARCHAR" property="workAddress"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     post_id, type_id, company_id, job_type, reliability, city_id, post_time, Internship_time,
     entry_time, delivery_method, title, open_id, state, requirement
   </sql>
-  <sql id="Blob_Column_List">
+    <sql id="Blob_Column_List">
     job_description, work_address
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from tb_post
-    where post_id = #{postId,jdbcType=INTEGER}
-  </select>
-  <select id="selectDetailByPrimaryKey" parameterType="java.lang.Integer" resultType="com.zczp.vo_cancer.PostDetailsVo">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_post
+        where post_id = #{postId,jdbcType=INTEGER}
+    </select>
+    <select id="selectDetailByPrimaryKey" parameterType="java.lang.Integer"
+            resultType="com.zczp.vo_cancer.PostDetailsVo">
     select
     tp.post_id as postId, tp.title ,tp.requirement , tp.open_id as openId ,tp.job_type as jobType ,
     tp.reliability ,tp.post_time as postTime , tp.Internship_time as internshipTime ,tp.entry_time as entryTime ,
@@ -60,6 +61,17 @@
         LEFT JOIN tb_city tcy  on tcy.city_id=tp.city_id
         where title like CONCAT(CONCAT('%',#{title},'%'))
     </select>
+    <select id="getPostDetailById" parameterType="java.lang.Integer" resultType="com.zczp.vo_yycoder.CollectPostDetailVo">
+        select
+        tp.post_id as  'postId', tp.title,tpt.type_name as 'postType',tc.company_name as 'companyName',
+        tc.company_logo as 'companyLogo',tp.job_type as 'jobType',reliability , tcy.city_name as 'cityName',
+        tp.post_time as 'postTime' ,tp.Internship_time as 'internshipTime',tp.entry_time as 'entryTime',tp.state as 'state'
+        from tb_post tp
+        LEFT JOIN tb_company tc on tp.company_id=tc.company_id
+        LEFT JOIN tb_post_type tpt on tp.type_id =tpt.type_id
+        LEFT JOIN tb_city tcy  on tcy.city_id=tp.city_id
+        where tp.post_id = #{postId,jdbcType=INTEGER}
+    </select>
     <select id="getPostDetail" resultType="com.zczp.vo_yycoder.PostDetailVo">
         select
         tp.post_id as  'postId', tp.title,tpt.type_name as 'postType',tc.company_name as 'companyName',
@@ -69,18 +81,35 @@
         LEFT JOIN tb_company tc on tp.company_id=tc.company_id
         LEFT JOIN tb_post_type tpt on tp.type_id =tpt.type_id
         LEFT JOIN tb_city tcy  on tcy.city_id=tp.city_id
-        where tp.state=1
+        where  tp.state=1
         order by  tp.post_time desc
     </select>
-    <select id="getPostByCityName"  parameterType="java.lang.String" resultType="com.zczp.vo_yycoder.PostDetailVo">
-        select
-        tp.post_id as  'postId', tp.title,tpt.type_name as 'postType',tc.company_name as 'companyName',
+    <select id="getPostIssueByOpenId" parameterType="java.lang.String" resultType="com.zczp.vo_yycoder.PostDetailVo">
+        SELECT tp.post_id as 'postId', tp.title,tpt.type_name as 'postType',tc.company_name as 'companyName',
         tc.company_logo as 'companyLogo',tp.job_type as 'jobType',reliability , tcy.city_name as 'cityName',
         tp.post_time as 'postTime' ,tp.Internship_time as 'internshipTime',entry_time as 'entryTime'
         from tb_post tp
         LEFT JOIN tb_company tc on tp.company_id=tc.company_id
         LEFT JOIN tb_post_type tpt on tp.type_id =tpt.type_id
-        LEFT JOIN tb_city tcy  on tcy.city_id=tp.city_id
+        LEFT JOIN tb_city tcy on tcy.city_id=tp.city_id
+        LEFT JOIN tb_user tu on tu.open_id= tp.open_id
+        <where>
+            tp.state=1
+            <if test="openId!=null">
+                and tu.open_id=#{postId,jdbcType=VARCHAR}
+            </if>
+        </where>
+        order by tp.post_time desc
+    </select>
+    <select id="getPostByCondition" parameterType="java.lang.String" resultType="com.zczp.vo_yycoder.PostDetailVo">
+        select
+        tp.post_id as 'postId', tp.title,tpt.type_name as 'postType',tc.company_name as 'companyName',
+        tc.company_logo as 'companyLogo',tp.job_type as 'jobType',reliability , tcy.city_name as 'cityName',
+        tp.post_time as 'postTime' ,tp.Internship_time as 'internshipTime',entry_time as 'entryTime'
+        from tb_post tp
+        LEFT JOIN tb_company tc on tp.company_id=tc.company_id
+        LEFT JOIN tb_post_type tpt on tp.type_id =tpt.type_id
+        LEFT JOIN tb_city tcy on tcy.city_id=tp.city_id
         <where>
             tp.state=1
             <if test="cityName != null and cityName != ''and cityName!='全国'">
@@ -94,14 +123,14 @@
             </if>
 
         </where>
-        order by  tp.post_time desc
+        order by tp.post_time desc
 
     </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_post
     where post_id = #{postId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zczp.entity.TbPostWithBLOBs">
+    <insert id="insert" parameterType="com.zczp.entity.TbPostWithBLOBs">
     insert into tb_post (post_id, type_id, company_id,
       job_type, reliability, city_id, 
       post_time, Internship_time, entry_time,
@@ -115,161 +144,161 @@
       #{state,jdbcType=INTEGER}, #{requirement,jdbcType=VARCHAR}, #{jobDescription,jdbcType=LONGVARCHAR},
       #{workAddress,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.zczp.entity.TbPostWithBLOBs">
-    insert into tb_post
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="postId != null">
-        post_id,
-      </if>
-      <if test="typeId != null">
-        type_id,
-      </if>
-      <if test="companyId != null">
-        company_id,
-      </if>
-      <if test="jobType != null">
-        job_type,
-      </if>
-      <if test="reliability != null">
-        reliability,
-      </if>
-      <if test="cityId != null">
-        city_id,
-      </if>
-      <if test="postTime != null">
-        post_time,
-      </if>
-      <if test="internshipTime != null">
-        Internship_time,
-      </if>
-      <if test="entryTime != null">
-        entry_time,
-      </if>
-      <if test="deliveryMethod != null">
-        delivery_method,
-      </if>
-      <if test="title != null">
-        title,
-      </if>
-      <if test="openId != null">
-        open_id,
-      </if>
-      <if test="state != null">
-        state,
-      </if>
-      <if test="requirement != null">
-        requirement,
-      </if>
-      <if test="jobDescription != null">
-        job_description,
-      </if>
-      <if test="workAddress != null">
-        work_address,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="postId != null">
-        #{postId,jdbcType=INTEGER},
-      </if>
-      <if test="typeId != null">
-        #{typeId,jdbcType=INTEGER},
-      </if>
-      <if test="companyId != null">
-        #{companyId,jdbcType=INTEGER},
-      </if>
-      <if test="jobType != null">
-        #{jobType,jdbcType=VARCHAR},
-      </if>
-      <if test="reliability != null">
-        #{reliability,jdbcType=INTEGER},
-      </if>
-      <if test="cityId != null">
-        #{cityId,jdbcType=INTEGER},
-      </if>
-      <if test="postTime != null">
-        #{postTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="internshipTime != null">
-        #{internshipTime,jdbcType=VARCHAR},
-      </if>
-      <if test="entryTime != null">
-        #{entryTime,jdbcType=VARCHAR},
-      </if>
-      <if test="deliveryMethod != null">
-        #{deliveryMethod,jdbcType=VARCHAR},
-      </if>
-      <if test="title != null">
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="openId != null">
-        #{openId,jdbcType=VARCHAR},
-      </if>
-      <if test="state != null">
-        #{state,jdbcType=INTEGER},
-      </if>
-      <if test="requirement != null">
-        #{requirement,jdbcType=VARCHAR},
-      </if>
-      <if test="jobDescription != null">
-        #{jobDescription,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="workAddress != null">
-        #{workAddress,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zczp.entity.TbPostWithBLOBs">
-    update tb_post
-    <set>
-      <if test="typeId != null">
-        type_id = #{typeId,jdbcType=INTEGER},
-      </if>
-      <if test="companyId != null">
-        company_id = #{companyId,jdbcType=INTEGER},
-      </if>
-      <if test="jobType != null">
-        job_type = #{jobType,jdbcType=VARCHAR},
-      </if>
-      <if test="reliability != null">
-        reliability = #{reliability,jdbcType=INTEGER},
-      </if>
-      <if test="cityId != null">
-        city_id = #{cityId,jdbcType=INTEGER},
-      </if>
-      <if test="postTime != null">
-        post_time = #{postTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="internshipTime != null">
-        Internship_time = #{internshipTime,jdbcType=VARCHAR},
-      </if>
-      <if test="entryTime != null">
-        entry_time = #{entryTime,jdbcType=VARCHAR},
-      </if>
-      <if test="deliveryMethod != null">
-        delivery_method = #{deliveryMethod,jdbcType=VARCHAR},
-      </if>
-      <if test="title != null">
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="openId != null">
-        open_id = #{openId,jdbcType=VARCHAR},
-      </if>
-      <if test="state != null">
-        state = #{state,jdbcType=INTEGER},
-      </if>
-      <if test="requirement != null">
-        requirement = #{requirement,jdbcType=VARCHAR},
-      </if>
-      <if test="jobDescription != null">
-        job_description = #{jobDescription,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="workAddress != null">
-        work_address = #{workAddress,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where post_id = #{postId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zczp.entity.TbPostWithBLOBs">
+    <insert id="insertSelective" parameterType="com.zczp.entity.TbPostWithBLOBs">
+        insert into tb_post
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="postId != null">
+                post_id,
+            </if>
+            <if test="typeId != null">
+                type_id,
+            </if>
+            <if test="companyId != null">
+                company_id,
+            </if>
+            <if test="jobType != null">
+                job_type,
+            </if>
+            <if test="reliability != null">
+                reliability,
+            </if>
+            <if test="cityId != null">
+                city_id,
+            </if>
+            <if test="postTime != null">
+                post_time,
+            </if>
+            <if test="internshipTime != null">
+                Internship_time,
+            </if>
+            <if test="entryTime != null">
+                entry_time,
+            </if>
+            <if test="deliveryMethod != null">
+                delivery_method,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="openId != null">
+                open_id,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="requirement != null">
+                requirement,
+            </if>
+            <if test="jobDescription != null">
+                job_description,
+            </if>
+            <if test="workAddress != null">
+                work_address,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="postId != null">
+                #{postId,jdbcType=INTEGER},
+            </if>
+            <if test="typeId != null">
+                #{typeId,jdbcType=INTEGER},
+            </if>
+            <if test="companyId != null">
+                #{companyId,jdbcType=INTEGER},
+            </if>
+            <if test="jobType != null">
+                #{jobType,jdbcType=VARCHAR},
+            </if>
+            <if test="reliability != null">
+                #{reliability,jdbcType=INTEGER},
+            </if>
+            <if test="cityId != null">
+                #{cityId,jdbcType=INTEGER},
+            </if>
+            <if test="postTime != null">
+                #{postTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="internshipTime != null">
+                #{internshipTime,jdbcType=VARCHAR},
+            </if>
+            <if test="entryTime != null">
+                #{entryTime,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryMethod != null">
+                #{deliveryMethod,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="openId != null">
+                #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=INTEGER},
+            </if>
+            <if test="requirement != null">
+                #{requirement,jdbcType=VARCHAR},
+            </if>
+            <if test="jobDescription != null">
+                #{jobDescription,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="workAddress != null">
+                #{workAddress,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zczp.entity.TbPostWithBLOBs">
+        update tb_post
+        <set>
+            <if test="typeId != null">
+                type_id = #{typeId,jdbcType=INTEGER},
+            </if>
+            <if test="companyId != null">
+                company_id = #{companyId,jdbcType=INTEGER},
+            </if>
+            <if test="jobType != null">
+                job_type = #{jobType,jdbcType=VARCHAR},
+            </if>
+            <if test="reliability != null">
+                reliability = #{reliability,jdbcType=INTEGER},
+            </if>
+            <if test="cityId != null">
+                city_id = #{cityId,jdbcType=INTEGER},
+            </if>
+            <if test="postTime != null">
+                post_time = #{postTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="internshipTime != null">
+                Internship_time = #{internshipTime,jdbcType=VARCHAR},
+            </if>
+            <if test="entryTime != null">
+                entry_time = #{entryTime,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryMethod != null">
+                delivery_method = #{deliveryMethod,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="openId != null">
+                open_id = #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=INTEGER},
+            </if>
+            <if test="requirement != null">
+                requirement = #{requirement,jdbcType=VARCHAR},
+            </if>
+            <if test="jobDescription != null">
+                job_description = #{jobDescription,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="workAddress != null">
+                work_address = #{workAddress,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where post_id = #{postId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zczp.entity.TbPostWithBLOBs">
     update tb_post
     set type_id = #{typeId,jdbcType=INTEGER},
       company_id = #{companyId,jdbcType=INTEGER},
@@ -293,7 +322,8 @@
     set  reliability = #{reliability,jdbcType=INTEGER}
     where post_id = #{postId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zczp.entity.TbPost">
+
+    <update id="updateByPrimaryKey" parameterType="com.zczp.entity.TbPost">
     update tb_post
     set type_id = #{typeId,jdbcType=INTEGER},
       company_id = #{companyId,jdbcType=INTEGER},
@@ -310,4 +340,15 @@
       requirement = #{requirement,jdbcType=VARCHAR}
     where post_id = #{postId,jdbcType=INTEGER}
   </update>
+    <update id="deleteUserIssueById" parameterType="java.lang.Object">
+        update tb_post set state = -1
+        <where>
+            <if test="openId!=null">
+                and open_id = #{openId,jdbcType=VARCHAR}
+            </if>
+            <if test="postId!=null">
+                and post_id = #{postId,jdbcType=INTEGER}
+            </if>
+        </where>
+    </update>
 </mapper>
