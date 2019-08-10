@@ -3,7 +3,6 @@ package com.zczp.controller_yycoder;
 
 import com.zczp.service_yycoder.AdminService;
 import com.zczp.util.AjaxResult;
-import com.zczp.vo_yycoder.CollectPostDetailVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

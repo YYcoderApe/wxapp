@@ -1,9 +1,14 @@
 package com.zczp.service_yycoder.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 import com.zczp.dao.*;
 import com.zczp.entity.TbAskReply;
 import com.zczp.entity.TbComment;
 import com.zczp.service_yycoder.UserService;
+import com.zczp.util.PageQueryUtil;
+import com.zczp.util.PageResult;
 import com.zczp.vo_cancer.CommentsVo;
 import com.zczp.vo_yycoder.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +33,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public List<UserDetailVo> getUserByOpenId(String openId) {
-        List<UserDetailVo> userDetailVoList =tbUserMapper.getUserByOpenId(openId);
-        if(userDetailVoList!=null)
-            return userDetailVoList;
+    public UserDetailVo getUserByOpenId(String openId) {
+        UserDetailVo userDetailVo =tbUserMapper.getUserByOpenId(openId);
+        if(userDetailVo!=null)
+            return userDetailVo;
         return null;
     }
 
@@ -68,6 +73,23 @@ public class UserServiceImpl implements UserService {
         return  tbPostMapper.deleteUserIssueById(openId, postId);
     }
 
+    @Override
+    public PageResult getAllUser(PageQueryUtil pageUtil) {
+          List<UserDetailVo> tags=tbUserMapper.getAllUser(pageUtil);
+        int total = tbUserMapper.getTotalTags(pageUtil);
+        PageResult pageResult = new PageResult(tags, total, pageUtil.getLimit(), pageUtil.getPage());
+        return pageResult;
+    }
+
+    @Override
+    public UserDetailVo searchUserByName(String userName) {
+        return tbUserMapper.seachUserByName(userName);
+    }
+
+    @Override
+    public int deleteUserById(String openId) {
+        return tbUserMapper.deleteByPrimaryKey(openId);
+    }
 
 
 }

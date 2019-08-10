@@ -14,7 +14,3 @@ yy:增加一个Ajax包装类在util中，只要在controller引入依赖就能�
    增加了一个上传图片的工具类，开启访问http://localhost:8080/swagger-ui.html#/即可，进入接口
     选择文件上传，返回结果中包含图片的地址：return_url进行访问就可以，将链接存放在数据库中即
     可，本地在e盘下会创建一个temp文件夹，里面放着你上传的图片。
-    
-cxy:使用jedis整合redis，创建redisUtil即可使用。
-cxy:修改依赖顺序，dao引入util，config引入controller_cancer,web引入config
-    

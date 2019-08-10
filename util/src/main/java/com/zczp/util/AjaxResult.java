@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @Auther: ARong
- * @Date: 2019/1/15 13:56
+ * @Auther: YYcoder
+ * @Date: 2019/7/15 13:52
  * @Description: 该类用于包装所有Ajax请求的响应结果
  */
 public class AjaxResult implements Serializable {
@@ -37,9 +37,9 @@ public class AjaxResult implements Serializable {
 
     /**
      * @param
-     * @auther: Arong
+     * @auther: YYcoder
      * @description: 默认的成功结果
-     * @return: com.iteason.anbaoli_vote_system.utils.AjaxResult
+     * @return: com.zczp.util.AjaxResult
      * @date: 2019/1/15 14:04
      */
     public AjaxResult ok() {
@@ -48,10 +48,10 @@ public class AjaxResult implements Serializable {
 
     /**
      * @param oData
-     * @auther: Arong
+     * @auther: YYcoder
      * @description: 请求成功返回字符串
-     * @return: com.iteason.anbaoli_vote_system.utils.AjaxResult
-     * @date: 2019/1/15 14:06
+     * @return: com.zczp.util.AjaxResult
+     * @date: 2019/7/15 14:06
      */
     public AjaxResult ok(String oData) {
         return new AjaxResult(200, oData);
@@ -59,10 +59,10 @@ public class AjaxResult implements Serializable {
 
     /**
      * @param oData
-     * @auther: Arong
+     * @auther: YYcoder
      * @description: 请求成功返回对象
-     * @return: com.iteason.anbaoli_vote_system.utils.AjaxResult
-     * @date: 2019/1/15 14:08
+     * @return: com.zczp.util.AjaxResult
+     * @date: 2019/7/15 14:08
      */
     public AjaxResult ok(Object oData) {
         return new AjaxResult(200, oData);
@@ -70,10 +70,10 @@ public class AjaxResult implements Serializable {
 
     /**
      * @param listData
-     * @auther: Arong
+     * @auther: YYcoder
      * @description: 请求成功返回对象集合
-     * @return: com.iteason.anbaoli_vote_system.utils.AjaxResult
-     * @date: 2019/1/15 14:09
+     * @return: com.zczp.util.AjaxResult
+     * @date: 2019/7/15 14:09
      */
     public AjaxResult ok(List<Object> listData) {
         return new AjaxResult(200, listData);
@@ -81,10 +81,10 @@ public class AjaxResult implements Serializable {
 
     /**
      * @param
-     * @auther: Arong
+     * @auther: YYcoder
      * @description: 请求失败，服务器出现异常
-     * @return: com.iteason.anbaoli_vote_system.utils.AjaxResult
-     * @date: 2019/1/15 14:10
+     * @return: com.zczp.util.AjaxResult
+     * @date: 2019/7/15 14:10
      */
     public AjaxResult error() {
         return new AjaxResult(500, "服务器异常");
@@ -92,10 +92,10 @@ public class AjaxResult implements Serializable {
 
     /**
      * @param
-     * @auther: Arong
+     * @auther: YYcoder
      * @description: 请求失败，服务器出现异常,发送异常信息
-     * @return: com.iteason.anbaoli_vote_system.utils.AjaxResult
-     * @date: 2019/1/15 14:10
+     * @return: com.zczp.util.AjaxResult
+     * @date: 2019/7/15 14:10
      */
     public AjaxResult error(String sData) {
         return new AjaxResult(500, sData);

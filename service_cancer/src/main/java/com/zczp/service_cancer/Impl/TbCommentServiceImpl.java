@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public class TbCommentServiceImpl implements TbCommentService {
-    @Autowired
+    @Autowired(required = false)
     private TbCommentMapper tbCommentMapper;
     @Override
     public int deleteByPrimaryKey(Integer commentId) {

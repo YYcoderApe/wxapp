@@ -1,7 +1,7 @@
-package com.zczp.web.controller;
+package com.zczp.controller_yycoder;
 
 
-import com.zczp.web.service.FileService;
+import com.zczp.service_yycoder.FileService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +14,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * @author ：
  * @ClassName ：UploadController
- * @date : 2019/4/1 17:47
+ * @date : 2019/8/2 17:47
  * @description : TODO
  */
 @RestController

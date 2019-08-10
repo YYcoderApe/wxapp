@@ -26,9 +26,23 @@
         from tb_user
         where open_id = #{openId,jdbcType=VARCHAR}
     </select>
+    <select id="getAllUser" parameterType="java.util.Map" resultType="com.zczp.vo_yycoder.UserDetailVo">
+        select open_id as openId, user_image as userImage,user_name as userName,
+        user_gender as userGender,user_phone as userPhone, user_school as userSchool,user_company as userCompany,
+        user_postType as userPosttype, user_signature as userSignature
+        from tb_user
+        <if test="start!=null and limit!=null">
+                limit #{start},#{limit}
+        </if>
+
+    </select>
+    <select id="getTotalTags" parameterType="Map" resultType="java.lang.Integer">
+        select count(*)  from tb_user
+        where user_name=#{userName,jdbcType=VARCHAR}
+    </select>
     <select id="getUserByOpenId" parameterType="java.lang.String" resultType="com.zczp.vo_yycoder.UserDetailVo">
         select open_id as openId, user_image as userImage,user_name as userName,
-        user_gender as userGender, user_school as userSchool,user_company as userCompany,
+        user_gender as userGender,user_phone as userPhone, user_school as userSchool,user_company as userCompany,
         user_postType as userPosttype, user_signature as userSignature
         from tb_user
         <where>
@@ -39,6 +53,12 @@
     </select>
     <select id="getUserCollection" parameterType="java.lang.String" resultType="java.lang.Integer">
         select post_id from tb_collect where open_id = #{openId,jdbcType=VARCHAR}
+    </select>
+    <select id="seachUserByName" parameterType="java.lang.String" resultType="com.zczp.vo_yycoder.UserDetailVo">
+         select open_id as openId, user_image as userImage,user_name as userName,
+        user_gender as userGender,user_phone as userPhone, user_school as userSchool,user_company as userCompany,
+        user_postType as userPosttype, user_signature as userSignature
+        from tb_user where user_name=#{userName,jdbcType=VARCHAR}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from tb_user
@@ -229,4 +249,5 @@
         </set>
         where open_id = #{openId,jdbcType=VARCHAR}
     </update>
+
 </mapper>

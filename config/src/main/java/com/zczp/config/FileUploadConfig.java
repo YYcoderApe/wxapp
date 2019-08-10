@@ -1,4 +1,4 @@
-package com.zczp.web.config;
+package com.zczp.config;
 
 import com.google.gson.Gson;
 import com.qiniu.common.Zone;

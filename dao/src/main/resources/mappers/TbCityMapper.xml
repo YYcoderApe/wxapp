@@ -4,33 +4,37 @@
   <resultMap id="BaseResultMap" type="com.zczp.entity.TbCity">
     <id column="city_id" jdbcType="INTEGER" property="cityId" />
     <result column="city_name" jdbcType="CHAR" property="cityName" />
+    <result column="city_new_date" jdbcType="TIMESTAMP" property="cityNewDate" />
   </resultMap>
   <sql id="Base_Column_List">
-    city_id, city_name
+    city_id, city_name, city_new_date
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from tb_city
-    where city_id = #{cityId,jdbcType=INTEGER}
-  </select>
   <select id="selectAllCity"  resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from tb_city
+    order by city_new_date asc
   </select>
   <select id="selectAll"  resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from tb_city
   </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_city
+    where city_id = #{cityId,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_city
     where city_id = #{cityId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zczp.entity.TbCity">
-    insert into tb_city (city_id, city_name)
-    values (#{cityId,jdbcType=INTEGER}, #{cityName,jdbcType=CHAR})
+    insert into tb_city (city_id, city_name, city_new_date
+      )
+    values (#{cityId,jdbcType=INTEGER}, #{cityName,jdbcType=CHAR}, #{cityNewDate,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.zczp.entity.TbCity">
     insert into tb_city
@@ -41,6 +45,9 @@
       <if test="cityName != null">
         city_name,
       </if>
+      <if test="cityNewDate != null">
+        city_new_date,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="cityId != null">
@@ -48,6 +55,9 @@
       </if>
       <if test="cityName != null">
         #{cityName,jdbcType=CHAR},
+      </if>
+      <if test="cityNewDate != null">
+        #{cityNewDate,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -57,12 +67,20 @@
       <if test="cityName != null">
         city_name = #{cityName,jdbcType=CHAR},
       </if>
+      <if test="cityNewDate != null">
+        city_new_date = #{cityNewDate,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where city_id = #{cityId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zczp.entity.TbCity">
     update tb_city
-    set city_name = #{cityName,jdbcType=CHAR}
+    set city_name = #{cityName,jdbcType=CHAR},
+      city_new_date = #{cityNewDate,jdbcType=TIMESTAMP}
     where city_id = #{cityId,jdbcType=INTEGER}
   </update>
+  <delete id="updateSerialNumber" parameterType="java.lang.Integer">
+    update tb_city set city_id = city_id-1
+    where city_id > #{cityId,jdbcType=INTEGER}
+  </delete>
 </mapper>

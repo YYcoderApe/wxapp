@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 public class TbCompanyServiceImpl implements TbCompanyService {
-    @Autowired
+    @Autowired(required = false)
     private TbCompanyMapper tbCompanyMapper;
     @Override
     public List<CompanyVo> selectByName(String companyName) {

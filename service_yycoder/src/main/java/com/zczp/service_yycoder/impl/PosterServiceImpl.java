@@ -34,4 +34,21 @@ public class PosterServiceImpl implements PosterService {
         }
         return null;
     }
+
+    @Override
+    public int addPoster(TbPoster tbPoster) {
+        return tbPosterMapper.insert(tbPoster);
+    }
+
+    @Override
+    public int updatePoster(TbPoster tbPoster) {
+        return tbPosterMapper.updateByPrimaryKeySelective(tbPoster);
+    }
+
+    @Override
+    public int deletePoster(Integer posterId) {
+        tbPosterMapper.deleteByPrimaryKey(posterId);
+        tbPosterMapper.updateSerialNumber(posterId);
+        return 1;
+    }
 }
