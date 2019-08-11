@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 @Service
 public class TbCommentServiceImpl implements TbCommentService {
-    @Autowired
+    @Autowired(required = false)
     private TbCommentMapper tbCommentMapper;
     @Autowired
     private TbAskReplyMapper tbAskReplyMapper;

@@ -16,7 +16,7 @@ import java.util.*;
 
 @Service
 public class TbPostServiceImpl implements TbPostService {
-    @Autowired
+    @Autowired(required = false)
     private TbPostMapper tbPostMapper;
     @Autowired
     private TbCommentServiceImpl tbCommentService;

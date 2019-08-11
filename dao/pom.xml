@@ -26,6 +26,15 @@
     </properties>
 
     <dependencies>
+        <!--lombok依赖-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
@@ -47,12 +56,12 @@
             <artifactId>entity</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <!--dao 模块 引入util模块-->
         <dependency>
             <groupId>com.zczp</groupId>
             <artifactId>util</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
     </dependencies>
 
 </project>

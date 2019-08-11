@@ -22,4 +22,9 @@ wx:
   app-secret: af039eb11f5f62fa1d52bcd9aeedaefda
 
 
+#pagehelper:
+#  helperDialect: mysql
+#  reasonable: true
+#  supportMethodsArguments: true
+#  params: count = countSql
 

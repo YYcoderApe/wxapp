@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 public class TbCityServiceImpl implements TbCityService {
-    @Autowired
+    @Autowired(required = false)
     private TbCityMapper tbCityMapper;
 
 

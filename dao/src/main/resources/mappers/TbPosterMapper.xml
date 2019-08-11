@@ -24,6 +24,11 @@
     delete from tb_poster
     where poster_id = #{posterId,jdbcType=INTEGER}
   </delete>
+  <delete id="updateSerialNumber" parameterType="java.lang.Integer">
+    update tb_poster set poster_id = poster_id-1
+    where poster_id > #{posterId,jdbcType=INTEGER}
+  </delete>
+
   <insert id="insert" parameterType="com.zczp.entity.TbPoster">
     insert into tb_poster (poster_id, poster_image, poster_address
       )
