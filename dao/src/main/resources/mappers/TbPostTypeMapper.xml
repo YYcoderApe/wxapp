@@ -7,7 +7,7 @@
     <result column="type_new_date" jdbcType="TIMESTAMP" property="typeNewDate" />
   </resultMap>
   <sql id="Base_Column_List">
-    type_id, type_name
+    type_id, type_name, type_new_date
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
