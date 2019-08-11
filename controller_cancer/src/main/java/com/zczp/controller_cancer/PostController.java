@@ -6,18 +6,23 @@ import com.zczp.service_cancer.Impl.TbCommentServiceImpl;
 import com.zczp.service_cancer.Impl.TbPostServiceImpl;
 import com.zczp.service_cancer.Impl.TbReliabilityServiceImpl;
 import com.zczp.util.AjaxResult;
+import com.zczp.util.TokenUtil;
 import com.zczp.vo_cancer.CommentVo;
 import com.zczp.vo_cancer.PostDetailsVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @Api(tags = "招聘信息模块")
 @RequestMapping("/api/post")
 public class PostController {
+    @Autowired
+    TokenUtil tokenUtil;
     @Autowired
     private TbPostServiceImpl tbPostService;
     @Autowired
@@ -34,7 +39,10 @@ public class PostController {
             @RequestParam @ApiParam("招聘信息Id") int postId,
             @RequestParam @ApiParam ("当前用户Id") String openId){
         PostDetailsVo postDetailsVo =tbPostService.selectDetailByPrimaryKey(postId,openId);
-        return ajaxResult.ok(postDetailsVo);
+        if(postDetailsVo!=null){
+            return ajaxResult.ok(postDetailsVo);
+        }
+        return ajaxResult.error("查询失败");
     }
 
     @ApiOperation("评论")
@@ -80,9 +88,15 @@ public class PostController {
         return ajaxResult.error("操作失败");
     }
 
-//    @ApiOperation("生成海报")
-//    @GetMapping("/poster")
-//    public  AjaxResult poster(){
-//        return null;
-//    }
+    @ApiOperation("生成海报")
+    @GetMapping("/poster")
+    public  AjaxResult poster(){
+//        String a  =tokenUtil.getToken("Authorization");
+//        System.out.println(a);
+//        String s=request.getHeader("Authorization");
+//        System.out.println(s);
+//        StringRedisTemplate redisTemplate=new StringRedisTemplate();
+//        redisTemplate.opsForValue().set("JWT-SESSION-" , "测试", 7200, TimeUnit.SECONDS);
+        return ajaxResult.ok("成功");
+    }
 }

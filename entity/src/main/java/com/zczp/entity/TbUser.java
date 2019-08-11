@@ -27,6 +27,25 @@ public class TbUser {
 
     private String country;
 
+    @Override
+    public String toString() {
+        return "TbUser{" +
+                "openId='" + openId + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userPhone=" + userPhone +
+                ", userGender='" + userGender + '\'' +
+                ", userSchool='" + userSchool + '\'' +
+                ", userPosttype='" + userPosttype + '\'' +
+                ", userSignature='" + userSignature + '\'' +
+                ", userCompany='" + userCompany + '\'' +
+                ", userImage='" + userImage + '\'' +
+                ", language='" + language + '\'' +
+                ", city='" + city + '\'' +
+                ", province='" + province + '\'' +
+                ", country='" + country + '\'' +
+                '}';
+    }
+
     public String getOpenId() {
         return openId;
     }

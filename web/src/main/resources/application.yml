@@ -16,5 +16,10 @@ qiniu:
 
 baseUploadUrl: d://temp/
 
+wx:
+  url: https://api.weixin.qq.com/sns/jscode2session
+  app-id: wxc40a3086249c6c6ca
+  app-secret: af039eb11f5f62fa1d52bcd9aeedaefda
+
 
 
