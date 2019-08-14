@@ -1,4 +1,4 @@
-package com.zczp.controller_yycoder;
+package com.zczp.cmsController_yycoder;
 
 import com.zczp.entity.TbCity;
 import com.zczp.entity.TbPostType;
@@ -78,7 +78,6 @@ public class LabelController {
             return new AjaxResult().ok("修改岗位标签成功");
         }
         return new AjaxResult().error("修改岗位标签失败");
-
     }
 
     @DeleteMapping ("/postType/delete")

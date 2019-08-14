@@ -8,6 +8,7 @@ import com.zczp.entity.TbPost;
 import com.zczp.entity.TbPostType;
 import com.zczp.entity.TbPostWithBLOBs;
 import com.zczp.service_yycoder.HomeService;
+import com.zczp.vo_yycoder.ConditionVo;
 import com.zczp.vo_yycoder.PostDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,8 +51,8 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    public List<PostDetailVo> getPostByCondition(String cityName, String jobType, String postType) {
-        postDetailVoList=tbPostMapper.getPostByCondition(cityName,jobType,postType);
+    public List<PostDetailVo> getPostByCondition(ConditionVo conditionVo) {
+        postDetailVoList=tbPostMapper.getPostByCondition(conditionVo);
         return postDetailVoList;
 
     }

@@ -18,7 +18,8 @@ public interface TbCollectMapper extends BaseMapper<TbCollect>{
             @Param("openId") String openId,
             @Param("postId") Integer postId);
 
-    Integer selectByPostIdAndUserId(Integer postId, String openId);
+    Integer selectByPostIdAndUserId(@Param("postId") Integer postId,
+                                    @Param("openId") String openId);
 
     int updateByPostIdAndOpenId(TbCollect tbCollect);
 }

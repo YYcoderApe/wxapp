@@ -17,6 +17,7 @@ import org.omg.PortableServer.REQUEST_PROCESSING_POLICY_ID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -105,4 +106,54 @@ public class WebApplicationTests {
 //        System.out.println(userList);
 //            System.out.println(userDetailVoPageInfo);
 //    }
+  @Autowired(required = false)
+  private TbAskReplyMapper tbAskReplyMapper;
+
+    @Autowired(required = false)
+    private TbCommentMapper tbCommentMapper;
+
+    @Autowired(required = false)
+    private TbPostMapper tbPostMapper;
+
+    //postDeatilVo（类，collectPostDeatailVo只是多了个state）
+    CollectPostDetailVo collectPostDetailVo;
+
+    //评论表，每个评论表含提问和回复
+    List<TbCommentsVo> CommentsVoList=null;
+    List<TbCommentsVo>  tbCommentsVoList=null;
+    //评论表对象
+    TbCommentsVo tbCommentsVo=new TbCommentsVo();
+    @Test
+    public void test(){
+            //根据open_id去TbAskReply找到post的先后顺序，返回TbAskReply
+
+        TbComment tbComment=new TbComment();
+        List<MyAskReplyVo> myAskReplyVoList = new ArrayList<MyAskReplyVo>();
+        List<TbAskReply> askReplyList = tbAskReplyMapper.getAskReplyByOpenId("2");
+        tbComment.setFromId("1");
+        for(TbAskReply tbAskReply:askReplyList){
+            tbCommentsVoList=new ArrayList<TbCommentsVo>();
+            tbComment.setPostId(tbAskReply.getPostId());
+            CommentsVoList = tbCommentMapper.selectTbCommentList(tbComment);
+            int index=0;
+            while(CommentsVoList.size()>index) {
+                tbComment.setReplyId(CommentsVoList.get(index).getCommentId());
+                tbComment.setToId(CommentsVoList.get(index).getFromId());
+                tbCommentsVo.setCommentList(tbCommentMapper.selectCommentList(tbComment));
+
+                CommentsVoList.get(index).setCommentList(tbCommentsVo.getCommentList());
+                System.out.println(CommentsVoList.get(index).getFromId());
+
+                    tbCommentsVoList.add(CommentsVoList.get(index));
+
+
+
+                index++;
+            }
+            collectPostDetailVo=tbPostMapper.getPostDetailById(tbAskReply.getPostId());
+            MyAskReplyVo myAskReplyVo =new MyAskReplyVo();
+            myAskReplyVo.setPostDetailList(collectPostDetailVo);
+            myAskReplyVo.setCommentList(tbCommentsVoList);
+            myAskReplyVoList.add(myAskReplyVo);
+    }}
 }

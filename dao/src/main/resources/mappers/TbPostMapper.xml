@@ -101,7 +101,7 @@
         </where>
         order by tp.post_time desc
     </select>
-    <select id="getPostByCondition" parameterType="java.lang.String" resultType="com.zczp.vo_yycoder.PostDetailVo">
+    <select id="getPostByCondition" parameterType="com.zczp.vo_yycoder.ConditionVo" resultType="com.zczp.vo_yycoder.PostDetailVo">
         select
         tp.post_id as 'postId', tp.title,tpt.type_name as 'postType',tc.company_name as 'companyName',
         tc.company_logo as 'companyLogo',tp.job_type as 'jobType',reliability , tcy.city_name as 'cityName',
@@ -120,6 +120,9 @@
             </if>
             <if test="postType != null and postType!=''and postType!='全部'">
                 and tpt.type_name = #{postType}
+            </if>
+            <if test="companyName!= null and companyName!=''">
+                and tc.company_name = #{companyName}
             </if>
 
         </where>

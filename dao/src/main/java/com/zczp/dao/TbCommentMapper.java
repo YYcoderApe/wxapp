@@ -25,4 +25,8 @@ public interface TbCommentMapper extends BaseMapper<TbComment>{
     //删除评论
     int  deleteTbCommentById(@Param("commentId") Integer commentId);
 
+    //根据openId和postId查找评论Id
+    List<Integer> getAllCommentId(
+            @Param("openId") String openId,
+            @Param("postId") Integer postId);
 }

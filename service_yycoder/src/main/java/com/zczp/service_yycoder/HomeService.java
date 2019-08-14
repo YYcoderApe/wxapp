@@ -2,11 +2,10 @@ package com.zczp.service_yycoder;
 
 
 import com.zczp.entity.TbCity;
-import com.zczp.entity.TbPost;
 import com.zczp.entity.TbPostType;
-import com.zczp.entity.TbPostWithBLOBs;
+import com.zczp.vo_yycoder.ConditionVo;
 import com.zczp.vo_yycoder.PostDetailVo;
-import io.swagger.models.auth.In;
+
 
 import java.util.List;
 
@@ -25,6 +24,6 @@ public interface HomeService {
     List<TbPostType> getAllJobTypeSort();
 
     //根据城市cityName 进行字段查询
-    List<PostDetailVo> getPostByCondition(String cityName, String jobType, String postType);
-
+//    List<PostDetailVo> getPostByCondition(String cityName, String jobType, String postType);
+    List<PostDetailVo> getPostByCondition(ConditionVo conditionVo);
 }
