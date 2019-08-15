@@ -6,7 +6,9 @@ import com.github.pagehelper.PageInfo;
 import com.zczp.dao.*;
 import com.zczp.entity.TbAskReply;
 import com.zczp.entity.TbComment;
+import com.zczp.service_cancer.Impl.TbCompanyServiceImpl;
 import com.zczp.vo_cancer.CommentsVo;
+import com.zczp.vo_cancer.CompanyVo;
 import com.zczp.vo_yycoder.CollectPostDetailVo;
 import com.zczp.vo_yycoder.MyAskReplyVo;
 import com.zczp.vo_yycoder.TbCommentsVo;
@@ -123,37 +125,38 @@ public class WebApplicationTests {
     List<TbCommentsVo>  tbCommentsVoList=null;
     //评论表对象
     TbCommentsVo tbCommentsVo=new TbCommentsVo();
-    @Test
-    public void test(){
-            //根据open_id去TbAskReply找到post的先后顺序，返回TbAskReply
+//    @Test
+//    public void test(){
+//            //根据open_id去TbAskReply找到post的先后顺序，返回TbAskReply
+//
+//        TbComment tbComment=new TbComment();
+//        List<MyAskReplyVo> myAskReplyVoList = new ArrayList<MyAskReplyVo>();
+//        List<TbAskReply> askReplyList = tbAskReplyMapper.getAskReplyByOpenId("2");
+//        tbComment.setFromId("1");
+//        for(TbAskReply tbAskReply:askReplyList){
+//            tbCommentsVoList=new ArrayList<TbCommentsVo>();
+//            tbComment.setPostId(tbAskReply.getPostId());
+//            CommentsVoList = tbCommentMapper.selectTbCommentList(tbComment);
+//            int index=0;
+//            while(CommentsVoList.size()>index) {
+//                tbComment.setReplyId(CommentsVoList.get(index).getCommentId());
+//                tbComment.setToId(CommentsVoList.get(index).getFromId());
+//                tbCommentsVo.setCommentList(tbCommentMapper.selectCommentList(tbComment));
+//
+//                CommentsVoList.get(index).setCommentList(tbCommentsVo.getCommentList());
+//                System.out.println(CommentsVoList.get(index).getFromId());
+//
+//                    tbCommentsVoList.add(CommentsVoList.get(index));
+//
+//
+//
+//                index++;
+//            }
+//            collectPostDetailVo=tbPostMapper.getPostDetailById(tbAskReply.getPostId());
+//            MyAskReplyVo myAskReplyVo =new MyAskReplyVo();
+//            myAskReplyVo.setPostDetailList(collectPostDetailVo);
+//            myAskReplyVo.setCommentList(tbCommentsVoList);
+//            myAskReplyVoList.add(myAskReplyVo);
+//    }}
 
-        TbComment tbComment=new TbComment();
-        List<MyAskReplyVo> myAskReplyVoList = new ArrayList<MyAskReplyVo>();
-        List<TbAskReply> askReplyList = tbAskReplyMapper.getAskReplyByOpenId("2");
-        tbComment.setFromId("1");
-        for(TbAskReply tbAskReply:askReplyList){
-            tbCommentsVoList=new ArrayList<TbCommentsVo>();
-            tbComment.setPostId(tbAskReply.getPostId());
-            CommentsVoList = tbCommentMapper.selectTbCommentList(tbComment);
-            int index=0;
-            while(CommentsVoList.size()>index) {
-                tbComment.setReplyId(CommentsVoList.get(index).getCommentId());
-                tbComment.setToId(CommentsVoList.get(index).getFromId());
-                tbCommentsVo.setCommentList(tbCommentMapper.selectCommentList(tbComment));
-
-                CommentsVoList.get(index).setCommentList(tbCommentsVo.getCommentList());
-                System.out.println(CommentsVoList.get(index).getFromId());
-
-                    tbCommentsVoList.add(CommentsVoList.get(index));
-
-
-
-                index++;
-            }
-            collectPostDetailVo=tbPostMapper.getPostDetailById(tbAskReply.getPostId());
-            MyAskReplyVo myAskReplyVo =new MyAskReplyVo();
-            myAskReplyVo.setPostDetailList(collectPostDetailVo);
-            myAskReplyVo.setCommentList(tbCommentsVoList);
-            myAskReplyVoList.add(myAskReplyVo);
-    }}
 }

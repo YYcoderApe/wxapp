@@ -12,4 +12,6 @@ public interface TbCompanyService {
     List<CompanyVo> selectAll();
 
     Integer addCompany(CompanyVo companyVo);
+
+    Integer updateCompany(CompanyVo companyVo);
 }

@@ -32,18 +32,6 @@ public class HomeController {
         return new AjaxResult().error("库存中表post没数据或信息待审核");
     }
 
-    //    @GetMapping("select")
-//    @ApiOperation("根据条件进行展示招聘信息")
-//    public AjaxResult getPostByName(
-//            @RequestParam("cityName") String cityName,
-//            @RequestParam("jobType") String jobType,
-//            @RequestParam("postType") String postType) {
-//        List<PostDetailVo> postDetailVos = homeService.getPostByCondition(cityName,jobType,postType);
-//        if(postDetailVos!=null){
-//            return new AjaxResult().ok(postDetailVos);
-//        }
-//        return new AjaxResult().error("你输入的信息有误");
-//    }
     @GetMapping("select")
     @ApiOperation("根据条件进行展示招聘信息")
     public AjaxResult getPostByCondition(@ModelAttribute ConditionVo conditionVo) {

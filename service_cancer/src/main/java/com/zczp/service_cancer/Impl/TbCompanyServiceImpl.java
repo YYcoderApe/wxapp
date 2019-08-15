@@ -31,4 +31,9 @@ public class TbCompanyServiceImpl implements TbCompanyService {
     public Integer addCompany(CompanyVo companyVo) {
         return tbCompanyMapper.addCompany(companyVo);
     }
+
+    @Override
+    public Integer updateCompany(CompanyVo companyVo) {
+        return tbCompanyMapper.updateByPrimaryKeySelective(companyVo);
+    }
 }

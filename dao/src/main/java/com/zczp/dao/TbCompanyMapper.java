@@ -14,4 +14,6 @@ public interface TbCompanyMapper extends BaseMapper<TbCompany>{
     List<CompanyVo> selectAll();
 
     Integer addCompany(CompanyVo companyVo);
+
+    Integer updateByPrimaryKeySelective(CompanyVo companyVo);
 }
