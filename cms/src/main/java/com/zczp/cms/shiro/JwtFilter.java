@@ -1,4 +1,4 @@
-package com.zczp.shiro;
+package com.zczp.cms.shiro;
 
 import com.zczp.vo_cancer.JwtToken;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;

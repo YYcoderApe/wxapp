@@ -1,4 +1,4 @@
-package com.zczp.shiro;
+package com.zczp.cms.shiro;
 
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
@@ -55,17 +55,13 @@ public class ShirConfig {
         factoryBean.setSecurityManager(securityManager);
         Map<String, String> filterRuleMap = new HashMap<>();
         //登陆相关api不需要被过滤器拦截
-        filterRuleMap.put("/api/wx/**", "anon");
-        filterRuleMap.put("/api/pushPost/**", "anon");
-        filterRuleMap.put("/user/**", "anon");
-        filterRuleMap.put("/poster/**", "anon");
-        filterRuleMap.put("/api/search/**", "anon");
-        filterRuleMap.put("/upload/**", "anon");
-        filterRuleMap.put("/api/post/**", "anon");
-        filterRuleMap.put("/home/**", "anon");
-//        filterRuleMap.put("/api/wx/user/login/**", "anon");
+        filterRuleMap.put("/api/administration/login", "anon");
+        filterRuleMap.put("/swagger-ui.html", "anon");
+        filterRuleMap.put("/swagger-resources/**", "anon");
+        filterRuleMap.put("/v2/**", "anon");
+        filterRuleMap.put("/webjars/**", "anon");
         // 所有请求通过JWT Filter
-        filterRuleMap.put("/api/background/**", "authc");
+//        filterRuleMap.put("/**", "authc");
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return factoryBean;
     }

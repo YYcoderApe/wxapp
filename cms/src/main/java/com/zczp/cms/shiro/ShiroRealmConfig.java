@@ -1,4 +1,4 @@
-package com.zczp.shiro;
+package com.zczp.cms.shiro;
 
 
 import com.zczp.util.JwtUtil;
@@ -14,7 +14,6 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.Collections;

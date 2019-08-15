@@ -1,6 +1,6 @@
-package com.zczp.controller_cancer;
+package com.zczp.cmsController;
 
-import com.zczp.entity.*;
+import com.github.pagehelper.PageHelper;
 import com.zczp.service_cancer.Impl.TbCollectServiceImpl;
 import com.zczp.service_cancer.Impl.TbCommentServiceImpl;
 import com.zczp.service_cancer.Impl.TbPostServiceImpl;
@@ -13,7 +13,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -36,9 +35,11 @@ public class PostController {
     @ApiOperation("招聘信息详情")
     @GetMapping("/postDetail")
     public AjaxResult postDetail(
+            @RequestParam @ApiParam("页数") int pageNum,
             @RequestParam @ApiParam("招聘信息Id") int postId,
             @RequestParam @ApiParam ("当前用户Id") String openId){
-        PostDetailsVo postDetailsVo =tbPostService.selectDetailByPrimaryKey(postId,openId,null);
+//        PageHelper.startPage(pageNum,1);
+        PostDetailsVo postDetailsVo =tbPostService.selectDetailByPrimaryKey(postId,openId,pageNum);
         if(postDetailsVo!=null){
             return ajaxResult.ok(postDetailsVo);
         }
@@ -54,7 +55,17 @@ public class PostController {
         }
         return ajaxResult.error("评论失败");
     }
-    //未完成
+
+    @ApiOperation("删除评论")
+    @PostMapping("/deleteComment")
+    public  AjaxResult deleteComment(@RequestParam int commentId){
+        int result=tbCommentService.deleteByCommentId(commentId);
+        if (result==1){
+            return ajaxResult.ok("删除成功");
+        }
+        return ajaxResult.error("操作失败");
+    }
+
     @ApiOperation("修改可信度")
     @PostMapping("/reliability")
     public  AjaxResult reliability(
@@ -71,32 +82,5 @@ public class PostController {
         return ajaxResult.error("操作失败");
     }
 
-    @ApiOperation("收藏招聘信息")
-    @PostMapping("/collect")
-    public  AjaxResult collect(
-            @RequestParam @ApiParam("0-取消收藏 1-收藏") int collect,
-            @RequestParam @ApiParam("招聘信息表Id") int postId,
-            @RequestParam @ApiParam("用户ID" ) String openId)
-    {
-        if (collect==1){
-            tbCollectService.saveCollectState(postId,openId);
-            return ajaxResult.ok("点击收藏");
-        }else if (collect==0){
-            tbCollectService.delCollectState(postId,openId);
-            return ajaxResult.ok("取消收藏");
-        }
-        return ajaxResult.error("操作失败");
-    }
 
-    @ApiOperation("生成海报")
-    @GetMapping("/poster")
-    public  AjaxResult poster(){
-//        String a  =tokenUtil.getToken("Authorization");
-//        System.out.println(a);
-//        String s=request.getHeader("Authorization");
-//        System.out.println(s);
-//        StringRedisTemplate redisTemplate=new StringRedisTemplate();
-//        redisTemplate.opsForValue().set("JWT-SESSION-" , "测试", 7200, TimeUnit.SECONDS);
-        return ajaxResult.ok("成功");
-    }
 }

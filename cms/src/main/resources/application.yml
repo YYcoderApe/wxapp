@@ -1,0 +1,29 @@
+server:
+  port: 8083
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://39.108.104.201:25000/xcx?characterEncoding=utf8
+    username: root
+    password: 123456
+mybatis:
+  mapper-locations: classpath:mappers/*.xml
+qiniu:
+  accessKey: azpIMFH6J4faWNGELmZbLb1p-BYDtuI8-4G51ygr
+  secretKey: -IR28ht2qUaOwbUVtTACt7fAstHR6Z5gKHzxMxTk
+  bucket: xcx
+  path: http://pvd470736.bkt.clouddn.com
+
+baseUploadUrl: d://temp/
+
+wx:
+  url: https://api.weixin.qq.com/sns/jscode2session
+  app-id: wxc40a3086249c6c6ca
+  app-secret: af039eb11f5f62fa1d52bcd9aeedaefda
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params:
+

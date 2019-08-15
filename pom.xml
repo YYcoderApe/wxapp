@@ -37,6 +37,7 @@
         <module>web</module>
         <module>config</module>
         <module>util</module>
+        <module>cms</module>
     </modules>
 
     <dependencies>

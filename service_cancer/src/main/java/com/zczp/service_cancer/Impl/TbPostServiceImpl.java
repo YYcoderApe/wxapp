@@ -1,5 +1,6 @@
 package com.zczp.service_cancer.Impl;
 
+import com.github.pagehelper.PageHelper;
 import com.zczp.dao.TbPostMapper;
 import com.zczp.entity.TbPost;
 import com.zczp.entity.TbPostWithBLOBs;
@@ -40,8 +41,11 @@ public class TbPostServiceImpl implements TbPostService {
 
 
     @Override
-    public PostDetailsVo selectDetailByPrimaryKey(Integer postId,String openId) {
+    public PostDetailsVo selectDetailByPrimaryKey(Integer postId,String openId,Integer pageNum) {
         PostDetailsVo postDetailsVo=tbPostMapper.selectDetailByPrimaryKey(postId);
+        if (pageNum!=null){
+            PageHelper.startPage(pageNum,5);
+        }
         List<CommentsVo> commentsVoList =tbCommentService.selectAllByPrimaryPostId(postDetailsVo.getPostId());
         for (CommentsVo commentVo:commentsVoList){
             commentVo.setCommentList(tbCommentService.selectAllByPrimaryReplyId(commentVo.getCommentId()));
@@ -92,5 +96,10 @@ public class TbPostServiceImpl implements TbPostService {
             tbPostMapper.updateReliabilityByPrimaryKey(tbPostWithBLOBs);
             redisUtil.hdel(RedisKeyUtil.MAP_KEY_RELIABILITY_COUNT,entry.getKey());
         }
+    }
+
+    @Override
+    public List<PostDetailVo> selectByCompany(String company) {
+        return tbPostMapper.selectByCompany(company);
     }
 }

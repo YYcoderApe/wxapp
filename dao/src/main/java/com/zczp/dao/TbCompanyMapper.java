@@ -10,4 +10,8 @@ public interface TbCompanyMapper extends BaseMapper<TbCompany>{
 
     //查询搜索次数前12公司
     List<CompanyVo> selectByCount();
+
+    List<CompanyVo> selectAll();
+
+    Integer addCompany(CompanyVo companyVo);
 }

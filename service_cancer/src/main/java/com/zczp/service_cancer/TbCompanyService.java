@@ -8,4 +8,8 @@ public interface TbCompanyService {
     List<CompanyVo> selectByName(String companyName);
 
     List<CompanyVo> selectByCount();
+
+    List<CompanyVo> selectAll();
+
+    Integer addCompany(CompanyVo companyVo);
 }

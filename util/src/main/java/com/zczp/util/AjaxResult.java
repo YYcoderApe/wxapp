@@ -1,5 +1,7 @@
 package com.zczp.util;
 
+import org.springframework.stereotype.Component;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -8,6 +10,7 @@ import java.util.List;
  * @Date: 2019/7/15 13:52
  * @Description: 该类用于包装所有Ajax请求的响应结果
  */
+@Component
 public class AjaxResult implements Serializable {
     private int status;//状态码 ，200为正常，500为异常
     private String sData;//包装String类型的数据

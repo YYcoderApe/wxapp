@@ -42,4 +42,9 @@ public class TbCommentServiceImpl implements TbCommentService {
     public List<CommentsVo> selectAllByPrimaryReplyId(Integer replyId) {
         return tbCommentMapper.selectAllByPrimaryReplyId(replyId);
     }
+
+    @Override
+    public Integer deleteByCommentId(int commentId) {
+        return tbCommentMapper.deleteTbCommentById(commentId);
+    }
 }

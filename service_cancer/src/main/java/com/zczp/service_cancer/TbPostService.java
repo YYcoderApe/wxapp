@@ -15,10 +15,11 @@ public interface TbPostService {
 
     TbPostWithBLOBs selectByPrimaryKey(Integer postId);
 
-    PostDetailsVo selectDetailByPrimaryKey(Integer postId,String openId);
+    PostDetailsVo selectDetailByPrimaryKey(Integer postId,String openId,Integer pageNum);
 
     List<PostDetailVo> selectByTitle(String title);
 
     void transReliabilityCountToDB();
 
+    List<PostDetailVo> selectByCompany(String company);
 }

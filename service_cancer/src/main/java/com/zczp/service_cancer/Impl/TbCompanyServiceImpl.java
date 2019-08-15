@@ -21,4 +21,14 @@ public class TbCompanyServiceImpl implements TbCompanyService {
     public List<CompanyVo> selectByCount() {
         return tbCompanyMapper.selectByCount();
     }
+
+    @Override
+    public List<CompanyVo> selectAll() {
+        return tbCompanyMapper.selectAll();
+    }
+
+    @Override
+    public Integer addCompany(CompanyVo companyVo) {
+        return tbCompanyMapper.addCompany(companyVo);
+    }
 }

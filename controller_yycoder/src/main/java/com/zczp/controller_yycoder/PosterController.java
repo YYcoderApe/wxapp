@@ -1,6 +1,5 @@
 package com.zczp.controller_yycoder;
 
-import com.zczp.entity.TbPost;
 import com.zczp.entity.TbPoster;
 import com.zczp.service_yycoder.FileService;
 import com.zczp.service_yycoder.PosterService;
@@ -8,7 +7,6 @@ import com.zczp.util.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import io.swagger.models.auth.In;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

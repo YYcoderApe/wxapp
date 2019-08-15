@@ -21,8 +21,8 @@ public class SearchController {
     AjaxResult ajaxResult=new AjaxResult();
     @ApiOperation("查询招聘岗位")
     @GetMapping("/searchPost")
-    public AjaxResult searchPost(@RequestParam @ApiParam("标题") String title){
-        List<PostDetailVo> postDetailVoList=tbPostService.selectByTitle(title);
+    public AjaxResult searchPost(@RequestParam @ApiParam("公司名称") String company){
+        List<PostDetailVo> postDetailVoList=tbPostService.selectByCompany(company);
         if (postDetailVoList!=null){
             return ajaxResult.ok(postDetailVoList);
         }
