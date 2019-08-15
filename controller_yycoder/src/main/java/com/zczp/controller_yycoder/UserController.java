@@ -114,7 +114,7 @@ public class UserController {
     }
 
     @DeleteMapping("Question/deleteComment")
-    @ApiOperation("删除我的相关评论")
+    @ApiOperation("删除我的相关评论(指定的评论)")
     public AjaxResult deleteComment(@RequestParam @ApiParam("评论的Id") Integer commentId) {
         int result = askReplyService.deleteTbCommentBycommentId(commentId);
         if (result > 0) {
@@ -123,43 +123,15 @@ public class UserController {
         return new AjaxResult().error("该评论删除失败，请确认是否操作出错");
     }
 
-
-    @GetMapping("backgroud/getAllUser")
-    @ApiOperation("后台——展示所有用户")
-    public AjaxResult getAllUsert(
-            @RequestParam @ApiParam("当前页") Object page,
-            @RequestParam @ApiParam("每页记录个数") Object limit) {
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("page", page);
-        params.put("limit", limit);
-        if (StringUtils.isEmpty(params.get("page")) || StringUtils.isEmpty(params.get("limit"))) {
-            return new AjaxResult().error("参数异常");
+    @DeleteMapping("Question/delAskReply")
+    @ApiOperation(" 删除评论(招聘信息已删除情况下)  ")
+    public AjaxResult deleteComment(
+            @RequestParam @ApiParam("用户openId") String openId,
+            @RequestParam @ApiParam("postId") Integer postId) {
+        int result = askReplyService.deleteTbComment(openId,postId);
+        if (result > 0) {
+            return new AjaxResult().ok("评论信息删除成功");
         }
-        PageQueryUtil pageUtil = new PageQueryUtil(params);
-        PageResult pageResult = userService.getAllUser(pageUtil);
-        if (pageResult != null) {
-            return new AjaxResult().ok(pageResult);
-        }
-        return new AjaxResult().error("数据库用户表无信息");
-    }
-
-    @GetMapping("backgroud/searchUser")
-    @ApiOperation("后台——根据昵称搜索")
-    public AjaxResult getAllUsert(@RequestParam @ApiParam("用户昵称") String userName) {
-        UserDetailVo userDetailVo = userService.searchUserByName(userName);
-        if (userDetailVo != null) {
-            return new AjaxResult().ok(userDetailVo);
-        }
-        return new AjaxResult().error("你所输入的用户昵称不存在");
-    }
-
-    @DeleteMapping("backgroud/deleteUser")
-    @ApiOperation("后台——销户处理")
-    public AjaxResult deleteUserById(@RequestParam @ApiParam("用户的openId") String openId) {
-        int res = userService.deleteUserById(openId);
-        if (res > 0) {
-            return new AjaxResult().ok("销户成功，用户信息已经删除");
-        }
-        return new AjaxResult().error("销户失败");
+        return new AjaxResult().error("该评论删除失败，请确认是否操作出错");
     }
 }

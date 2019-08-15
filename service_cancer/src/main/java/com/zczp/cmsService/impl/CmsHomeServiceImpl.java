@@ -5,7 +5,8 @@ import com.zczp.dao.TbPostMapper;
 import com.zczp.dao.TbPostTypeMapper;
 import com.zczp.entity.TbCity;
 import com.zczp.entity.TbPostType;
-import com.zczp.cmsService.HomeService;
+import com.zczp.cmsService.CmsHomeService;
+import com.zczp.vo_yycoder.ConditionVo;
 import com.zczp.vo_yycoder.PostDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class HomeServiceImpl implements HomeService {
+public class CmsHomeServiceImpl implements CmsHomeService {
 
     @Autowired(required = false)
     private TbPostMapper tbPostMapper;
@@ -48,8 +49,8 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    public List<PostDetailVo> getPostByCondition(String cityName, String jobType, String postType) {
-        postDetailVoList=tbPostMapper.getPostByCondition(cityName,jobType,postType);
+    public List<PostDetailVo> getPostByCondition(ConditionVo conditionVo) {
+        postDetailVoList=tbPostMapper.getPostByCondition(conditionVo);
         return postDetailVoList;
 
     }

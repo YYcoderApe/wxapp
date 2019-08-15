@@ -32,12 +32,9 @@ public class AskReplyServiceImpl implements AskReplyService {
     CollectPostDetailVo collectPostDetailVo;
 
     //评论表，每个评论表含提问和回复
-    List<TbCommentsVo> CommentsVoList;
+    List<TbCommentsVo> CommentsVoList=null;
     List<TbCommentsVo>  tbCommentsVoList=null;
-    //含评论表和post表
-    List<MyAskReplyVo> myAskReplyVoList = new ArrayList<MyAskReplyVo>();
     //评论表对象
-
     TbCommentsVo tbCommentsVo=new TbCommentsVo();
 
 
@@ -45,6 +42,8 @@ public class AskReplyServiceImpl implements AskReplyService {
     @Transactional
     public List<MyAskReplyVo> getMyAskReplyList(String openId){
         TbComment tbComment=new TbComment();
+        //含评论表和post表
+        List<MyAskReplyVo> myAskReplyVoList = new ArrayList<MyAskReplyVo>();
         //根据open_id去TbAskReply找到post的先后顺序，返回TbAskReply
         List<TbAskReply> askReplyList = tbAskReplyMapper.getAskReplyByOpenId(openId);
 
@@ -61,7 +60,7 @@ public class AskReplyServiceImpl implements AskReplyService {
 
                 CommentsVoList.get(index).setCommentList(tbCommentsVo.getCommentList());
                 if(CommentsVoList.get(index).getCommentList().size()>0
-                        || CommentsVoList.get(index).getFromId()==openId)
+                        | CommentsVoList.get(index).getFromId().equals(openId))
                     tbCommentsVoList.add(CommentsVoList.get(index));
                 index++;
             }
@@ -79,6 +78,7 @@ public class AskReplyServiceImpl implements AskReplyService {
     @Transactional
     public List<MyAskReplyVo> getMyReplyMsgList(String openId) {
         TbComment tbComment=new TbComment();
+        List<MyAskReplyVo> myAskReplyVoList = new ArrayList<MyAskReplyVo>();
         List<TbAskReply> askReplyList = tbAskReplyMapper.getAskReplyByOpenId(openId);
         tbComment.setFromId(openId);
         for(TbAskReply tbAskReply:askReplyList){
@@ -110,6 +110,17 @@ public class AskReplyServiceImpl implements AskReplyService {
     public int deleteTbCommentBycommentId(Integer commentId){
         return tbCommentMapper.deleteByPrimaryKey(commentId);
     }
+
+    @Override
+    public int deleteTbComment(String openId, Integer postId) {
+        List<Integer> list = tbCommentMapper.getAllCommentId(openId, postId);
+        for(Integer index:list){
+            tbCommentMapper.deleteTbCommentById(index);
+        }
+        tbAskReplyMapper.deleteById(openId, postId);
+        return 1;
+    }
+
 
 }
 

@@ -3,11 +3,12 @@ package com.zczp.cmsService;
 
 import com.zczp.entity.TbCity;
 import com.zczp.entity.TbPostType;
+import com.zczp.vo_yycoder.ConditionVo;
 import com.zczp.vo_yycoder.PostDetailVo;
 
 import java.util.List;
 
-public interface HomeService {
+public interface CmsHomeService {
 
     //查询post中所需要的字段打包给前端
     List<PostDetailVo> getPostDetail();
@@ -22,7 +23,7 @@ public interface HomeService {
     List<TbPostType> getAllJobTypeSort();
 
     //根据城市cityName 进行字段查询
-    List<PostDetailVo> getPostByCondition(String cityName, String jobType, String postType);
+    List<PostDetailVo> getPostByCondition(ConditionVo conditionVo);
 
     Integer deleteByPrimaryKey(int postId);
 

@@ -132,6 +132,10 @@
             <if test="postType != null and postType!=''and postType!='全部'">
                 and tpt.type_name = #{postType}
             </if>
+            <if test="companyName!= null and companyName!=''">
+                and tc.company_name = #{companyName}
+            </if>
+
         </where>
         order by tp.post_time desc
 

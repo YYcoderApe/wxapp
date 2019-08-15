@@ -50,6 +50,12 @@
     and tc.reply_id is null
     order by tc.comment_time desc
   </select>
+  <select id="getAllCommentId"  resultType="java.lang.Integer">
+    select comment_id from tb_comment
+    where from_id=#{openId,jdbcType=VARCHAR}
+    and post_id= #{postId,jdbcType=INTEGER}
+     order by comment_time desc
+  </select>
   <select id="selectCommentList" parameterType="com.zczp.entity.TbComment" resultType="com.zczp.vo_yycoder.TbCommentsVo">
     select
     tc.comment_id as commentId , tc.post_id as postId ,tc.content, tc.from_id as fromId,

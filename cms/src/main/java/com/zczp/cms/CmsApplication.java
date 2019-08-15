@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
-@ComponentScan(basePackages = {"com.zczp.cmsController"
+@ComponentScan(basePackages = {"com.zczp.cmsController","com.zczp.cmsController_yycoder","com.zczp.service_yycoder"
         ,"com.zczp.cmsService","com.zczp.service_cancer","com.zczp.util","com.zczp.dao","com.zczp.config"
         ,"com.zczp.cms"})
 @MapperScan("com.zczp.dao")

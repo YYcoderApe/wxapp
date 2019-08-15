@@ -4,6 +4,7 @@ import com.zczp.entity.TbPost;
 import com.zczp.entity.TbPostWithBLOBs;
 import com.zczp.vo_cancer.PostDetailsVo;
 import com.zczp.vo_yycoder.CollectPostDetailVo;
+import com.zczp.vo_yycoder.ConditionVo;
 import com.zczp.vo_yycoder.PostDetailVo;
 import io.swagger.models.auth.In;
 import javafx.geometry.Pos;
@@ -17,7 +18,7 @@ public interface TbPostMapper  extends BaseMapper<TbPostWithBLOBs>{
 
     int updateByPrimaryKey(TbPost record);
 
-    PostDetailsVo selectDetailByPrimaryKey(Integer postId);
+    PostDetailsVo selectDetailByPrimaryKey(@Param("postId") Integer postId);
 
     List<PostDetailVo> selectByTitle(String title);
 
@@ -38,10 +39,11 @@ public interface TbPostMapper  extends BaseMapper<TbPostWithBLOBs>{
     List<PostDetailVo> getPostDetail();
 
     //根据条件展示招聘信息
-    List<PostDetailVo> getPostByCondition(
-            @Param("cityName") String cityName,
-            @Param("jobType")String jobType,
-            @Param("postType") String postType);
+//    List<PostDetailVo> getPostByCondition(
+//            @Param("cityName") String cityName,
+//            @Param("jobType")String jobType,
+//            @Param("postType") String postType);
+    List<PostDetailVo> getPostByCondition(ConditionVo conditionVo);
 
     //根据post_id查找post信息
     CollectPostDetailVo getPostDetailById(@Param("postId") Integer postId);

@@ -16,7 +16,7 @@ import java.util.List;
 public class TbCommentServiceImpl implements TbCommentService {
     @Autowired(required = false)
     private TbCommentMapper tbCommentMapper;
-    @Autowired
+    @Autowired(required = false)
     private TbAskReplyMapper tbAskReplyMapper;
 
     //提问时reply_id为空，回复时不为空

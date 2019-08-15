@@ -1,7 +1,6 @@
 package com.zczp.cmsController;
 
 import com.github.pagehelper.PageHelper;
-import com.zczp.cmsService.impl.FileServiceImpl;
 import com.zczp.service_cancer.Impl.TbCompanyServiceImpl;
 import com.zczp.util.AjaxResult;
 import com.zczp.vo_cancer.CompanyVo;
@@ -29,8 +28,8 @@ public class CompanyController {
     private TbCompanyServiceImpl tbCompanyService;
     @Autowired
     private AjaxResult ajaxResult;
-    @Autowired
-    private FileServiceImpl fileService;
+//    @Autowired
+//    private FileServiceImpl fileService;
 
     @ApiOperation("展示所以公司")
     @GetMapping("/showCompany")
@@ -56,42 +55,42 @@ public class CompanyController {
         }
         return ajaxResult.ok("没有此公司");
     }
-//未完成
-    @ApiOperation("新增公司")
-    @GetMapping("/addCompany")
-    public AjaxResult addCompany(
-            @RequestParam(value = "file") @ApiParam("上传图片") MultipartFile upfile,
-            @RequestParam @ApiParam("公司名称")String companyName) throws IOException {
-        File file = new File(url + upfile.getOriginalFilename());
-        //将MulitpartFile文件转化为file文件格式
-        upfile.transferTo(file);
-        CompanyVo companyVo=new CompanyVo();
-        companyVo.setCompanyLogo(Path + "/" + fileService.uploadFile(file).get("imgName"));
-        companyVo.setCompanyName(companyName);
-        Integer result=tbCompanyService.addCompany(companyVo);
-        if (result!=0){
-            ajaxResult.ok("新增成功");
-        }
-        return new AjaxResult().error("新增失败");
-    }
-
-    @ApiOperation("编辑公司")
-    @GetMapping("/updateCompany")
-    public AjaxResult updateCompany(
-            @RequestParam @ApiParam("公司Id")int companyId,
-            @RequestParam @ApiParam("公司名称")String companyName,
-            @RequestParam(value = "file") @ApiParam("上传图片") MultipartFile upfile) throws IOException {
-        File file = new File(url + upfile.getOriginalFilename());
-        //将MulitpartFile文件转化为file文件格式
-        upfile.transferTo(file);
-        CompanyVo companyVo=new CompanyVo();
-        companyVo.setCompanyLogo(Path + "/" + fileService.uploadFile(file).get("imgName"));
-        companyVo.setCompanyName(companyName);
-        companyVo.setCompanyId(companyId);
+////未完成
+//    @ApiOperation("新增公司")
+//    @GetMapping("/addCompany")
+//    public AjaxResult addCompany(
+//            @RequestParam(value = "file") @ApiParam("上传图片") MultipartFile upfile,
+//            @RequestParam @ApiParam("公司名称")String companyName) throws IOException {
+//        File file = new File(url + upfile.getOriginalFilename());
+//        //将MulitpartFile文件转化为file文件格式
+//        upfile.transferTo(file);
+//        CompanyVo companyVo=new CompanyVo();
+//        companyVo.setCompanyLogo(Path + "/" + fileService.uploadFile(file).get("imgName"));
+//        companyVo.setCompanyName(companyName);
 //        Integer result=tbCompanyService.addCompany(companyVo);
 //        if (result!=0){
-//            ajaxResult.ok("编辑成功");
+//            ajaxResult.ok("新增成功");
 //        }
-        return new AjaxResult().error("编辑失败");
-    }
+//        return new AjaxResult().error("新增失败");
+//    }
+//
+//    @ApiOperation("编辑公司")
+//    @GetMapping("/updateCompany")
+//    public AjaxResult updateCompany(
+//            @RequestParam @ApiParam("公司Id")int companyId,
+//            @RequestParam @ApiParam("公司名称")String companyName,
+//            @RequestParam(value = "file") @ApiParam("上传图片") MultipartFile upfile) throws IOException {
+//        File file = new File(url + upfile.getOriginalFilename());
+//        //将MulitpartFile文件转化为file文件格式
+//        upfile.transferTo(file);
+//        CompanyVo companyVo=new CompanyVo();
+//        companyVo.setCompanyLogo(Path + "/" + fileService.uploadFile(file).get("imgName"));
+//        companyVo.setCompanyName(companyName);
+//        companyVo.setCompanyId(companyId);
+////        Integer result=tbCompanyService.addCompany(companyVo);
+////        if (result!=0){
+////            ajaxResult.ok("编辑成功");
+////        }
+//        return new AjaxResult().error("编辑失败");
+//    }
 }

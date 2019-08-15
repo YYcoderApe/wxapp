@@ -1,11 +1,12 @@
 package com.zczp.cmsController;
 
 import com.github.pagehelper.PageHelper;
+import com.zczp.cmsService.impl.CmsHomeServiceImpl;
 import com.zczp.entity.TbCity;
 import com.zczp.entity.TbPostType;
 import com.zczp.service_cancer.Impl.TbPostServiceImpl;
-import com.zczp.cmsService.HomeService;
 import com.zczp.util.AjaxResult;
+import com.zczp.vo_yycoder.ConditionVo;
 import com.zczp.vo_yycoder.PostDetailVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,7 +23,7 @@ import java.util.*;
 public class HomeController {
 
     @Autowired
-    private HomeService homeService;
+    private CmsHomeServiceImpl homeService;
     @Autowired
     private TbPostServiceImpl tbPostService;
     AjaxResult ajaxResult=new AjaxResult();
@@ -56,18 +57,11 @@ public class HomeController {
         return ajaxResult.ok("删除成功");
     }
 
-    @GetMapping("/select")
+    @GetMapping("select")
     @ApiOperation("根据条件进行展示招聘信息")
-    public AjaxResult getPostByName(
-//            @RequestParam int pagenum,
-            @RequestParam("cityName") String cityName,
-            @RequestParam("jobType") String jobType,
-            @RequestParam("postType") String postType
-//            @RequestParam String companyName
-            ) {
-//        PageHelper.startPage(pagenum,10);
-        List<PostDetailVo> postDetailVos = homeService.getPostByCondition(cityName,jobType,postType);
-        if(postDetailVos!=null){
+    public AjaxResult getPostByCondition(@ModelAttribute ConditionVo conditionVo) {
+        List<PostDetailVo> postDetailVos = homeService.getPostByCondition(conditionVo);
+        if (postDetailVos != null) {
             return new AjaxResult().ok(postDetailVos);
         }
         return new AjaxResult().error("你输入的信息有误");
