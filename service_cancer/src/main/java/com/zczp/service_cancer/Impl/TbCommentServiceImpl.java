@@ -47,4 +47,9 @@ public class TbCommentServiceImpl implements TbCommentService {
     public Integer deleteByCommentId(int commentId) {
         return tbCommentMapper.deleteTbCommentById(commentId);
     }
+
+    @Override
+    public int getTotalTags(int postId) {
+        return tbCommentMapper.getTotalTags(postId);
+    }
 }

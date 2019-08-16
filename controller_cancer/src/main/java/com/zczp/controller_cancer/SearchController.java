@@ -29,15 +29,15 @@ public class SearchController {
         return ajaxResult.error("没有该招聘信息");
     }
 
-    @ApiOperation("历史记录")
-    @GetMapping("/history")
-    public AjaxResult history(){
-        return null;
-    }
-
-    @ApiOperation("清空历史记录")
-    @GetMapping("/deleteHistory")
-    public AjaxResult deleteHistory(){
-        return null;
-    }
+//    @ApiOperation("历史记录")
+//    @GetMapping("/history")
+//    public AjaxResult history(){
+//        return null;
+//    }
+//
+//    @ApiOperation("清空历史记录")
+//    @GetMapping("/deleteHistory")
+//    public AjaxResult deleteHistory(){
+//        return null;
+//    }
 }

@@ -16,4 +16,6 @@ public interface TbCommentService  {
     List<CommentsVo> selectAllByPrimaryReplyId(Integer replyId);
 
     Integer deleteByCommentId(int commentId);
+
+    int getTotalTags(int postId);
 }

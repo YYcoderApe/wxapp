@@ -6,6 +6,7 @@ import com.zczp.entity.TbCity;
 import com.zczp.entity.TbPostType;
 import com.zczp.service_cancer.Impl.TbPostServiceImpl;
 import com.zczp.util.AjaxResult;
+import com.zczp.util.PageResult;
 import com.zczp.vo_yycoder.ConditionVo;
 import com.zczp.vo_yycoder.PostDetailVo;
 import io.swagger.annotations.Api;
@@ -26,14 +27,19 @@ public class HomeController {
     private CmsHomeServiceImpl homeService;
     @Autowired
     private TbPostServiceImpl tbPostService;
-    AjaxResult ajaxResult=new AjaxResult();
+    @Autowired
+    private AjaxResult ajaxResult;
+
+    private PageResult pageResult;
     @GetMapping(value="/index")
     @ApiOperation("分页展示信息列表")
     public AjaxResult getAllPost(@RequestParam @ApiParam("页数") int pageNum) {
         PageHelper.startPage(pageNum,10);
         List<PostDetailVo> postDetailVos = homeService.getPostDetail();
+        int totalTags=homeService.getTotalTags();
         if(postDetailVos!=null){
-            return ajaxResult.ok(postDetailVos);
+            pageResult=new PageResult(postDetailVos,totalTags,10,pageNum);
+            return ajaxResult.ok(pageResult);
         }
         return new AjaxResult().error("库存中表post没数据或信息待审核");
     }

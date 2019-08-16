@@ -95,6 +95,13 @@
         from tb_company
         order by count desc limit 0,12
     </select>
+    <select id="getTotalTags"  resultType="java.lang.Integer">
+        select count(*)  from tb_company
+    </select>
+    <select id="getSearchTags"  parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(*)  from tb_company
+        where company_name like CONCAT(CONCAT('%',#{companyName},'%'))
+    </select>
     <insert id="addCompany" parameterType="com.zczp.vo_cancer.CompanyVo">
         insert into tb_company
         <trim prefix="(" suffix=")" suffixOverrides=",">

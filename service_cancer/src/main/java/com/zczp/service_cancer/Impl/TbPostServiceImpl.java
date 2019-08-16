@@ -43,8 +43,9 @@ public class TbPostServiceImpl implements TbPostService {
     @Override
     public PostDetailsVo selectDetailByPrimaryKey(Integer postId,String openId,Integer pageNum) {
         PostDetailsVo postDetailsVo=tbPostMapper.selectDetailByPrimaryKey(postId);
+        int pageSize=5;
         if (pageNum!=null){
-            PageHelper.startPage(pageNum,5);
+            PageHelper.startPage(pageNum,pageSize);
         }
         List<CommentsVo> commentsVoList =tbCommentService.selectAllByPrimaryPostId(postDetailsVo.getPostId());
         for (CommentsVo commentVo:commentsVoList){
@@ -77,6 +78,13 @@ public class TbPostServiceImpl implements TbPostService {
             redisUtil.hset(RedisKeyUtil.MAP_KEY_COLLECT,key,String.valueOf(collectState));
         }
         postDetailsVo.setCollectState(collectState);
+        int totalCount=tbCommentService.getTotalTags(postId);
+        postDetailsVo.setTotalCount(totalCount);
+        if (pageNum!=null) {
+            postDetailsVo.setCurrPage(pageNum);
+            postDetailsVo.setPageSize(pageSize);
+            postDetailsVo.setTotalPage((int) Math.ceil((double) totalCount / pageSize));
+        }
         return postDetailsVo;
     }
 

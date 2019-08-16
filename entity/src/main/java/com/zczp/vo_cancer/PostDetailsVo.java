@@ -72,6 +72,16 @@ public class PostDetailsVo {
     @ApiModelProperty("收藏Id 0-未收藏 1-已收藏")
     private int collectState;
 
+    //总记录数
+    private int totalCount;
+    //每页记录数
+    private int pageSize;
+    //当前页数
+    private int currPage;
+    //总页数
+    private int totalPage;
+
     @ApiModelProperty("评论列表")
     private List<CommentsVo> commentsVoList;
+
 }

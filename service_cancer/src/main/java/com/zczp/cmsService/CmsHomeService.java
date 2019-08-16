@@ -27,4 +27,5 @@ public interface CmsHomeService {
 
     Integer deleteByPrimaryKey(int postId);
 
+    int getTotalTags();
 }

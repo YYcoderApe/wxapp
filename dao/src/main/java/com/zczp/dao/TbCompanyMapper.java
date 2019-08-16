@@ -16,4 +16,8 @@ public interface TbCompanyMapper extends BaseMapper<TbCompany>{
     Integer addCompany(CompanyVo companyVo);
 
     Integer updateByPrimaryKeySelective(CompanyVo companyVo);
+
+    int getTotalTags();
+
+    int getSearchTags(String companyName);
 }

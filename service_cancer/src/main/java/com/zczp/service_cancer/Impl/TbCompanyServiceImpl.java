@@ -74,4 +74,14 @@ public class TbCompanyServiceImpl implements TbCompanyService {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public int getTotalTags() {
+        return tbCompanyMapper.getTotalTags();
+    }
+
+    @Override
+    public int getSearchTags(String companyName) {
+        return tbCompanyMapper.getSearchTags(companyName);
+    }
 }
