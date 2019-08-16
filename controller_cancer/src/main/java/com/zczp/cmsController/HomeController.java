@@ -47,7 +47,7 @@ public class HomeController {
         }
         return ajaxResult.error("没有该招聘信息");
     }
-    @GetMapping(value="/delete")
+    @DeleteMapping(value="/delete")
     @ApiOperation("删除招聘信息")
     public AjaxResult delete(@RequestParam int postId) {
         Integer result = homeService.deleteByPrimaryKey(postId);

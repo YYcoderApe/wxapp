@@ -27,6 +27,8 @@ public class TbUser {
 
     private String country;
 
+    private Integer state;
+
     @Override
     public String toString() {
         return "TbUser{" +
@@ -148,5 +150,13 @@ public class TbUser {
 
     public void setCountry(String country) {
         this.country = country == null ? null : country.trim();
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

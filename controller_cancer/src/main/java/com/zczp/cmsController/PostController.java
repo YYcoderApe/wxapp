@@ -12,6 +12,7 @@ import com.zczp.vo_cancer.PostDetailsVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,8 +28,6 @@ public class PostController {
     @Autowired
     private TbCommentServiceImpl tbCommentService;
     @Autowired
-    private TbCollectServiceImpl tbCollectService;
-    @Autowired
     private TbReliabilityServiceImpl tbReliabilityService;
 
     AjaxResult ajaxResult=new AjaxResult();
@@ -38,12 +37,21 @@ public class PostController {
             @RequestParam @ApiParam("页数") int pageNum,
             @RequestParam @ApiParam("招聘信息Id") int postId,
             @RequestParam @ApiParam ("当前用户Id") String openId){
-//        PageHelper.startPage(pageNum,1);
         PostDetailsVo postDetailsVo =tbPostService.selectDetailByPrimaryKey(postId,openId,pageNum);
         if(postDetailsVo!=null){
             return ajaxResult.ok(postDetailsVo);
         }
         return ajaxResult.error("查询失败");
+    }
+
+    @ApiOperation("删除招聘信息")
+    @DeleteMapping("/deletePost")
+    public  AjaxResult deletePost(@RequestParam int postId){
+        int result=tbPostService.deletePostById(postId);
+        if (result==1){
+            return ajaxResult.ok("删除成功");
+        }
+        return ajaxResult.error("操作失败");
     }
 
     @ApiOperation("评论")
@@ -57,7 +65,7 @@ public class PostController {
     }
 
     @ApiOperation("删除评论")
-    @PostMapping("/deleteComment")
+    @DeleteMapping("/deleteComment")
     public  AjaxResult deleteComment(@RequestParam int commentId){
         int result=tbCommentService.deleteByCommentId(commentId);
         if (result==1){

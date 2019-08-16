@@ -102,4 +102,9 @@ public class TbPostServiceImpl implements TbPostService {
     public List<PostDetailVo> selectByCompany(String company) {
         return tbPostMapper.selectByCompany(company);
     }
+
+    @Override
+    public int deletePostById(int postId) {
+        return tbPostMapper.deleteByPrimaryKey(postId);
+    }
 }

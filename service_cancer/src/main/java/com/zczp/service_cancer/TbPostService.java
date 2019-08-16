@@ -22,4 +22,6 @@ public interface TbPostService {
     void transReliabilityCountToDB();
 
     List<PostDetailVo> selectByCompany(String company);
+
+    int deletePostById(int postId);
 }
