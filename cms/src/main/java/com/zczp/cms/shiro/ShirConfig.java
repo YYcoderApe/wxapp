@@ -55,13 +55,13 @@ public class ShirConfig {
         factoryBean.setSecurityManager(securityManager);
         Map<String, String> filterRuleMap = new HashMap<>();
         //登陆相关api不需要被过滤器拦截
-        filterRuleMap.put("/api/administration/login", "anon");
+        filterRuleMap.put("/admin/login", "anon");
         filterRuleMap.put("/swagger-ui.html", "anon");
         filterRuleMap.put("/swagger-resources/**", "anon");
         filterRuleMap.put("/v2/**", "anon");
         filterRuleMap.put("/webjars/**", "anon");
         // 所有请求通过JWT Filter
-//        filterRuleMap.put("/**", "authc");
+        filterRuleMap.put("/**", "jwt");
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return factoryBean;
     }

@@ -14,6 +14,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.Collections;
@@ -24,7 +25,7 @@ import java.util.List;
  * Realm 的一个配置管理类 allRealm()方法得到所有的realm
  */
 @Component
-public class ShiroRealmConfig {
+public class ShiroRealmConfig extends AuthorizingRealm{
 
 
     @Resource
@@ -67,23 +68,16 @@ public class ShiroRealmConfig {
             @Override
             protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) {
                 String jwtToken = (String) token.getCredentials();
-                System.out.println(jwtToken);
-                String s ="fa86a6a0df33424c8d2f0e38d9efcc2e";
-                if (jwtToken==s){
-                    System.out.println("成功"+jwtToken);
-                }else {
-                    System.out.println("失败");
-                }
-//                String wxOpenId = jwtUtil.getWxOpenIdByToken(jwtToken);
-//                String sessionKey = jwtUtil.getSessionKeyByToken(jwtToken);
-                    if (jwtToken!=s)
+                if (jwtToken==""||jwtToken==null)
                     throw new AuthenticationException("没有token");
-//                if (StringUtils.isEmpty(wxOpenId))
-//                    throw new AuthenticationException("user account not exits , please check your token");
-//                if (StringUtils.isEmpty(sessionKey))
-//                    throw new AuthenticationException("sessionKey is invalid , please check your token");
-//                if (!jwtUtil.verifyToken(jwtToken))
-//                    throw new AuthenticationException("token is invalid , please check your token");
+                String userName=jwtUtil.getUserNameByToken(jwtToken);
+                String password=jwtUtil.getPasswordByToken(jwtToken);
+                if (StringUtils.isEmpty(userName))
+                    throw new AuthenticationException("user account not exits , please check your token");
+                if (StringUtils.isEmpty(password))
+                    throw new AuthenticationException("password is invalid , please check your token");
+                if (!jwtUtil.verifyUserToken(jwtToken))
+                    throw new AuthenticationException("token is invalid , please check your token");
                 return new SimpleAuthenticationInfo(token, token, getName());
             }
         };
@@ -96,5 +90,15 @@ public class ShiroRealmConfig {
      */
     private CredentialsMatcher credentialsMatcher() {
         return (token, info) -> true;
+    }
+
+    @Override
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        return null;
+    }
+
+    @Override
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+        return null;
     }
 }

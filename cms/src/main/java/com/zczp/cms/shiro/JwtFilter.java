@@ -33,10 +33,8 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-        if (isLoginAttempt(request, response)) {
-            JwtToken token = new JwtToken(getAuthzHeader(request));
-            getSubject(request, response).login(token);
-        }
+        JwtToken token = new JwtToken(getAuthzHeader(request));
+        getSubject(request, response).login(token);
         return true;
     }
 

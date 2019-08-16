@@ -27,7 +27,7 @@ public class Swagger2Config {
                 .apiInfo(apiInfo())
                 .select()
                 // controller包路径
-                .apis(basePackage("com.zczp.cmsController"))
+                .apis(basePackage("com.zczp.cmsController"+splitor+"com.zczp.cmsController_yycoder"))
                 .paths(PathSelectors.any())
                 .build();
     }

@@ -4,9 +4,9 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.zczp.entity.TbAdmin;
 import com.zczp.entity.WxAccount;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -32,10 +32,8 @@ public class JwtUtil {
      */
     private static final int EXPIRE_TIME = 7200;
 
-//    @Resource
-    private StringRedisTemplate redisTemplate;
     @Autowired
-    RedisUtil redisUtil;
+    private StringRedisTemplate redisTemplate;
 
     /**
      * 根据微信用户登陆信息创建 token
@@ -111,5 +109,81 @@ public class JwtUtil {
      */
     private String getJwtIdByToken(String token) throws JWTDecodeException {
         return JWT.decode(token).getClaim("jwt-id").asString();
+    }
+
+    /**
+     * 根据管理用户登陆信息创建 token
+     * 注 : 这里的token会被缓存到redis中,用作为二次验证
+     * redis里面缓存的时间应该和jwt token的过期时间设置相同
+     *
+     * @param tbAdmin 用户信息
+     * @return 返回 jwt token
+     */
+    public String createTokenByTbAdmin(TbAdmin tbAdmin) {
+        String userId = UUID.randomUUID().toString();                 //JWT 随机ID,做为验证的key
+        //1 . 加密算法进行签名得到token
+        Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
+        String token = JWT.create()
+                .withClaim("userName", tbAdmin.getAdminName())
+                .withClaim("password", tbAdmin.getAdminPassword())
+                .withClaim("userId", userId)
+                .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRE_TIME * 1000))  //JWT 配置过期时间的正确姿势
+                .sign(algorithm);
+        //2 . Redis缓存JWT, 注 : 请和JWT过期时间一致
+        redisTemplate.opsForValue().set("JWT-SESSION-"+userId, token, EXPIRE_TIME, TimeUnit.SECONDS);
+        return token;
+    }
+
+    /**
+     * 校验token是否正确
+     * 1 . 根据token解密，解密出userId , 先从redis中查找出redisToken，匹配是否相同
+     * 2 . 然后再对redisToken进行解密，解密成功则 继续流程 和 进行token续期
+     *
+     * @param token 密钥
+     * @return 返回是否校验通过
+     */
+    public boolean verifyUserToken(String token) {
+        try {
+            //1 . 根据token解密，解密出jwt-id , 先从redis中查找出redisToken，匹配是否相同
+            String redisToken = redisTemplate.opsForValue().get("JWT-SESSION-" + getUserIdByToken(token));
+            if (Objects.isNull(redisToken)) return false;
+            if (!redisToken.equals(token)) return false;
+            //2 . 得到算法相同的JWTVerifier
+            Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
+            JWTVerifier verifier = JWT.require(algorithm)
+                    .withClaim("userName", getUserNameByToken(redisToken))
+                    .withClaim("password", getPasswordByToken(redisToken))
+                    .withClaim("userId", getUserIdByToken(redisToken))
+                    .acceptExpiresAt(System.currentTimeMillis() + EXPIRE_TIME * 1000)  //JWT 正确的配置续期姿势
+                    .build();
+            //3 . 验证token
+            verifier.verify(redisToken);
+            //4 . Redis缓存JWT续期
+            redisTemplate.opsForValue().set("JWT-SESSION-" + getUserIdByToken(token), redisToken, EXPIRE_TIME, TimeUnit.SECONDS);
+            return true;
+        } catch (Exception e) { //捕捉到任何异常都视为校验失败
+            return false;
+        }
+    }
+
+    /**
+     * 根据Token获取userName(注意坑点 : 就算token不正确，也有可能解密出userName,同下)
+     */
+    public String getUserNameByToken(String token) throws JWTDecodeException {
+        return JWT.decode(token).getClaim("userName").asString();
+    }
+
+    /**
+     * 根据Token获取password
+     */
+    public String getPasswordByToken(String token) throws JWTDecodeException {
+        return JWT.decode(token).getClaim("password").asString();
+    }
+
+    /**
+     * 根据Token 获取userId
+     */
+    private String getUserIdByToken(String token) throws JWTDecodeException {
+        return JWT.decode(token).getClaim("userId").asString();
     }
 }

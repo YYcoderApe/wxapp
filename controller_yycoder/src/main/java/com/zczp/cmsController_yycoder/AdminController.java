@@ -1,6 +1,7 @@
 package com.zczp.cmsController_yycoder;
 
 
+        import com.zczp.entity.TbAdmin;
         import com.zczp.service_cancer.TbPostService;
         import com.zczp.service_yycoder.AdminService;
         import com.zczp.service_yycoder.AskReplyService;
@@ -36,8 +37,10 @@ public class AdminController {
 
     @Autowired
     private AdminService adminService;
+    @Autowired
+    private JwtUtil jwtUtil;
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     @ApiOperation("管理员登录")
     public AjaxResult adminLogin(
             @RequestParam @ApiParam("Admin名字") String adminName,
@@ -45,8 +48,9 @@ public class AdminController {
         boolean result = adminService.checkAdmin(adminName, adminPwd);
         if (result) {
 //            //把token返回给客户端-->客户端保存至cookie-->客户端每次请求附带cookie参数
-//            String JWT = JwtUtil
-            return new AjaxResult().error("登录成功");
+            TbAdmin tbAdmin=new TbAdmin(adminName,adminPwd);
+            String token =jwtUtil.createTokenByTbAdmin(tbAdmin);
+            return new AjaxResult().ok(token);
         }
         return new AjaxResult().error("用户名或密码错误，请重新输入");
 

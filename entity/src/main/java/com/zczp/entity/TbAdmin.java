@@ -1,6 +1,15 @@
 package com.zczp.entity;
 
 public class TbAdmin {
+
+    public TbAdmin() {
+    }
+
+    public TbAdmin(String adminName, String adminPassword) {
+        this.adminName = adminName;
+        this.adminPassword = adminPassword;
+    }
+
     private Integer adminId;
 
     private String adminName;
