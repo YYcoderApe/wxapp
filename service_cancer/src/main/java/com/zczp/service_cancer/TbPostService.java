@@ -24,4 +24,8 @@ public interface TbPostService {
     List<PostDetailVo> selectByCompany(String company);
 
     int deletePostById(int postId);
+
+    List<String> getSearchHistory();
+
+    void deleteHistory();
 }

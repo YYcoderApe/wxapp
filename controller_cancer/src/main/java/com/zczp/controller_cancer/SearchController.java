@@ -2,6 +2,8 @@ package com.zczp.controller_cancer;
 
 import com.zczp.service_cancer.Impl.TbPostServiceImpl;
 import com.zczp.util.AjaxResult;
+import com.zczp.util.RedisUtil;
+import com.zczp.util.TokenUtil;
 import com.zczp.vo_yycoder.PostDetailVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,27 +19,31 @@ import java.util.List;
 public class SearchController {
     @Autowired
     private TbPostServiceImpl tbPostService;
-
-    AjaxResult ajaxResult=new AjaxResult();
+    @Autowired
+    RedisUtil redisUtil;
+    @Autowired
+    AjaxResult ajaxResult;
     @ApiOperation("查询招聘岗位")
     @GetMapping("/searchPost")
     public AjaxResult searchPost(@RequestParam @ApiParam("公司名称") String company){
         List<PostDetailVo> postDetailVoList=tbPostService.selectByCompany(company);
-        if (postDetailVoList!=null){
+        if (postDetailVoList!=null&&postDetailVoList.get(0).getTitle()!=null){
             return ajaxResult.ok(postDetailVoList);
         }
         return ajaxResult.error("没有该招聘信息");
     }
 
-//    @ApiOperation("历史记录")
-//    @GetMapping("/history")
-//    public AjaxResult history(){
-//        return null;
-//    }
-//
-//    @ApiOperation("清空历史记录")
-//    @GetMapping("/deleteHistory")
-//    public AjaxResult deleteHistory(){
-//        return null;
-//    }
+    @ApiOperation("历史记录")
+    @GetMapping("/history")
+    public AjaxResult history(){
+        List<String> list=tbPostService.getSearchHistory();
+        return ajaxResult.ok(list);
+    }
+
+    @ApiOperation("清空历史记录")
+    @GetMapping("/deleteHistory")
+    public AjaxResult deleteHistory(){
+        tbPostService.deleteHistory();
+        return ajaxResult.ok("删除成功");
+    }
 }

@@ -56,7 +56,7 @@ public class PushController {
     @GetMapping("/searchCompany")
     public AjaxResult searchCompany(@RequestParam @ApiParam("公司名") String companyName){
         List<CompanyVo> companyVos = tbCompanyService.selectByName(companyName);
-        if (companyVos!=null){
+        if (!companyVos.isEmpty()){
             return ajaxResult.ok(companyVos);
         }
         return ajaxResult.error("没有此公司");

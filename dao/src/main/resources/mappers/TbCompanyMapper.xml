@@ -72,6 +72,12 @@
         </set>
         where company_id = #{companyId,jdbcType=INTEGER}
     </update>
+    <update id="updateCountByCompanyId" parameterType="com.zczp.entity.TbCompany">
+    update tb_company
+    set
+      count = #{count,jdbcType=INTEGER}
+    where company_id = #{companyId,jdbcType=INTEGER}
+  </update>
     <update id="updateByPrimaryKey" parameterType="com.zczp.entity.TbCompany">
     update tb_company
     set company_name = #{companyName,jdbcType=VARCHAR},
