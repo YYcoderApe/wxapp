@@ -77,7 +77,10 @@
     left join tb_user tu on tc.from_id = tu.open_id
     where tc.post_id = #{postId,jdbcType=INTEGER} and tc.reply_id is null order by tc.comment_time desc
   </select>
-
+  <select id="getTotalTags" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select count(*)  from tb_comment
+        where post_id=#{postId} AND reply_id IS NULL
+    </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_comment
     where comment_id = #{commentId,jdbcType=INTEGER}

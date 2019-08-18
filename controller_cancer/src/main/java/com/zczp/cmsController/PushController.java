@@ -1,4 +1,4 @@
-package com.zczp.controller_cancer;
+package com.zczp.cmsController;
 
 import com.zczp.entity.TbCity;
 import com.zczp.entity.TbPostType;
@@ -56,7 +56,7 @@ public class PushController {
     @GetMapping("/searchCompany")
     public AjaxResult searchCompany(@RequestParam @ApiParam("公司名") String companyName){
         List<CompanyVo> companyVos = tbCompanyService.selectByName(companyName);
-        if (!companyVos.isEmpty()){
+        if (companyVos!=null){
             return ajaxResult.ok(companyVos);
         }
         return ajaxResult.error("没有此公司");

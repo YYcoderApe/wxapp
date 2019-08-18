@@ -19,4 +19,8 @@ public interface TbCompanyService {
     Integer deleteCompanyById(int companyId);
 
     void importCompany(MultipartFile file);
+
+    int getTotalTags();
+
+    int getSearchTags(String companyName);
 }

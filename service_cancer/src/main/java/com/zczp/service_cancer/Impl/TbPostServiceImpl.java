@@ -7,6 +7,7 @@ import com.zczp.entity.TbPostWithBLOBs;
 import com.zczp.service_cancer.TbPostService;
 import com.zczp.util.RedisKeyUtil;
 import com.zczp.util.RedisUtil;
+import com.zczp.util.TokenUtil;
 import com.zczp.vo_cancer.CommentsVo;
 import com.zczp.vo_cancer.PostDetailsVo;
 import com.zczp.vo_yycoder.PostDetailVo;
@@ -43,8 +44,9 @@ public class TbPostServiceImpl implements TbPostService {
     @Override
     public PostDetailsVo selectDetailByPrimaryKey(Integer postId,String openId,Integer pageNum) {
         PostDetailsVo postDetailsVo=tbPostMapper.selectDetailByPrimaryKey(postId);
+        int pageSize=5;
         if (pageNum!=null){
-            PageHelper.startPage(pageNum,5);
+            PageHelper.startPage(pageNum,pageSize);
         }
         List<CommentsVo> commentsVoList =tbCommentService.selectAllByPrimaryPostId(postDetailsVo.getPostId());
         for (CommentsVo commentVo:commentsVoList){
@@ -77,6 +79,13 @@ public class TbPostServiceImpl implements TbPostService {
             redisUtil.hset(RedisKeyUtil.MAP_KEY_COLLECT,key,String.valueOf(collectState));
         }
         postDetailsVo.setCollectState(collectState);
+        int totalCount=tbCommentService.getTotalTags(postId);
+        postDetailsVo.setTotalCount(totalCount);
+        if (pageNum!=null) {
+            postDetailsVo.setCurrPage(pageNum);
+            postDetailsVo.setPageSize(pageSize);
+            postDetailsVo.setTotalPage((int) Math.ceil((double) totalCount / pageSize));
+        }
         return postDetailsVo;
     }
 
@@ -100,11 +109,33 @@ public class TbPostServiceImpl implements TbPostService {
 
     @Override
     public List<PostDetailVo> selectByCompany(String company) {
+        String openId=new TokenUtil().getOpenId("Authorization");
+        if (openId!=null){
+             long count=redisUtil.lpush(0,"history_"+openId,company);
+             if (count>=12){
+                 redisUtil.rpop("history_"+openId,0);
+             }
+        }
         return tbPostMapper.selectByCompany(company);
     }
 
     @Override
     public int deletePostById(int postId) {
         return tbPostMapper.deleteByPrimaryKey(postId);
+    }
+
+    @Override
+    public List<String> getSearchHistory() {
+        String openId=new TokenUtil().getOpenId("Authorization");
+        List<String> list=redisUtil.lrange("history_"+openId,0,11,0);
+        return list;
+    }
+
+    @Override
+    public void deleteHistory() {
+        String openId=new TokenUtil().getOpenId("Authorization");
+        for (int a=0;a<=11;a++){
+            redisUtil.lpop("history_"+openId);
+        }
     }
 }

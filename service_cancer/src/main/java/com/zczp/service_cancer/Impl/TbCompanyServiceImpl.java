@@ -19,7 +19,14 @@ public class TbCompanyServiceImpl implements TbCompanyService {
     private TbCompanyMapper tbCompanyMapper;
     @Override
     public List<CompanyVo> selectByName(String companyName) {
-        return tbCompanyMapper.selectByName(companyName);
+        List<CompanyVo> companyVoList=tbCompanyMapper.selectByName(companyName);
+        if (!companyVoList.isEmpty()){
+            for (CompanyVo companyVo:companyVoList){
+                companyVo.setCount(companyVo.getCount()+1);
+                tbCompanyMapper.updateCountByCompanyId(companyVo);
+            }
+        }
+        return companyVoList;
     }
 
     //查询搜索次数前12公司
@@ -71,5 +78,15 @@ public class TbCompanyServiceImpl implements TbCompanyService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public int getTotalTags() {
+        return tbCompanyMapper.getTotalTags();
+    }
+
+    @Override
+    public int getSearchTags(String companyName) {
+        return tbCompanyMapper.getSearchTags(companyName);
     }
 }

@@ -29,4 +29,6 @@ public interface TbCommentMapper extends BaseMapper<TbComment>{
     List<Integer> getAllCommentId(
             @Param("openId") String openId,
             @Param("postId") Integer postId);
+
+    int getTotalTags(int postId);
 }

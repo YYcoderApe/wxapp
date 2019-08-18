@@ -5,6 +5,7 @@ import com.zczp.service_cancer.Impl.TbCompanyServiceImpl;
 import com.zczp.service_yycoder.PosterService;
 import com.zczp.service_yycoder.impl.FileServiceImpl;
 import com.zczp.util.AjaxResult;
+import com.zczp.util.PageResult;
 import com.zczp.vo_cancer.CompanyVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,17 +37,20 @@ public class CompanyController {
     private AjaxResult ajaxResult;
     @Autowired
     private FileServiceImpl fileService;
-    @Autowired
-    private PosterService posterService;
 
+    PageResult pageResult;
+    //每次展示条数
+    int pageSize=10;
     @ApiOperation("展示所以公司")
     @GetMapping("/showCompany")
     public AjaxResult showComopany(
             @RequestParam @ApiParam("页数")int pageNum){
-        PageHelper.startPage(pageNum,10);
+        PageHelper.startPage(pageNum,pageSize);
         List<CompanyVo> companyVos=tbCompanyService.selectAll();
+        int totalTags=tbCompanyService.getTotalTags();
         if (!companyVos.isEmpty()){
-            return ajaxResult.ok(companyVos);
+            pageResult=new PageResult(companyVos,totalTags,pageSize,pageNum);
+            return ajaxResult.ok(pageResult);
         }
         return ajaxResult.error("操作失败");
     }
@@ -56,10 +60,13 @@ public class CompanyController {
     public AjaxResult searchCompany(
             @RequestParam @ApiParam("页数")int pageNum,
             @RequestParam @ApiParam("公司名称")String companyName){
-        PageHelper.startPage(pageNum,10);
+
+        PageHelper.startPage(pageNum,pageSize);
         List<CompanyVo> companyVos=tbCompanyService.selectByName(companyName);
+        int totalTags=tbCompanyService.getSearchTags(companyName);
         if (!companyVos.isEmpty()){
-            return ajaxResult.ok(companyVos);
+            pageResult=new PageResult(companyVos,totalTags,pageSize,pageNum);
+            return ajaxResult.ok(pageResult);
         }
         return ajaxResult.ok("没有此公司");
     }

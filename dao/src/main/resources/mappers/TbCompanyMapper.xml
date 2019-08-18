@@ -72,6 +72,12 @@
         </set>
         where company_id = #{companyId,jdbcType=INTEGER}
     </update>
+    <update id="updateCountByCompanyId" parameterType="com.zczp.entity.TbCompany">
+    update tb_company
+    set
+      count = #{count,jdbcType=INTEGER}
+    where company_id = #{companyId,jdbcType=INTEGER}
+  </update>
     <update id="updateByPrimaryKey" parameterType="com.zczp.entity.TbCompany">
     update tb_company
     set company_name = #{companyName,jdbcType=VARCHAR},
@@ -94,6 +100,13 @@
         select company_id AS companyId,company_logo as companyLogo,company_name as companyName,count
         from tb_company
         order by count desc limit 0,12
+    </select>
+    <select id="getTotalTags"  resultType="java.lang.Integer">
+        select count(*)  from tb_company
+    </select>
+    <select id="getSearchTags"  parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(*)  from tb_company
+        where company_name like CONCAT(CONCAT('%',#{companyName},'%'))
     </select>
     <insert id="addCompany" parameterType="com.zczp.vo_cancer.CompanyVo">
         insert into tb_company
