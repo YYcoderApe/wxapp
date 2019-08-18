@@ -6,7 +6,9 @@ import com.sun.org.apache.bcel.internal.generic.RETURN;
 import com.zczp.dao.*;
 import com.zczp.entity.TbAskReply;
 import com.zczp.entity.TbComment;
+import com.zczp.entity.TbUser;
 import com.zczp.service_yycoder.UserService;
+import com.zczp.util.MathUtils;
 import com.zczp.util.PageQueryUtil;
 import com.zczp.util.PageResult;
 import com.zczp.vo_cancer.CommentsVo;
@@ -34,10 +36,19 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserDetailVo getUserByOpenId(String openId) {
-        UserDetailVo userDetailVo =tbUserMapper.getUserByOpenId(openId);
-        if(userDetailVo!=null)
+        UserDetailVo userDetailVo = tbUserMapper.getUserByOpenId(openId);
+        if (userDetailVo != null)
             return userDetailVo;
         return null;
+    }
+
+    @Override
+    public int addRobotUserIfo(UserDetailVo userDetailVo) {
+        String s = MathUtils.makeUpNewData(Thread.currentThread().hashCode()+"", 3)+   MathUtils.randomDigitNumber(7);
+        userDetailVo.setOpenId(s);
+        userDetailVo.setUserGender("男");
+        userDetailVo.setState(1);
+        return tbUserMapper.addRobotUserIfo(userDetailVo);
     }
 
     @Override
@@ -70,19 +81,25 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public int deleteUserIssue(String openId, Integer postId) {
-        return  tbPostMapper.deleteUserIssueById(openId, postId);
+        return tbPostMapper.deleteUserIssueById(openId, postId);
+    }
+
+    //    @Override
+//    public PageResult getAllUser(PageQueryUtil pageUtil,Integer state) {
+//          List<UserDetailVo> tags=tbUserMapper.getAllUser(pageUtil.getPage(),state);
+//        int total = tbUserMapper.getTotalTags(pageUtil);
+//        PageResult pageResult = new PageResult(tags, total, pageUtil.getLimit(), pageUtil.getPage());
+//        return pageResult;
+//    }
+
+    @Override
+    public List<UserDetailVo> getAllUser(Integer state) {
+        return tbUserMapper.getAllUser(state);
+
     }
 
     @Override
-    public PageResult getAllUser(PageQueryUtil pageUtil) {
-          List<UserDetailVo> tags=tbUserMapper.getAllUser(pageUtil);
-        int total = tbUserMapper.getTotalTags(pageUtil);
-        PageResult pageResult = new PageResult(tags, total, pageUtil.getLimit(), pageUtil.getPage());
-        return pageResult;
-    }
-
-    @Override
-    public UserDetailVo searchUserByName(String userName) {
+    public List<UserDetailVo> searchUserByName(String userName) {
         return tbUserMapper.seachUserByName(userName);
     }
 

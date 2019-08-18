@@ -17,7 +17,10 @@ public interface TbUserMapper extends BaseMapper<TbUser>{
     int deleteByPrimaryKey(String id);
 
     //查询所有的用户
-    List<UserDetailVo> getAllUser(PageQueryUtil pageUtil);
+    List<UserDetailVo> getAllUser(@Param("state") Integer state);
+
+    //增加虚拟用户
+    int addRobotUserIfo(UserDetailVo userDetailVo);
 
     //修改用户信息
     int updateUserInfoById( UserDetailVo userDetailVo);
@@ -29,6 +32,6 @@ public interface TbUserMapper extends BaseMapper<TbUser>{
     int getTotalTags(PageQueryUtil pageUtil);
 
     //根据昵称进行搜索
-    UserDetailVo seachUserByName(String userName);
+    List<UserDetailVo> seachUserByName(String userName);
 
 }

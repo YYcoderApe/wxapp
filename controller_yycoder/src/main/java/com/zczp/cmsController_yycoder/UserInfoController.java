@@ -2,7 +2,6 @@ package com.zczp.cmsController_yycoder;
 
 
 import com.zczp.service_cancer.TbPostService;
-import com.zczp.service_yycoder.AdminService;
 import com.zczp.service_yycoder.AskReplyService;
 import com.zczp.service_yycoder.UserService;
 import com.zczp.util.AjaxResult;
@@ -17,13 +16,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 管理员 进行 对用户信息的管理
@@ -48,17 +44,14 @@ public class UserInfoController {
 
     @GetMapping("/getAllUser")
     @ApiOperation("用户信息  --- 获取所有用户")
-    public AjaxResult getAllUsert(
-            @RequestParam @ApiParam("当前页") Object page) {
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("page", page);
-        params.put("limit", 10);
-        if (StringUtils.isEmpty(params.get("page")) || StringUtils.isEmpty(params.get("limit"))) {
-            return new AjaxResult().error("参数异常");
-        }
-        pageUtil = new PageQueryUtil(params);
-        pageResult = userService.getAllUser(pageUtil);
-        if (pageResult != null) {
+    public AjaxResult getAllUser(
+            @RequestParam @ApiParam("当前页") Integer page) {
+        List<UserDetailVo> userDetailVoList = userService.getAllUser(0);
+        if (userDetailVoList != null) {
+            List<UserDetailVo> list = new ArrayList<UserDetailVo>();
+            int pageStart = (page - 1) * 10;
+            list = userDetailVoList.subList(pageStart, userDetailVoList.size() - pageStart > 10 ? pageStart + 10 : userDetailVoList.size());
+            pageResult = new PageResult(list, userDetailVoList.size(), 10, page);
             return new AjaxResult().ok(pageResult);
         }
         return new AjaxResult().error("数据库用户表无信息");
@@ -87,11 +80,12 @@ public class UserInfoController {
     @GetMapping("/searchUserInfo")
     @ApiOperation("用户信息 --- 根据昵称搜索")
     public AjaxResult getAllUsert(@RequestParam @ApiParam("用户昵称") String userName) {
-        UserDetailVo userDetailVo = userService.searchUserByName(userName);
-        if (userDetailVo != null) {
-            return new AjaxResult().ok(userDetailVo);
+        List<UserDetailVo> userDetailVoList= userService.searchUserByName(userName);
+        if(userDetailVoList!=null){
+            pageResult = new PageResult(userDetailVoList, userDetailVoList.size(), 10, 1);
+            return new AjaxResult().ok(pageResult);
         }
-        return new AjaxResult().error("你所输入的用户昵称不存在");
+        return new AjaxResult().error("该用户不存在"+pageResult);
     }
 
     @GetMapping("UserIssueList")

@@ -3,7 +3,6 @@ package com.zczp.service_cancer.Impl;
 import com.zczp.dao.TbCompanyMapper;
 import com.zczp.service_cancer.TbCompanyService;
 import com.zczp.vo_cancer.CompanyVo;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -65,10 +63,10 @@ public class TbCompanyServiceImpl implements TbCompanyService {
                     companyVo.setCompanyName(row.getCell(1).getStringCellValue());
                 }
                 if(row.getCell(2)!=null){//第3列
-                   companyVo.setCompanyLogo(row.getCell(2).getStringCellValue());
+                    companyVo.setCompanyLogo(row.getCell(2).getStringCellValue());
                 }
 //                System.out.println(companyVo.toString());
-               tbCompanyMapper.addCompany(companyVo);
+                tbCompanyMapper.addCompany(companyVo);
             }
         } catch (IOException e) {
             e.printStackTrace();

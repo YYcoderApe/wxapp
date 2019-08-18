@@ -3,19 +3,14 @@ package com.zczp.controller_yycoder;
 import com.zczp.service_yycoder.AskReplyService;
 import com.zczp.service_yycoder.UserService;
 import com.zczp.util.AjaxResult;
-import com.zczp.util.PageQueryUtil;
-import com.zczp.util.PageResult;
 import com.zczp.vo_yycoder.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("user")
