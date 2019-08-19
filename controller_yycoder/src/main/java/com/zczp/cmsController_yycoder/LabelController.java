@@ -2,6 +2,7 @@ package com.zczp.cmsController_yycoder;
 
 import com.zczp.entity.TbCity;
 import com.zczp.entity.TbPostType;
+import com.zczp.service_yycoder.HomeService;
 import com.zczp.service_yycoder.LabelService;
 import com.zczp.util.AjaxResult;
 import io.swagger.annotations.Api;
@@ -10,13 +11,28 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Api(tags = "前台管理--标签管理")
 @RequestMapping("label")
 public class LabelController {
 
-    @Autowired(required = false)
+    @Autowired
     private LabelService labelService;
+
+    @Autowired
+    private HomeService homeService;
+
+    @GetMapping("city/list")
+    @ApiOperation("获取城市标签")
+    public AjaxResult getCityLabelList() {
+        List<TbCity> tbCityList = homeService.getAllCitySort();
+        if (tbCityList != null) {
+            return new AjaxResult().ok(tbCityList);
+        }
+        return new AjaxResult().error("数据库中没有相应的城市分类");
+    }
 
     @PostMapping("/city/add")
     @ApiOperation("新增城市标签")
@@ -53,6 +69,16 @@ public class LabelController {
         }
         return new AjaxResult().error("删除城市标签失败");
 
+    }
+
+    @GetMapping("/postType/list")
+    @ApiOperation("获取岗位标签")
+    public AjaxResult getPostTypeLabelList() {
+        List<TbPostType> tbPostTypeList = homeService.getAllJobTypeSort();
+        if (tbPostTypeList != null) {
+            return new AjaxResult().ok(tbPostTypeList);
+        }
+        return new AjaxResult().error("数据库中没有职位类型");
     }
 
     @PostMapping("/postType/add")

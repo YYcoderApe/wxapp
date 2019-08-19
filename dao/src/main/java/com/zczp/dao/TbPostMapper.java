@@ -26,7 +26,6 @@ public interface TbPostMapper  extends BaseMapper<TbPostWithBLOBs>{
 
     int updateReliabilityByPrimaryKey(TbPostWithBLOBs record);
 
-
     //取出对应用户openId发布的招聘信息
     List<PostDetailVo> getPostIssueByOpenId(String openId);
 
@@ -38,11 +37,7 @@ public interface TbPostMapper  extends BaseMapper<TbPostWithBLOBs>{
     //取出Post表中字段信息展现在首页
     List<PostDetailVo> getPostDetail();
 
-    //根据条件展示招聘信息
-//    List<PostDetailVo> getPostByCondition(
-//            @Param("cityName") String cityName,
-//            @Param("jobType")String jobType,
-//            @Param("postType") String postType);
+    //根据条件展示招聘信息;
     List<PostDetailVo> getPostByCondition(ConditionVo conditionVo);
 
     //根据post_id查找post信息

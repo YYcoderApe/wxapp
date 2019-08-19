@@ -4,9 +4,7 @@ import com.zczp.dao.TbCityMapper;
 import com.zczp.dao.TbPostMapper;
 import com.zczp.dao.TbPostTypeMapper;
 import com.zczp.entity.TbCity;
-import com.zczp.entity.TbPost;
 import com.zczp.entity.TbPostType;
-import com.zczp.entity.TbPostWithBLOBs;
 import com.zczp.service_yycoder.HomeService;
 import com.zczp.vo_yycoder.ConditionVo;
 import com.zczp.vo_yycoder.PostDetailVo;
@@ -31,14 +29,12 @@ public class HomeServiceImpl implements HomeService {
     List<PostDetailVo> postDetailVoList=null;
 
     @Override
-    @Transactional
     public List<PostDetailVo> getPostDetail() {
         postDetailVoList= tbPostMapper.getPostDetail();
         return postDetailVoList;
     }
 
     @Override
-    @Transactional
     public List<TbCity> getAllCitySort() {
         List<TbCity> tbCityList=tbCityMapper.selectAllCity();
         return tbCityList;
@@ -54,7 +50,6 @@ public class HomeServiceImpl implements HomeService {
     public List<PostDetailVo> getPostByCondition(ConditionVo conditionVo) {
         postDetailVoList=tbPostMapper.getPostByCondition(conditionVo);
         return postDetailVoList;
-
     }
 
 }

@@ -1,10 +1,6 @@
 package com.zczp.service_yycoder;
 
-import com.zczp.entity.TbComment;
-import com.zczp.util.PageQueryUtil;
-import com.zczp.util.PageResult;
 import com.zczp.vo_yycoder.*;
-
 import java.util.List;
 
 public interface UserService {

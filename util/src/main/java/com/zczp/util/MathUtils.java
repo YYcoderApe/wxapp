@@ -3,7 +3,7 @@ package com.zczp.util;
 /**
  * @Description: 随机数生成工具类
  * @author: YYcoder
- * @date: 2019/4/14 12:38
+ * @date: 2019/8/10 12:38
  */
 public class MathUtils {
 

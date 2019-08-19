@@ -1,7 +1,6 @@
 package com.zczp.service_yycoder;
 
 import com.zczp.vo_yycoder.MyAskReplyVo;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

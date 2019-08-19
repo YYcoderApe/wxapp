@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -27,11 +28,22 @@ public class BannerController {
 
     @Value("${qiniu.path}")
     private String Path;
+
     @Autowired
     private PosterService posterService;
+
     @Autowired
     private FileService fileService;
 
+    @GetMapping("/getAllBanner")
+    @ApiOperation("获取所有海报")
+    public AjaxResult getAllposter() {
+        List<TbPoster> userList = posterService.getAllPoster();
+        if (userList != null) {
+            return new AjaxResult().ok(userList);
+        }
+        return new AjaxResult().error("库存中没有海报图");
+    }
 
     @PostMapping("/addBanner")
     @ApiOperation("新增海报")

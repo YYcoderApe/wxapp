@@ -94,13 +94,11 @@ public class UserInfoController {
             @RequestParam @ApiParam("当前用户ID") String openId,
             @RequestParam @ApiParam("当前页") Integer page) {
         List<PostDetailVo> postDetailVoList = userService.getUserIssue(openId);
-        if (postDetailVoList.size() > 10) {
+        if (postDetailVoList != null) {
             List<PostDetailVo> list = new ArrayList<PostDetailVo>();
             int pageStart = (page - 1) * 10;
             list = postDetailVoList.subList(pageStart, postDetailVoList.size() - pageStart > 10 ? pageStart + 10 : postDetailVoList.size());
             pageResult = new PageResult(list, postDetailVoList.size(), 10, page);
-        }
-        if (postDetailVoList != null) {
             return new AjaxResult().ok(pageResult);
         }
         return new AjaxResult().error("该用户没有发布任何招聘信息");

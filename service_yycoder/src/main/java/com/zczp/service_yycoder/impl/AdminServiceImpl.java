@@ -6,11 +6,8 @@ import com.zczp.service_yycoder.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.print.attribute.standard.RequestingUserName;
-
 @Service
 public class AdminServiceImpl implements AdminService {
-
 
     @Autowired(required = false)
     private TbAdminMapper tbAdminMapper;

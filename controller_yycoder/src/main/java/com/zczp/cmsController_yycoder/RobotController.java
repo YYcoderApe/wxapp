@@ -2,9 +2,11 @@ package com.zczp.cmsController_yycoder;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zczp.entity.TbPostWithBLOBs;
+
 import com.zczp.service_cancer.Impl.TbCommentServiceImpl;
-import com.zczp.service_cancer.Impl.TbPostServiceImpl;
 import com.zczp.service_cancer.Impl.TbReliabilityServiceImpl;
+import com.zczp.service_cancer.TbCommentService;
+import com.zczp.service_cancer.TbReliabilityService;
 import com.zczp.service_cancer.TbPostService;
 import com.zczp.service_yycoder.AskReplyService;
 import com.zczp.service_yycoder.FileService;
@@ -12,7 +14,6 @@ import com.zczp.service_yycoder.UserService;
 import com.zczp.util.AjaxResult;
 import com.zczp.util.PageQueryUtil;
 import com.zczp.util.PageResult;
-import com.zczp.util.TokenUtil;
 import com.zczp.vo_cancer.CommentVo;
 import com.zczp.vo_cancer.PostDetailsVo;
 import com.zczp.vo_yycoder.MyAskReplyVo;
@@ -43,14 +44,13 @@ public class RobotController {
 
     @Value("${qiniu.path}")
     private String Path;
-    @Autowired
-    TokenUtil tokenUtil;
+
 
     @Autowired
-    private TbCommentServiceImpl tbCommentService;
+    private TbCommentService tbCommentService;
 
     @Autowired
-    private TbReliabilityServiceImpl tbReliabilityService;
+    private TbReliabilityService tbReliabilityService;
     @Autowired
     private UserService userService;
 
@@ -105,6 +105,7 @@ public class RobotController {
     @PutMapping("updateRobotUser")
     @ApiOperation("用户信息  ---   修改虚拟用户")
     public AjaxResult updateRobotUser(
+            @RequestParam @ApiParam("用户的openId") String openId,
             @RequestParam(value = "file") @ApiParam("上传头像") MultipartFile upfile,
             @ModelAttribute UserInfoVo userInfoVo) throws IOException {
         File file = new File(url + upfile.getOriginalFilename());
@@ -112,14 +113,14 @@ public class RobotController {
         upfile.transferTo(file);
         String userInfoStr = JSONObject.toJSONString(userInfoVo);
         UserDetailVo userDetailVo = JSONObject.parseObject(userInfoStr,UserDetailVo.class);
-
-        //访问的具体网址
+        userDetailVo.setOpenId(openId);
         userDetailVo.setUserImage(Path + "/" + fileService.uploadFile(file).get("imgName"));
-        int result = userService.addRobotUserIfo(userDetailVo);
+        //访问的具体网址
+        int result = userService.updateUserIfoById(userDetailVo);
         if (result > 0) {
-            return new AjaxResult().ok("新增成功");
+            return new AjaxResult().ok("更新成功");
         }
-        return new AjaxResult().error("新增失败");
+        return new AjaxResult().error("更新失败");
     }
 
     @GetMapping("/getRobotUserById")
@@ -159,13 +160,11 @@ public class RobotController {
             @RequestParam @ApiParam("当前用户ID") String openId,
             @RequestParam @ApiParam("当前页") Integer page) {
         List<PostDetailVo> postDetailVoList = userService.getUserIssue(openId);
-        if (postDetailVoList.size() > 10) {
+        if (postDetailVoList != null) {
             List<PostDetailVo> list = new ArrayList<PostDetailVo>();
             int pageStart = (page - 1) * 10;
             list = postDetailVoList.subList(pageStart, postDetailVoList.size() - pageStart > 10 ? pageStart + 10 : postDetailVoList.size());
             pageResult = new PageResult(list, postDetailVoList.size(), 10, page);
-        }
-        if (postDetailVoList != null) {
             return new AjaxResult().ok(pageResult);
         }
         return new AjaxResult().error("该用户没有发布任何招聘信息");
