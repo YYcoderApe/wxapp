@@ -6,7 +6,6 @@ import com.zczp.dao.TbPostMapper;
 import com.zczp.entity.TbAskReply;
 import com.zczp.entity.TbComment;
 import com.zczp.service_yycoder.AskReplyService;
-import com.zczp.vo_cancer.CommentsVo;
 import com.zczp.vo_yycoder.CollectPostDetailVo;
 import com.zczp.vo_yycoder.MyAskReplyVo;
 import com.zczp.vo_yycoder.TbCommentsVo;
@@ -37,9 +36,7 @@ public class AskReplyServiceImpl implements AskReplyService {
     //评论表对象
     TbCommentsVo tbCommentsVo=new TbCommentsVo();
 
-
     @Override
-    @Transactional
     public List<MyAskReplyVo> getMyAskReplyList(String openId){
         TbComment tbComment=new TbComment();
         //含评论表和post表
@@ -75,7 +72,6 @@ public class AskReplyServiceImpl implements AskReplyService {
     }
 
     @Override
-    @Transactional
     public List<MyAskReplyVo> getMyReplyMsgList(String openId) {
         TbComment tbComment=new TbComment();
         List<MyAskReplyVo> myAskReplyVoList = new ArrayList<MyAskReplyVo>();
@@ -106,12 +102,12 @@ public class AskReplyServiceImpl implements AskReplyService {
     }
 
     @Override
-    @Transactional
     public int deleteTbCommentBycommentId(Integer commentId){
         return tbCommentMapper.deleteByPrimaryKey(commentId);
     }
 
     @Override
+    @Transactional
     public int deleteTbComment(String openId, Integer postId) {
         List<Integer> list = tbCommentMapper.getAllCommentId(openId, postId);
         for(Integer index:list){
@@ -120,7 +116,6 @@ public class AskReplyServiceImpl implements AskReplyService {
         tbAskReplyMapper.deleteById(openId, postId);
         return 1;
     }
-
 
 }
 

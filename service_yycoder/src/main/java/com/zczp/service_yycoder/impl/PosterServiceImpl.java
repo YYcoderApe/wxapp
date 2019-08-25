@@ -5,7 +5,6 @@ import com.zczp.entity.TbPoster;
 import com.zczp.service_yycoder.PosterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,7 +15,6 @@ public class PosterServiceImpl implements PosterService {
     private TbPosterMapper tbPosterMapper;
 
     @Override
-    @Transactional
     public List<TbPoster> getAllPoster() {
         List<TbPoster> PosterList = tbPosterMapper.selectAllPoster();
         if(PosterList!=null){
@@ -26,7 +24,6 @@ public class PosterServiceImpl implements PosterService {
     }
 
     @Override
-    @Transactional
     public TbPoster getPosterById(Integer posterId) {
         TbPoster tbPoster = tbPosterMapper.selectByPrimaryKey(posterId);
         if(tbPoster!=null){

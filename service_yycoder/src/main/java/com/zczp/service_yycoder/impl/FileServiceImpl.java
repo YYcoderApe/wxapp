@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * @author ：
  * @ClassName ：FileServiceImpl
- * @date : 2019/4/3 10:05
+ * @date : 2019/8/3 10:05
  * @description : TODO
  */
 
@@ -32,10 +32,8 @@ public class FileServiceImpl implements FileService {
     @Autowired
     private Auth auth;
 
-
     @Value("${qiniu.bucket}")
     private String bucket;
-
 
     private StringMap putPolicy;
 

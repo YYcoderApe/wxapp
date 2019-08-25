@@ -3,17 +3,12 @@ package com.zczp.service_yycoder.impl;
 import com.zczp.dao.TbCityMapper;
 import com.zczp.dao.TbPostTypeMapper;
 import com.zczp.entity.TbCity;
-import com.zczp.entity.TbPost;
 import com.zczp.entity.TbPostType;
 import com.zczp.service_yycoder.LabelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
 @Service
 public class LabelServiceImpl implements LabelService {
@@ -29,7 +24,6 @@ public class LabelServiceImpl implements LabelService {
 
     @Override
     public int addCityLabel(String cityName) {
-
         tbCity.setCityName(cityName);
         tbCity.setCityNewDate(new Date());
         int result = tbCityMapper.insert(tbCity);
@@ -44,9 +38,9 @@ public class LabelServiceImpl implements LabelService {
 
     @Override
     public int deleteCityLabel(Integer cityId) {
-        tbCityMapper.deleteByPrimaryKey(cityId);
+        int res =tbCityMapper.deleteByPrimaryKey(cityId);
         tbCityMapper.updateSerialNumber();
-        return 1;
+        return res;
     }
 
     @Override
@@ -65,8 +59,8 @@ public class LabelServiceImpl implements LabelService {
 
     @Override
     public int deletePostTypeLabel(Integer typeId) {
-        tbPostTypeMapper.deleteByPrimaryKey(typeId);
+        int result = tbPostTypeMapper.deleteByPrimaryKey(typeId);
         tbPostTypeMapper.updateSerialNumber(typeId);
-        return 1;
+        return result;
     }
 }

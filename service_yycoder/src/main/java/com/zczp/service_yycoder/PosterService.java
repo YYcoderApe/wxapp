@@ -1,10 +1,6 @@
 package com.zczp.service_yycoder;
 
 import com.zczp.entity.TbPoster;
-
-import java.util.List;
-import com.zczp.entity.TbPoster;
-
 import java.util.List;
 
 public interface PosterService {
