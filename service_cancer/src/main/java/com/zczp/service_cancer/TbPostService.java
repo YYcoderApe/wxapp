@@ -25,7 +25,7 @@ public interface TbPostService {
 
     int deletePostById(int postId);
 
-    List<String> getSearchHistory();
-
-    void deleteHistory();
+//    List<String> getSearchHistory();
+//
+//    void deleteHistory();
 }

@@ -38,19 +38,18 @@ public class CompanyController {
     @Autowired
     private FileServiceImpl fileService;
 
-    PageResult pageResult;
-    //每次展示条数
-    int pageSize=10;
+//    PageResult pageResult;
+//    //每次展示条数
+//    int pageSize=10;
     @ApiOperation("展示所以公司")
     @GetMapping("/showCompany")
-    public AjaxResult showComopany(
-            @RequestParam @ApiParam("页数")int pageNum){
-        PageHelper.startPage(pageNum,pageSize);
+    public AjaxResult showComopany(){
+//        PageHelper.startPage(pageNum,pageSize);
         List<CompanyVo> companyVos=tbCompanyService.selectAll();
-        int totalTags=tbCompanyService.getTotalTags();
+//        int totalTags=tbCompanyService.getTotalTags();
         if (!companyVos.isEmpty()){
-            pageResult=new PageResult(companyVos,totalTags,pageSize,pageNum);
-            return ajaxResult.ok(pageResult);
+//            pageResult=new PageResult(companyVos,totalTags,pageSize,pageNum);
+            return ajaxResult.ok(companyVos);
         }
         return ajaxResult.error("操作失败");
     }
@@ -58,15 +57,14 @@ public class CompanyController {
     @ApiOperation("搜索公司")
     @GetMapping("/search")
     public AjaxResult searchCompany(
-            @RequestParam @ApiParam("页数")int pageNum,
             @RequestParam @ApiParam("公司名称")String companyName){
 
-        PageHelper.startPage(pageNum,pageSize);
+//        PageHelper.startPage(pageNum,pageSize);
         List<CompanyVo> companyVos=tbCompanyService.selectByName(companyName);
-        int totalTags=tbCompanyService.getSearchTags(companyName);
+//        int totalTags=tbCompanyService.getSearchTags(companyName);
         if (!companyVos.isEmpty()){
-            pageResult=new PageResult(companyVos,totalTags,pageSize,pageNum);
-            return ajaxResult.ok(pageResult);
+//            pageResult=new PageResult(companyVos,totalTags,pageSize,pageNum);
+            return ajaxResult.ok(companyVos);
         }
         return ajaxResult.ok("没有此公司");
     }

@@ -148,13 +148,13 @@
     where post_id = #{postId,jdbcType=INTEGER}
   </delete>
     <insert id="insert" parameterType="com.zczp.entity.TbPostWithBLOBs">
-    insert into tb_post (post_id, type_id, company_id,
+    insert into tb_post (type_id, company_id,
       job_type, reliability, city_id, 
       post_time, Internship_time, entry_time,
       delivery_method, title, open_id,
       state, requirement, job_description,
       work_address)
-    values (#{postId,jdbcType=INTEGER}, #{typeId,jdbcType=INTEGER}, #{companyId,jdbcType=INTEGER},
+    values (#{typeId,jdbcType=INTEGER}, #{companyId,jdbcType=INTEGER},
       #{jobType,jdbcType=VARCHAR}, #{reliability,jdbcType=INTEGER}, #{cityId,jdbcType=INTEGER}, 
       #{postTime,jdbcType=TIMESTAMP}, #{internshipTime,jdbcType=VARCHAR}, #{entryTime,jdbcType=VARCHAR},
       #{deliveryMethod,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR},

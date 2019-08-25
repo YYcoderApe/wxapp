@@ -30,16 +30,16 @@ public class HomeController {
     @Autowired
     private AjaxResult ajaxResult;
 
-    private PageResult pageResult;
+//    private PageResult pageResult;
     @GetMapping(value="/index")
-    @ApiOperation("分页展示信息列表")
-    public AjaxResult getAllPost(@RequestParam @ApiParam("页数") int pageNum) {
-        PageHelper.startPage(pageNum,10);
+    @ApiOperation("展示信息列表")
+    public AjaxResult getAllPost() {
+//        PageHelper.startPage(pageNum,10);
         List<PostDetailVo> postDetailVos = homeService.getPostDetail();
-        int totalTags=homeService.getTotalTags();
+//        int totalTags=homeService.getTotalTags();
         if(postDetailVos!=null){
-            pageResult=new PageResult(postDetailVos,totalTags,10,pageNum);
-            return ajaxResult.ok(pageResult);
+//            pageResult=new PageResult(postDetailVos,totalTags,10,pageNum);
+            return ajaxResult.ok(postDetailVos);
         }
         return new AjaxResult().error("库存中表post没数据或信息待审核");
     }

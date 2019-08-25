@@ -34,10 +34,9 @@ public class PostController {
     @ApiOperation("招聘信息详情")
     @GetMapping("/postDetail")
     public AjaxResult postDetail(
-            @RequestParam @ApiParam("页数") int pageNum,
             @RequestParam @ApiParam("招聘信息Id") int postId,
             @RequestParam @ApiParam ("当前用户Id") String openId){
-        PostDetailsVo postDetailsVo =tbPostService.selectDetailByPrimaryKey(postId,openId,pageNum);
+        PostDetailsVo postDetailsVo =tbPostService.selectDetailByPrimaryKey(postId,openId,null);
         if(postDetailsVo!=null){
             return ajaxResult.ok(postDetailsVo);
         }

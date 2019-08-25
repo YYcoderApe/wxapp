@@ -33,17 +33,17 @@ public class SearchController {
         return ajaxResult.error("没有该招聘信息");
     }
 
-    @ApiOperation("历史记录")
-    @GetMapping("/history")
-    public AjaxResult history(){
-        List<String> list=tbPostService.getSearchHistory();
-        return ajaxResult.ok(list);
-    }
-
-    @ApiOperation("清空历史记录")
-    @GetMapping("/deleteHistory")
-    public AjaxResult deleteHistory(){
-        tbPostService.deleteHistory();
-        return ajaxResult.ok("删除成功");
-    }
+//    @ApiOperation("历史记录")
+//    @GetMapping("/history")
+//    public AjaxResult history(){
+//        List<String> list=tbPostService.getSearchHistory();
+//        return ajaxResult.ok(list);
+//    }
+//
+//    @ApiOperation("清空历史记录")
+//    @GetMapping("/deleteHistory")
+//    public AjaxResult deleteHistory(){
+//        tbPostService.deleteHistory();
+//        return ajaxResult.ok("删除成功");
+//    }
 }
