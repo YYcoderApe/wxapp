@@ -91,12 +91,7 @@ public class PostController {
     @ApiOperation("生成海报")
     @GetMapping("/poster")
     public  AjaxResult poster(){
-//        String a  =tokenUtil.getToken("Authorization");
-//        System.out.println(a);
-//        String s=request.getHeader("Authorization");
-//        System.out.println(s);
-//        StringRedisTemplate redisTemplate=new StringRedisTemplate();
-//        redisTemplate.opsForValue().set("JWT-SESSION-" , "测试", 7200, TimeUnit.SECONDS);
+
         return ajaxResult.ok("成功");
     }
 }
