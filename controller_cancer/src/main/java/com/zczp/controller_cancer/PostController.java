@@ -42,7 +42,7 @@ public class PostController {
         if(postDetailsVo!=null){
             return ajaxResult.ok(postDetailsVo);
         }
-        return ajaxResult.error("查询失败");
+        return ajaxResult.error("查询失败，没有此信息");
     }
 
     @ApiOperation("评论")

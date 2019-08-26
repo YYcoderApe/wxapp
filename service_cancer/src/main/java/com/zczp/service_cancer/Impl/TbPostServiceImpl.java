@@ -44,6 +44,7 @@ public class TbPostServiceImpl implements TbPostService {
     @Override
     public PostDetailsVo selectDetailByPrimaryKey(Integer postId,String openId,Integer pageNum) {
         PostDetailsVo postDetailsVo=tbPostMapper.selectDetailByPrimaryKey(postId);
+        if (postDetailsVo==null) return null;
         int pageSize=5;
         if (pageNum!=null){
             PageHelper.startPage(pageNum,pageSize);
