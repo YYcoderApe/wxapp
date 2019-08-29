@@ -45,6 +45,7 @@ public class TbPostServiceImpl implements TbPostService {
     public PostDetailsVo selectDetailByPrimaryKey(Integer postId,String openId,Integer pageNum) {
         PostDetailsVo postDetailsVo=tbPostMapper.selectDetailByPrimaryKey(postId);
         if (postDetailsVo==null) return null;
+        //分页查询评论
         int pageSize=5;
         if (pageNum!=null){
             PageHelper.startPage(pageNum,pageSize);
@@ -54,34 +55,38 @@ public class TbPostServiceImpl implements TbPostService {
             commentVo.setCommentList(tbCommentService.selectAllByPrimaryReplyId(commentVo.getCommentId()));
         }
         postDetailsVo.setCommentsVoList(commentsVoList);
-        String key =RedisKeyUtil.getKey(openId,postId);
-        //查询可信度状态
-        int reliabilityState;
-        String sate=redisUtil.hget(RedisKeyUtil.MAP_KEY_RELIABILITY,key);
-        if (sate!=null){
-             reliabilityState=Integer.valueOf(sate);
-        }else {
-            reliabilityState = tbReliabilityService.selectByPostIdAndUserId(postId,openId);
-            redisUtil.hset(RedisKeyUtil.MAP_KEY_RELIABILITY,key,String.valueOf(reliabilityState));
+        if (openId!=null){
+            String key =RedisKeyUtil.getKey(openId,postId);
+            //查询可信度状态
+            int reliabilityState;
+            String sate=redisUtil.hget(RedisKeyUtil.MAP_KEY_RELIABILITY,key);
+            if (sate!=null){
+                reliabilityState=Integer.valueOf(sate);
+            }else {
+                reliabilityState = tbReliabilityService.selectByPostIdAndUserId(postId,openId);
+                redisUtil.hset(RedisKeyUtil.MAP_KEY_RELIABILITY,key,String.valueOf(reliabilityState));
+            }
+            postDetailsVo.setReliabilityState(reliabilityState);
+            //查询可信度数
+            String reliability =redisUtil.hget(RedisKeyUtil.MAP_KEY_RELIABILITY_COUNT,postId.toString());
+            if (reliability!=null){
+                postDetailsVo.setReliability(postDetailsVo.getReliability()+Integer.valueOf(reliability));
+            }
+            //查询收藏状态
+            int collectState;
+            String state1 = redisUtil.hget(RedisKeyUtil.MAP_KEY_COLLECT,key);
+            if(state1!=null){
+                collectState=Integer.valueOf(state1);
+            }else {
+                collectState =tbCollectService.selectByPostIdAndUserId(postId,openId);
+                redisUtil.hset(RedisKeyUtil.MAP_KEY_COLLECT,key,String.valueOf(collectState));
+            }
+            postDetailsVo.setCollectState(collectState);
         }
-        postDetailsVo.setReliabilityState(reliabilityState);
-        //查询可信度数
-        String reliability =redisUtil.hget(RedisKeyUtil.MAP_KEY_RELIABILITY_COUNT,postId.toString());
-        if (reliability!=null){
-            postDetailsVo.setReliability(postDetailsVo.getReliability()+Integer.valueOf(reliability));
-        }
-        //查询收藏状态
-        int collectState;
-        String state1 = redisUtil.hget(RedisKeyUtil.MAP_KEY_COLLECT,key);
-        if(state1!=null){
-            collectState=Integer.valueOf(state1);
-        }else {
-            collectState =tbCollectService.selectByPostIdAndUserId(postId,openId);
-            redisUtil.hset(RedisKeyUtil.MAP_KEY_COLLECT,key,String.valueOf(collectState));
-        }
-        postDetailsVo.setCollectState(collectState);
+        //查询评论数
         int totalCount=tbCommentService.getTotalTags(postId);
         postDetailsVo.setTotalCount(totalCount);
+        //
         if (pageNum!=null) {
             postDetailsVo.setCurrPage(pageNum);
             postDetailsVo.setPageSize(pageSize);

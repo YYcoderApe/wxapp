@@ -61,7 +61,7 @@ public class ShirConfig {
         filterRuleMap.put("/v2/**", "anon");
         filterRuleMap.put("/webjars/**", "anon");
         // 所有请求通过JWT Filter
-        filterRuleMap.put("/**", "jwt");
+//        filterRuleMap.put("/**", "jwt");
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return factoryBean;
     }

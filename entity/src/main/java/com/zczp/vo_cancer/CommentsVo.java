@@ -25,8 +25,8 @@ public class CommentsVo {
     @ApiModelProperty("用户ID")
     private Integer fromId;
 
-    @ApiModelProperty("用户ID")
-    private Integer userImage;
+    @ApiModelProperty("用户头像")
+    private String userImage;
 
     @ApiModelProperty("用户名")
     private String userName;

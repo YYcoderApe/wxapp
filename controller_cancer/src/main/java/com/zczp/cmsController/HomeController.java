@@ -48,7 +48,7 @@ public class HomeController {
     @GetMapping("/searchPost")
     public AjaxResult searchPost(@RequestParam @ApiParam("公司名称") String company){
         List<PostDetailVo> postDetailVoList=tbPostService.selectByCompany(company);
-        if (postDetailVoList!=null){
+        if (!postDetailVoList.isEmpty()){
             return ajaxResult.ok(postDetailVoList);
         }
         return ajaxResult.error("没有该招聘信息");

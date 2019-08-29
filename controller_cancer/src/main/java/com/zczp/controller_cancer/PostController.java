@@ -37,7 +37,7 @@ public class PostController {
     @GetMapping("/postDetail")
     public AjaxResult postDetail(
             @RequestParam @ApiParam("招聘信息Id") int postId,
-            @RequestParam @ApiParam ("当前用户Id") String openId){
+            @RequestParam(required = false) @ApiParam ("当前用户Id") String openId){
         PostDetailsVo postDetailsVo =tbPostService.selectDetailByPrimaryKey(postId,openId,null);
         if(postDetailsVo!=null){
             return ajaxResult.ok(postDetailsVo);

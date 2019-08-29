@@ -35,12 +35,12 @@ public class PostController {
     @GetMapping("/postDetail")
     public AjaxResult postDetail(
             @RequestParam @ApiParam("招聘信息Id") int postId,
-            @RequestParam @ApiParam ("当前用户Id") String openId){
+            @RequestParam(required = false) @ApiParam ("当前用户Id") String openId){
         PostDetailsVo postDetailsVo =tbPostService.selectDetailByPrimaryKey(postId,openId,null);
         if(postDetailsVo!=null){
             return ajaxResult.ok(postDetailsVo);
         }
-        return ajaxResult.error("查询失败");
+        return ajaxResult.error("查询失败,没有此信息");
     }
 
     @ApiOperation("删除招聘信息")

@@ -27,10 +27,6 @@ import java.util.Map;
 @Api(tags = "公司管理模块")
 @RequestMapping("/api/company")
 public class CompanyController {
-    @Value("${baseUploadUrl}")
-    private String url;
-    @Value("${qiniu.path}")
-    private String Path;
     @Autowired
     private TbCompanyServiceImpl tbCompanyService;
     @Autowired
@@ -72,14 +68,14 @@ public class CompanyController {
     @ApiOperation("新增公司")
     @PostMapping("/addCompany")
     public AjaxResult addCompany(
-            @RequestParam(value = "file") @ApiParam("上传图片") MultipartFile upfile,
-            @RequestParam @ApiParam("公司名称") String companyName) throws IOException {
-        File file = new File(url + upfile.getOriginalFilename());
+            @RequestParam @ApiParam("公司logoUrl") String companyLogoUrl ,
+            @RequestParam @ApiParam("公司名称") String companyName) {
+//        File file = new File(url + upfile.getOriginalFilename());
         Map<String,Object> map = new HashMap<>();
-        //将MulitpartFile文件转化为file文件格式
-        upfile.transferTo(file);
+//        //将MulitpartFile文件转化为file文件格式
+//        upfile.transferTo(file);
         CompanyVo companyVo=new CompanyVo();
-        companyVo.setCompanyLogo(Path + "/" + fileService.uploadFile(file).get("imgName"));
+        companyVo.setCompanyLogo(companyLogoUrl);
         companyVo.setCompanyName(companyName);
         Integer result=tbCompanyService.addCompany(companyVo);
         System.out.println(result);
@@ -98,13 +94,13 @@ public class CompanyController {
     public AjaxResult updateCompany(
             @RequestParam @ApiParam("公司Id")int companyId,
             @RequestParam @ApiParam("公司名称")String companyName,
-            @RequestParam(value = "file") @ApiParam("上传图片") MultipartFile upfile) throws IOException {
+            @RequestParam @ApiParam("公司logoUrl") String companyLogoUrl){
         Map<String,Object> map = new HashMap<>();
-        File file = new File(url + upfile.getOriginalFilename());
-        //将MulitpartFile文件转化为file文件格式
-        upfile.transferTo(file);
+//        File file = new File(url + upfile.getOriginalFilename());
+//        //将MulitpartFile文件转化为file文件格式
+//        upfile.transferTo(file);
         CompanyVo companyVo=new CompanyVo();
-        companyVo.setCompanyLogo(Path + "/" + fileService.uploadFile(file).get("imgName"));
+        companyVo.setCompanyLogo(companyLogoUrl);
         companyVo.setCompanyName(companyName);
         companyVo.setCompanyId(companyId);
         Integer result=tbCompanyService.updateCompany(companyVo);
