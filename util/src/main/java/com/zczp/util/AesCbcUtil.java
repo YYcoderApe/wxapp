@@ -1,7 +1,8 @@
 package com.zczp.util;
 
+import org.apache.tomcat.util.codec.binary.Base64;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
-import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -16,10 +17,10 @@ import java.security.spec.InvalidParameterSpecException;
 public class AesCbcUtil {
 
 
-//    static {
-//        //BouncyCastle是一个开源的加解密解决方案，主页在http://www.bouncycastle.org/
-//        Security.addProvider(new BouncyCastleProvider());
-//    }
+    static {
+        //BouncyCastle是一个开源的加解密解决方案，主页在http://www.bouncycastle.org/
+        Security.addProvider(new BouncyCastleProvider());
+    }
 
     /**
      * AES解密

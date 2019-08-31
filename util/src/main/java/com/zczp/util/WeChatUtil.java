@@ -1,27 +1,15 @@
 package com.zczp.util;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.zczp.entity.TbUser;
 import com.zczp.entity.WxAccount;
 import com.zczp.vo_cancer.AuthorizeVO;
-import com.zczp.vo_cancer.JwtToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
-import org.springframework.util.Base64Utils;
-import org.springframework.util.StringUtils;
-import springfox.documentation.spring.web.json.Json;
 
-import javax.crypto.Cipher;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
-import java.io.IOException;
-import java.security.AlgorithmParameters;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,7 +39,8 @@ public class WeChatUtil {
         param.put("grant_type", "authorization_code");
         //发送请求
         String wxResult = HttpClientUtil.doGet(url,param);
-        JsonObject jsonObject = new JsonParser().parse(wxResult).getAsJsonObject();
+//        JsonObject jsonObject = new JsonParser().parse(wxResult).getAsJsonObject();
+        Map<String, Object> jsonObject = JsonUtils.json2object(wxResult, Map.class, String.class, Object.class);
         String openId =jsonObject.get("openid").toString();
         String sessionKey = jsonObject.get("session_key").toString();
         WxAccount wxAccount=new WxAccount(openId,sessionKey);
@@ -74,7 +63,13 @@ public class WeChatUtil {
         param.put("grant_type", "authorization_code");
         //发送请求
         String wxResult = HttpClientUtil.doGet(url,param);
-        JsonObject jsonObject = new JsonParser().parse(wxResult).getAsJsonObject();
+//        JsonObject jsonObject = new JsonParser().parse(wxResult).getAsJsonObject();
+        Map<String, Object> jsonObject = JsonUtils.json2object(wxResult, Map.class, String.class, Object.class);
+        if (jsonObject==null){
+            logger.info("获取openID和sessionKey失败");
+            return null;
+        }
+        logger.info("获取Openid："+jsonObject.get("openid").toString()+"获取sessionKey:" +jsonObject.get("session_key"));
         String openId =jsonObject.get("openid").toString();
         String sessionKey = jsonObject.get("session_key").toString();
         WxAccount wxAccount=new WxAccount(openId,sessionKey);
