@@ -8,9 +8,9 @@ import jdk.nashorn.internal.parser.Token;
 
 public interface WxUserService {
 
-//    String authorize(AuthorizeVO authorizeVO);
-//
-//    String login(String code);
+    String authorize(AuthorizeVO authorizeVO);
+
+    String login(String code);
 
     int save(TbUser tbUser);
 }

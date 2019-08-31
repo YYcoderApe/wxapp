@@ -20,8 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
+import sun.misc.BASE64Encoder;
 
 import java.io.File;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +31,26 @@ import java.util.List;
 @SpringBootTest
 public class WebApplicationTests {
 
+  @Test
+  public void test(){
+    String a="dssfsfsdfdfs";
+    String b="dsfsdfsdfsdfs";
+    System.out.println(a+"        "+b);
+  }
+//MD5加密
+  @Test
+  public void getEncryptedPassword(){
+    try{
+      MessageDigest md5=MessageDigest.getInstance("MD5");
+      BASE64Encoder base64en = new BASE64Encoder();
+      //加密后的字符串
+      String newPassword=base64en.encode(md5.digest("123456".getBytes("utf-8")));
+      System.out.println("密码"+newPassword+"密码");
+    }catch (Exception e){
+      e.printStackTrace();
+      System.out.println();
+    }
+  }
 //    @Test
 //    public void contextLoads() {
 //         //url中的  appid 和  secret 开发者会给你  这相当于你小程序的ID和密码       js_code 也会给你  js_code是用微信开发者工具调用方法获得

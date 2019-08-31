@@ -1,7 +1,5 @@
 package com.zczp.cmsController;
 
-import com.github.pagehelper.PageHelper;
-import com.zczp.service_cancer.Impl.TbCollectServiceImpl;
 import com.zczp.service_cancer.Impl.TbCommentServiceImpl;
 import com.zczp.service_cancer.Impl.TbPostServiceImpl;
 import com.zczp.service_cancer.Impl.TbReliabilityServiceImpl;
@@ -12,7 +10,6 @@ import com.zczp.vo_cancer.PostDetailsVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -74,7 +71,7 @@ public class PostController {
     }
 
     @ApiOperation("修改可信度")
-    @PostMapping("/reliability")
+    @PutMapping("/reliability")
     public  AjaxResult reliability(
             @RequestParam @ApiParam("0-取消 1-可信") int r,
             @RequestParam @ApiParam("招聘信息表Id") int postId,
