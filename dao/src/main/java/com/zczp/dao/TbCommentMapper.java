@@ -3,6 +3,7 @@ package com.zczp.dao;
 import com.zczp.entity.TbComment;
 import com.zczp.vo_cancer.CommentsVo;
 import com.zczp.vo_yycoder.TbCommentsVo;
+import com.zczp.vo_yycoder.UserAskReplyVo;
 import org.springframework.stereotype.Repository;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,6 +16,9 @@ public interface TbCommentMapper extends BaseMapper<TbComment>{
 
     //查询提问
     List<TbCommentsVo> selectTbCommentList(TbComment tbComment);
+
+    //后台查询问答列表
+    List<TbComment> getUserCommentList(TbComment tbComment);
 
     //查询回复
     List<TbCommentsVo> selectCommentList(TbComment tbComment);
@@ -31,4 +35,5 @@ public interface TbCommentMapper extends BaseMapper<TbComment>{
             @Param("postId") Integer postId);
 
     int getTotalTags(int postId);
+
 }

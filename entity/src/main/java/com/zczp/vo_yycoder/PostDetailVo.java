@@ -1,7 +1,9 @@
 package com.zczp.vo_yycoder;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
 import lombok.Data;
 
 import java.util.Date;
@@ -10,6 +12,9 @@ import java.util.Date;
 public class PostDetailVo {
     @ApiModelProperty("postId")
     private Integer postId;
+
+    @ApiModelProperty("openId")
+    private String openId;
 
     @ApiModelProperty("招聘的title")
     private String title;
@@ -33,6 +38,7 @@ public class PostDetailVo {
     private String cityName;
 
     @ApiModelProperty("发布时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" ,timezone = "GMT+8")
     private Date postTime;
 
     @ApiModelProperty("实习时长")

@@ -5,7 +5,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 
 /**
  * Created by EalenXie on 2018/11/22 18:21.
- * 鉴权用的token vo ，实现 AuthenticationToken
+ *  * 鉴权用的token vo ，实现 AuthenticationToken
  */
 @Data
 public class JwtToken implements AuthenticationToken {

@@ -12,7 +12,4 @@ public interface TbCityMapper extends BaseMapper<TbCity>{
     //查看所有城市的分类
     List<TbCity> selectAllCity();
 
-    //将序号重新排序
-    int updateSerialNumber();
-
 }

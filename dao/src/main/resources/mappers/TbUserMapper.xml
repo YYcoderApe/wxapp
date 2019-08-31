@@ -30,7 +30,7 @@
     <select id="getAllUser" parameterType="java.lang.Integer" resultType="com.zczp.vo_yycoder.UserDetailVo">
         select open_id as openId, user_image as userImage,user_name as userName,
         user_gender as userGender,user_phone as userPhone, user_school as userSchool,user_company as userCompany,
-        user_postType as userPosttype, user_signature as userSignature
+        user_postType as userPosttype, user_signature as userSignature,state
         from tb_user where state=#{state,jdbcType=INTEGER}
     </select>
     <select id="getTotalTags" parameterType="Map" resultType="java.lang.Integer">
@@ -40,7 +40,7 @@
     <select id="getUserByOpenId" parameterType="java.lang.String" resultType="com.zczp.vo_yycoder.UserDetailVo">
         select open_id as openId, user_image as userImage,user_name as userName,
         user_gender as userGender,user_phone as userPhone, user_school as userSchool,user_company as userCompany,
-        user_postType as userPosttype, user_signature as userSignature
+        user_postType as userPosttype, user_signature as userSignature,state
         from tb_user
         <where>
             <if test="openId != null and openId != ''">
@@ -307,6 +307,9 @@
             </if>
             <if test="userSchool != null">
                 user_school = #{userSchool,jdbcType=VARCHAR},
+            </if>
+            <if test="userPhone != null">
+                user_phone = #{userPhone,jdbcType=BIGINT},
             </if>
             <if test="userCompany != null">
                 user_company = #{userCompany,jdbcType=VARCHAR},

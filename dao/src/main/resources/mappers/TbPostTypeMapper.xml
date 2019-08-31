@@ -82,8 +82,8 @@
       type_new_date = #{typeNewDate,jdbcType=TIMESTAMP}
     where type_id = #{typeId,jdbcType=INTEGER}
   </update>
-  <update id="updateSerialNumber" parameterType="java.lang.Integer">
-    update tb_post_type set type_id=type_id-1
-    where type_id> #{typeId,jdbcType=INTEGER}
-  </update>
+  <!--<update id="updateSerialNumber" parameterType="java.lang.Integer">-->
+    <!--update tb_post_type set type_id=type_id-1-->
+    <!--where type_id> #{typeId,jdbcType=INTEGER}-->
+  <!--</update>-->
 </mapper>

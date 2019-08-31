@@ -1,7 +1,5 @@
 package com.zczp.util;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.zczp.entity.WxAccount;
 import com.zczp.vo_cancer.AuthorizeVO;
 import org.slf4j.Logger;

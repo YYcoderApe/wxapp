@@ -52,7 +52,7 @@
   </select>
     <select id="selectByTitle" parameterType="java.lang.String" resultType="com.zczp.vo_yycoder.PostDetailVo">
         select
-        tp.post_id as  'postId', tp.title,tpt.type_name as 'postType',tc.company_name as 'companyName',
+        tp.post_id as  'postId', tp.open_id as 'openId',tp.title,tpt.type_name as 'postType',tc.company_name as 'companyName',
         tc.company_logo as 'companyLogo',tp.job_type as 'jobType',reliability , tcy.city_name as 'cityName',
         tp.post_time as 'postTime' ,tp.Internship_time as 'internshipTime',entry_time as 'entryTime'
         from tb_post tp
@@ -63,7 +63,7 @@
     </select>
     <select id="selectByCompany" parameterType="java.lang.String" resultType="com.zczp.vo_yycoder.PostDetailVo">
         select
-        tp.post_id as  'postId', tp.title,tpt.type_name as 'postType',tc.company_name as 'companyName',
+        tp.post_id as  'postId',tp.open_id as 'openId',tp.title,tpt.type_name as 'postType',tc.company_name as 'companyName',
         tc.company_logo as 'companyLogo',tp.job_type as 'jobType',reliability , tcy.city_name as 'cityName',
         tp.post_time as 'postTime' ,tp.Internship_time as 'internshipTime',entry_time as 'entryTime'
         from tb_company tc
@@ -74,7 +74,7 @@
     </select>
     <select id="getPostDetailById" parameterType="java.lang.Integer" resultType="com.zczp.vo_yycoder.CollectPostDetailVo">
         select
-        tp.post_id as  'postId', tp.title,tpt.type_name as 'postType',tc.company_name as 'companyName',
+        tp.post_id as  'postId',tp.open_id as 'openId', tp.title,tpt.type_name as 'postType',tc.company_name as 'companyName',
         tc.company_logo as 'companyLogo',tp.job_type as 'jobType',reliability , tcy.city_name as 'cityName',
         tp.post_time as 'postTime' ,tp.Internship_time as 'internshipTime',tp.entry_time as 'entryTime',tp.state as 'state'
         from tb_post tp
@@ -96,9 +96,9 @@
         order by  tp.post_time desc
     </select>
     <select id="getPostIssueByOpenId" parameterType="java.lang.String" resultType="com.zczp.vo_yycoder.PostDetailVo">
-        SELECT tp.post_id as 'postId', tp.title,tpt.type_name as 'postType',tc.company_name as 'companyName',
+        SELECT tp.post_id as 'postId',tp.open_id as 'openId', tp.title,tpt.type_name as 'postType',tc.company_name as 'companyName',
         tc.company_logo as 'companyLogo',tp.job_type as 'jobType',reliability , tcy.city_name as 'cityName',
-        tp.post_time as 'postTime' ,tp.Internship_time as 'internshipTime',entry_time as 'entryTime'
+        tp.post_time as 'postTime' ,tp.Internship_time as 'internshipTime',tp.entry_time as 'entryTime',tp.state
         from tb_post tp
         LEFT JOIN tb_company tc on tp.company_id=tc.company_id
         LEFT JOIN tb_post_type tpt on tp.type_id =tpt.type_id
@@ -114,7 +114,7 @@
     </select>
     <select id="getPostByCondition" parameterType="java.lang.String" resultType="com.zczp.vo_yycoder.PostDetailVo">
         select
-        tp.post_id as 'postId', tp.title,tpt.type_name as 'postType',tc.company_name as 'companyName',
+        tp.post_id as 'postId',tp.open_id as 'openId', tp.title,tpt.type_name as 'postType',tc.company_name as 'companyName',
         tc.company_logo as 'companyLogo',tp.job_type as 'jobType',reliability , tcy.city_name as 'cityName',
         tp.post_time as 'postTime' ,tp.Internship_time as 'internshipTime',entry_time as 'entryTime'
         from tb_post tp

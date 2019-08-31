@@ -30,8 +30,6 @@ public class FileUploadConfig {
 
     private final MultipartProperties multipartProperties;
 
-    @Value("${baseUploadUrl}")
-    private String baseUploadUrl;
 
     @Value("${qiniu.accessKey}")
     private String accessKey;
@@ -50,8 +48,7 @@ public class FileUploadConfig {
     @ConditionalOnMissingBean
     public MultipartConfigElement multipartConfigElement() {
         MultipartConfigFactory factory = new MultipartConfigFactory();
-        judge(baseUploadUrl);
-        factory.setLocation(baseUploadUrl);
+        factory.setLocation("/data/tmp");
         return factory.createMultipartConfig();
     }
 

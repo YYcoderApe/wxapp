@@ -79,8 +79,4 @@
       city_new_date = #{cityNewDate,jdbcType=TIMESTAMP}
     where city_id = #{cityId,jdbcType=INTEGER}
   </update>
-  <delete id="updateSerialNumber" parameterType="java.lang.Integer">
-    update tb_city set city_id = city_id-1
-    where city_id > #{cityId,jdbcType=INTEGER}
-  </delete>
 </mapper>

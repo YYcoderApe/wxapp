@@ -3,6 +3,7 @@ package com.zczp.controller_yycoder;
 import com.zczp.service_yycoder.AskReplyService;
 import com.zczp.service_yycoder.UserService;
 import com.zczp.util.AjaxResult;
+import com.zczp.util.TokenUtil;
 import com.zczp.vo_yycoder.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,6 +19,9 @@ import java.util.List;
 public class UserController {
 
     @Autowired
+    TokenUtil tokenUtil;
+
+    @Autowired(required = false)
     private UserService userService;
 
     @Autowired
@@ -25,7 +29,10 @@ public class UserController {
 
     @GetMapping("/index")
     @ApiOperation("展示用户个人信息")
-    public AjaxResult getUserInfo(@RequestParam("openId") @ApiParam("当前用户的openId") String openId) {
+    public AjaxResult getUserInfo(@RequestParam @ApiParam("token") String token) {
+        String openId = tokenUtil.getOpenId(token);
+        if (openId == null)
+            return new AjaxResult().error("token失效，请重新输入");
         UserDetailVo userDetailVo = userService.getUserByOpenId(openId);
         if (userDetailVo != null) {
             return new AjaxResult().ok(userDetailVo);
@@ -35,7 +42,25 @@ public class UserController {
 
     @PutMapping("update")
     @ApiOperation("修改编辑用户个人信息")
-    public AjaxResult UpdateUserInfo(@ModelAttribute UserDetailVo userDetailVo) {
+    public AjaxResult UpdateUserInfo(
+            @RequestParam @ApiParam("用户token") String token,
+            @RequestParam(required = false) @ApiParam("用户性别") String userGender,
+            @RequestParam(required = false) @ApiParam("用户院校") String userSchool,
+            @RequestParam(required = false) @ApiParam("所在公司") String userCompany,
+            @RequestParam(required = false) @ApiParam("职位类型") String userPosttype,
+            @RequestParam(required = false) @ApiParam("联系方式") String userPhone,
+            @RequestParam(required = false) @ApiParam("个性签名") String userSignature) {
+        UserDetailVo userDetailVo = new UserDetailVo();
+        String openId = tokenUtil.getOpenId(token);
+        if (openId == null)
+            return new AjaxResult().error("token失效，请重新输入");
+        userDetailVo.setOpenId(openId);
+        userDetailVo.setUserGender(userGender);
+        userDetailVo.setUserSchool(userSchool);
+        userDetailVo.setUserCompany(userCompany);
+        userDetailVo.setUserPosttype(userPosttype);
+        userDetailVo.setUserPhone(userPhone);
+        userDetailVo.setUserSignature(userSignature);
         int recode = userService.updateUserIfoById(userDetailVo);
         if (recode > 0) {
             return new AjaxResult().ok("修改成功");
@@ -45,7 +70,10 @@ public class UserController {
 
     @GetMapping("MyCollection/index")
     @ApiOperation("查看个人的收藏")
-    public AjaxResult getUserCollection(@RequestParam @ApiParam("当前用户的openId") String openId) {
+    public AjaxResult getUserCollection(@RequestParam @ApiParam("token") String token) {
+        String openId = tokenUtil.getOpenId(token);
+        if (openId == null)
+            return new AjaxResult().error("token失效，请重新输入");
         List<CollectPostDetailVo> postDetailVoList = userService.getUserCollection(openId);
         if (postDetailVoList != null) {
             return new AjaxResult().ok(postDetailVoList);
@@ -56,8 +84,11 @@ public class UserController {
     @DeleteMapping("MyCollection/delete")
     @ApiOperation("删除个人收藏")
     public AjaxResult deleteCollection(
-            @RequestParam @ApiParam("当前用户ID") String openId,
-            @RequestParam @ApiParam("招聘信息ID") Integer postId) {
+            @RequestParam @ApiParam("招聘信息ID") Integer postId,
+            @RequestParam @ApiParam("token") String token) {
+        String openId = tokenUtil.getOpenId(token);
+        if (openId == null)
+            return new AjaxResult().error("token失效，请重新输入");
         int res = userService.deleteCollection(openId, postId);
         if (res > 0) {
             return new AjaxResult().ok("该收藏删除成功");
@@ -67,7 +98,10 @@ public class UserController {
 
     @GetMapping("MyIssue/index")
     @ApiOperation("查看自己的发布")
-    public AjaxResult getUserIssue(@RequestParam @ApiParam("当前用户ID") String openId) {
+    public AjaxResult getUserIssue(@RequestParam @ApiParam("token") String token) {
+        String openId = tokenUtil.getOpenId(token);
+        if (openId == null)
+            return new AjaxResult().error("token失效，请重新输入");
         List<PostDetailVo> postDetailVoList = userService.getUserIssue(openId);
         if (postDetailVoList != null) {
             return new AjaxResult().ok(postDetailVoList);
@@ -78,8 +112,11 @@ public class UserController {
     @DeleteMapping("MyIssue/delete")
     @ApiOperation("删除个人发布的招聘信息")
     public AjaxResult deleteUserIssue(
-            @RequestParam @ApiParam("当前用户ID") String openId,
-            @RequestParam @ApiParam("招聘信息ID") Integer postId) {
+            @RequestParam @ApiParam("招聘信息ID") Integer postId,
+            @RequestParam @ApiParam("token") String token) {
+        String openId = tokenUtil.getOpenId(token);
+        if (openId == null)
+            return new AjaxResult().error("token失效，请重新输入");
         int result = userService.deleteUserIssue(openId, postId);
         if (result > 0) {
             return new AjaxResult().ok("该发布信息删除成功");
@@ -89,7 +126,10 @@ public class UserController {
 
     @GetMapping("Question/MyAskReply")
     @ApiOperation("查看我的问一问(我的问答)")
-    public AjaxResult getUserAskReply(@RequestParam @ApiParam("当前用户ID") String openId) {
+    public AjaxResult getUserAskReply(@RequestParam @ApiParam("token") String token) {
+        String openId = tokenUtil.getOpenId(token);
+        if (openId == null)
+            return new AjaxResult().error("token失效，请重新输入");
         List<MyAskReplyVo> myAskReplyVoList = askReplyService.getMyAskReplyList(openId);
         if (myAskReplyVoList != null) {
             return new AjaxResult().ok(myAskReplyVoList);
@@ -99,7 +139,10 @@ public class UserController {
 
     @GetMapping("Question/MyReplyMsg")
     @ApiOperation("查看我的问一问(回复消息)")
-    public AjaxResult getUserReplyMsg(@RequestParam @ApiParam("当前用户ID") String openId) {
+    public AjaxResult getUserReplyMsg(@RequestParam @ApiParam("token") String token) {
+        String openId = tokenUtil.getOpenId(token);
+        if (openId == null)
+            return new AjaxResult().error("token失效，请重新输入");
         List<MyAskReplyVo> myAskReplyVoList = askReplyService.getMyReplyMsgList(openId);
 
         if (myAskReplyVoList != null) {
@@ -121,9 +164,12 @@ public class UserController {
     @DeleteMapping("Question/delAskReply")
     @ApiOperation(" 删除评论(招聘信息已删除情况下)  ")
     public AjaxResult deleteComment(
-            @RequestParam @ApiParam("用户openId") String openId,
-            @RequestParam @ApiParam("postId") Integer postId) {
-        int result = askReplyService.deleteTbComment(openId,postId);
+            @RequestParam @ApiParam("postId") Integer postId,
+            @RequestParam @ApiParam("token") String token) {
+        String openId = tokenUtil.getOpenId(token);
+        if (openId == null)
+            return new AjaxResult().error("token失效，请重新输入");
+        int result = askReplyService.deleteTbComment(openId, postId);
         if (result > 0) {
             return new AjaxResult().ok("评论信息删除成功");
         }

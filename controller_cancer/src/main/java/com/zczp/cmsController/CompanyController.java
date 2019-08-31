@@ -1,11 +1,9 @@
 package com.zczp.cmsController;
 
-import com.github.pagehelper.PageHelper;
+
 import com.zczp.service_cancer.Impl.TbCompanyServiceImpl;
-import com.zczp.service_yycoder.PosterService;
 import com.zczp.service_yycoder.impl.FileServiceImpl;
 import com.zczp.util.AjaxResult;
-import com.zczp.util.PageResult;
 import com.zczp.vo_cancer.CompanyVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,10 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,17 +28,11 @@ public class CompanyController {
     @Autowired
     private FileServiceImpl fileService;
 
-//    PageResult pageResult;
-//    //每次展示条数
-//    int pageSize=10;
     @ApiOperation("展示所以公司")
     @GetMapping("/showCompany")
     public AjaxResult showComopany(){
-//        PageHelper.startPage(pageNum,pageSize);
         List<CompanyVo> companyVos=tbCompanyService.selectAll();
-//        int totalTags=tbCompanyService.getTotalTags();
         if (!companyVos.isEmpty()){
-//            pageResult=new PageResult(companyVos,totalTags,pageSize,pageNum);
             return ajaxResult.ok(companyVos);
         }
         return ajaxResult.error("操作失败");
@@ -54,12 +42,8 @@ public class CompanyController {
     @GetMapping("/search")
     public AjaxResult searchCompany(
             @RequestParam @ApiParam("公司名称")String companyName){
-
-//        PageHelper.startPage(pageNum,pageSize);
         List<CompanyVo> companyVos=tbCompanyService.selectByName(companyName);
-//        int totalTags=tbCompanyService.getSearchTags(companyName);
         if (!companyVos.isEmpty()){
-//            pageResult=new PageResult(companyVos,totalTags,pageSize,pageNum);
             return ajaxResult.ok(companyVos);
         }
         return ajaxResult.ok("没有此公司");
@@ -70,10 +54,7 @@ public class CompanyController {
     public AjaxResult addCompany(
             @RequestParam @ApiParam("公司logoUrl") String companyLogoUrl ,
             @RequestParam @ApiParam("公司名称") String companyName) {
-//        File file = new File(url + upfile.getOriginalFilename());
         Map<String,Object> map = new HashMap<>();
-//        //将MulitpartFile文件转化为file文件格式
-//        upfile.transferTo(file);
         CompanyVo companyVo=new CompanyVo();
         companyVo.setCompanyLogo(companyLogoUrl);
         companyVo.setCompanyName(companyName);
@@ -96,9 +77,6 @@ public class CompanyController {
             @RequestParam @ApiParam("公司名称")String companyName,
             @RequestParam @ApiParam("公司logoUrl") String companyLogoUrl){
         Map<String,Object> map = new HashMap<>();
-//        File file = new File(url + upfile.getOriginalFilename());
-//        //将MulitpartFile文件转化为file文件格式
-//        upfile.transferTo(file);
         CompanyVo companyVo=new CompanyVo();
         companyVo.setCompanyLogo(companyLogoUrl);
         companyVo.setCompanyName(companyName);

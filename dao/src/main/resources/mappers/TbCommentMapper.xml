@@ -68,6 +68,14 @@
      and tc.to_id=#{toId,jdbcType=VARCHAR}
      order by tc.comment_time desc
   </select>
+  <select id="getUserCommentList" parameterType="com.zczp.entity.TbComment" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_comment
+    where post_id = #{postId,jdbcType=INTEGER}
+     and from_id=#{fromId,jdbcType=VARCHAR}
+     order by comment_time desc
+  </select>
   <select id="getCommentByPostId" parameterType="java.lang.Integer" resultType="com.zczp.vo_yycoder.TbCommentsVo">
     select
     tc.comment_id as commentId , tc.post_id as postId ,tc.content, tc.from_id as fromId,
