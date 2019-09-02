@@ -6,12 +6,8 @@ import com.zczp.entity.TbReliability;
 import com.zczp.service_cancer.TbReliabilityService;
 import com.zczp.util.RedisKeyUtil;
 import com.zczp.util.RedisUtil;
-import org.apache.ibatis.cursor.Cursor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @Service

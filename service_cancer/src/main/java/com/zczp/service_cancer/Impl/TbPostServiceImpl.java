@@ -2,12 +2,10 @@ package com.zczp.service_cancer.Impl;
 
 import com.github.pagehelper.PageHelper;
 import com.zczp.dao.TbPostMapper;
-import com.zczp.entity.TbPost;
 import com.zczp.entity.TbPostWithBLOBs;
 import com.zczp.service_cancer.TbPostService;
 import com.zczp.util.RedisKeyUtil;
 import com.zczp.util.RedisUtil;
-import com.zczp.util.TokenUtil;
 import com.zczp.vo_cancer.CommentsVo;
 import com.zczp.vo_cancer.PostDetailsVo;
 import com.zczp.vo_yycoder.PostDetailVo;
@@ -67,11 +65,6 @@ public class TbPostServiceImpl implements TbPostService {
                 redisUtil.hset(RedisKeyUtil.MAP_KEY_RELIABILITY,key,String.valueOf(reliabilityState));
             }
             postDetailsVo.setReliabilityState(reliabilityState);
-            //查询可信度数
-            String reliability =redisUtil.hget(RedisKeyUtil.MAP_KEY_RELIABILITY_COUNT,postId.toString());
-            if (reliability!=null){
-                postDetailsVo.setReliability(postDetailsVo.getReliability()+Integer.valueOf(reliability));
-            }
             //查询收藏状态
             int collectState;
             String state1 = redisUtil.hget(RedisKeyUtil.MAP_KEY_COLLECT,key);
@@ -82,6 +75,11 @@ public class TbPostServiceImpl implements TbPostService {
                 redisUtil.hset(RedisKeyUtil.MAP_KEY_COLLECT,key,String.valueOf(collectState));
             }
             postDetailsVo.setCollectState(collectState);
+        }
+        //查询可信度数
+        String reliability =redisUtil.hget(RedisKeyUtil.MAP_KEY_RELIABILITY_COUNT,postId.toString());
+        if (reliability!=null){
+            postDetailsVo.setReliability(postDetailsVo.getReliability()+Integer.valueOf(reliability));
         }
         //查询评论数
         int totalCount=tbCommentService.getTotalTags(postId);

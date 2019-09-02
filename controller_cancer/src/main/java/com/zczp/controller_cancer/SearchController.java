@@ -3,7 +3,6 @@ package com.zczp.controller_cancer;
 import com.zczp.service_cancer.Impl.TbPostServiceImpl;
 import com.zczp.util.AjaxResult;
 import com.zczp.util.RedisUtil;
-import com.zczp.util.TokenUtil;
 import com.zczp.vo_yycoder.PostDetailVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

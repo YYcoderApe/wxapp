@@ -1,24 +1,16 @@
 package com.zczp.cmsController;
 
-import com.github.pagehelper.PageHelper;
 import com.zczp.service_cancer.Impl.TbCompanyServiceImpl;
-import com.zczp.service_yycoder.PosterService;
 import com.zczp.service_yycoder.impl.FileServiceImpl;
 import com.zczp.util.AjaxResult;
-import com.zczp.util.PageResult;
 import com.zczp.vo_cancer.CompanyVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
