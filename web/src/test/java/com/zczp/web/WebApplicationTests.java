@@ -1,7 +1,6 @@
 package com.zczp.web;
 
 
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zczp.dao.*;
@@ -10,7 +9,10 @@ import com.zczp.entity.TbComment;
 import com.zczp.service_cancer.Impl.TbCompanyServiceImpl;
 import com.zczp.vo_cancer.CommentsVo;
 import com.zczp.vo_cancer.CompanyVo;
-import com.zczp.vo_yycoder.*;
+import com.zczp.vo_yycoder.CollectPostDetailVo;
+import com.zczp.vo_yycoder.MyAskReplyVo;
+import com.zczp.vo_yycoder.TbCommentsVo;
+import com.zczp.vo_yycoder.UserDetailVo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.omg.PortableServer.REQUEST_PROCESSING_POLICY_ID;
@@ -18,16 +20,43 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
+import sun.misc.BASE64Encoder;
 
 import java.io.File;
+import java.security.MessageDigest;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class WebApplicationTests {
 
-    //    @Test
+
+
+  @Test
+  public void test(){
+    Date date = new Date();
+    SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    System.out.println(dateFormat.format(date));
+    System.out.println(date);
+  }
+//MD5加密
+  @Test
+  public void getEncryptedPassword(){
+    try{
+      MessageDigest md5=MessageDigest.getInstance("MD5");
+      BASE64Encoder base64en = new BASE64Encoder();
+      //加密后的字符串
+      String newPassword=base64en.encode(md5.digest("123456".getBytes("utf-8")));
+      System.out.println("密码"+newPassword+"密码");
+    }catch (Exception e){
+      e.printStackTrace();
+      System.out.println();
+    }
+  }
+//    @Test
 //    public void contextLoads() {
 //         //url中的  appid 和  secret 开发者会给你  这相当于你小程序的ID和密码       js_code 也会给你  js_code是用微信开发者工具调用方法获得
 //            String  appid="wx1fb288a9dc863b05";//你小程序Id
@@ -45,8 +74,8 @@ public class WebApplicationTests {
 //    TbPostMapper tbPostMapper;
 //    @Autowired(required = false)
 //    TbCommentMapper tbCommentMapper;
-    @Autowired(required = false)
-    private TbAskReplyMapper tbAskReplyMapper;
+  @Autowired(required = false)
+  private TbAskReplyMapper tbAskReplyMapper;
 
     @Autowired(required = false)
     private TbCommentMapper tbCommentMapper;
@@ -58,42 +87,42 @@ public class WebApplicationTests {
     CollectPostDetailVo collectPostDetailVo;
 
     //评论表，每个评论表含提问和回复
-    List<TbCommentsVo> CommentsVoList = null;
-    List<TbCommentsVo> tbCommentsVoList = null;
+    List<TbCommentsVo> CommentsVoList=null;
+    List<TbCommentsVo>  tbCommentsVoList=null;
     //评论表对象
-    TbCommentsVo tbCommentsVo = new TbCommentsVo();
-
-    @Test
-    public void test() {
-        TbComment tbComment = new TbComment();
-        //含评论表和post表
-        List<UserAskReplyVo> userAskReplyVoList = new ArrayList<UserAskReplyVo>();
-        //根据open_id去TbAskReply找到post的先后顺序，返回TbAskReply
-        List<TbAskReply> askReplyList = tbAskReplyMapper.getAskReplyByOpenId("1");
-        tbComment.setFromId("1");
-        for (TbAskReply tbAskReply : askReplyList) {
-            tbComment.setPostId(tbAskReply.getPostId());
-            List<TbComment> userCommentList = tbCommentMapper.getUserCommentList(tbComment);
-            System.out.println(userCommentList);
-            collectPostDetailVo = tbPostMapper.getPostDetailById(tbAskReply.getPostId());
-            String collectPostDetail = JSONObject.toJSONString(collectPostDetailVo);
-            int index = 0;
-            while (userCommentList.size() > index) {
-                UserAskReplyVo userAskReplyVo = JSONObject.parseObject(collectPostDetail, UserAskReplyVo.class);
-                userAskReplyVo.setCommentId(userCommentList.get(index).getCommentId());
-                userAskReplyVo.setContent(userCommentList.get(index).getContent());
-                if (userCommentList.get(index).getReplyId() != null)
-                    userAskReplyVo.setIsReply(1);
-                else
-                    userAskReplyVo.setIsReply(0);
-
-                userAskReplyVoList.add(userAskReplyVo);
-                System.out.println(userAskReplyVoList);
-                index++;
-            }
-
-        }
-        System.out.println(userAskReplyVoList);
-    }
+    TbCommentsVo tbCommentsVo=new TbCommentsVo();
+//    @Test
+//    public void test(){
+//            //根据open_id去TbAskReply找到post的先后顺序，返回TbAskReply
+//
+//        TbComment tbComment=new TbComment();
+//        List<MyAskReplyVo> myAskReplyVoList = new ArrayList<MyAskReplyVo>();
+//        List<TbAskReply> askReplyList = tbAskReplyMapper.getAskReplyByOpenId("2");
+//        tbComment.setFromId("1");
+//        for(TbAskReply tbAskReply:askReplyList){
+//            tbCommentsVoList=new ArrayList<TbCommentsVo>();
+//            tbComment.setPostId(tbAskReply.getPostId());
+//            CommentsVoList = tbCommentMapper.selectTbCommentList(tbComment);
+//            int index=0;
+//            while(CommentsVoList.size()>index) {
+//                tbComment.setReplyId(CommentsVoList.get(index).getCommentId());
+//                tbComment.setToId(CommentsVoList.get(index).getFromId());
+//                tbCommentsVo.setCommentList(tbCommentMapper.selectCommentList(tbComment));
+//
+//                CommentsVoList.get(index).setCommentList(tbCommentsVo.getCommentList());
+//                System.out.println(CommentsVoList.get(index).getFromId());
+//
+//                    tbCommentsVoList.add(CommentsVoList.get(index));
+//
+//
+//
+//                index++;
+//            }
+//            collectPostDetailVo=tbPostMapper.getPostDetailById(tbAskReply.getPostId());
+//            MyAskReplyVo myAskReplyVo =new MyAskReplyVo();
+//            myAskReplyVo.setPostDetailList(collectPostDetailVo);
+//            myAskReplyVo.setCommentList(tbCommentsVoList);
+//            myAskReplyVoList.add(myAskReplyVo);
+//    }}
 
 }

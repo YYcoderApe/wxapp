@@ -3,7 +3,6 @@ package com.zczp.service_cancer.Impl;
 import com.zczp.dao.TbAskReplyMapper;
 import com.zczp.dao.TbCommentMapper;
 import com.zczp.entity.TbAskReply;
-import com.zczp.entity.TbComment;
 import com.zczp.service_cancer.TbCommentService;
 import com.zczp.vo_cancer.CommentVo;
 import com.zczp.vo_cancer.CommentsVo;

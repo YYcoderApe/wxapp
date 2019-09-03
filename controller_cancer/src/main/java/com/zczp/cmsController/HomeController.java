@@ -1,12 +1,10 @@
 package com.zczp.cmsController;
 
-import com.github.pagehelper.PageHelper;
 import com.zczp.cmsService.impl.CmsHomeServiceImpl;
 import com.zczp.entity.TbCity;
 import com.zczp.entity.TbPostType;
 import com.zczp.service_cancer.Impl.TbPostServiceImpl;
 import com.zczp.util.AjaxResult;
-import com.zczp.util.PageResult;
 import com.zczp.vo_yycoder.ConditionVo;
 import com.zczp.vo_yycoder.PostDetailVo;
 import io.swagger.annotations.Api;

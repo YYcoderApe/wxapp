@@ -15,6 +15,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -32,7 +33,37 @@ public class PushController {
     AjaxResult ajaxResult=new AjaxResult();
     @ApiOperation("发布招聘岗位")
     @PostMapping("/pushPost")
-    public AjaxResult pushPost(@RequestBody TbPostWithBLOBs tbPostWithBLOBs){
+    public AjaxResult pushPost(
+            @RequestParam @ApiParam("岗位类型Id") Integer typeId,
+            @RequestParam @ApiParam("公司Id") Integer companyId,
+            @RequestParam @ApiParam("招聘类型（实习 校招）") String jobType,
+            @RequestParam @ApiParam("城市Id") Integer cityId,
+            @RequestParam(required = false) @ApiParam("入职时间") String entryTime,
+            @RequestParam(required = false) @ApiParam("实习时长") String internshipTime,
+            @RequestParam @ApiParam("投递方式") String deliveryMethod,
+            @RequestParam @ApiParam("标题") String title,
+            @RequestParam @ApiParam("用户id") String openId,
+            @RequestParam @ApiParam("岗位要求") String requirement,
+            @RequestParam @ApiParam("招聘描述") String jobDescription,
+            @RequestParam @ApiParam("工作地址") String workAddress
+    ){
+        TbPostWithBLOBs tbPostWithBLOBs =new TbPostWithBLOBs();
+        tbPostWithBLOBs.setTypeId(typeId);
+        tbPostWithBLOBs.setCompanyId(companyId);
+        tbPostWithBLOBs.setJobType(jobType);
+        tbPostWithBLOBs.setCityId(cityId);
+        Date postTime = new Date();
+        tbPostWithBLOBs.setPostTime(postTime);
+        tbPostWithBLOBs.setEntryTime(entryTime);
+        tbPostWithBLOBs.setInternshipTime(internshipTime);
+        tbPostWithBLOBs.setDeliveryMethod(deliveryMethod);
+        tbPostWithBLOBs.setTitle(title);
+        tbPostWithBLOBs.setRequirement(requirement);
+        tbPostWithBLOBs.setJobDescription(jobDescription);
+        tbPostWithBLOBs.setWorkAddress(workAddress);
+        tbPostWithBLOBs.setOpenId(openId);
+        tbPostWithBLOBs.setReliability(0);
+        tbPostWithBLOBs.setState(0);
         int result=tbPostService.insert(tbPostWithBLOBs);
         if(result==1){
             return ajaxResult.ok("发布成功");

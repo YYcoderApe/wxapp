@@ -17,8 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import static java.lang.System.currentTimeMillis;
 
 @RestController
 @Api(tags = "发布招聘信息模块")
@@ -36,15 +39,6 @@ public class PushController {
     private AjaxResult ajaxResult;
     @Autowired
     private TokenUtil tokenUtil;
-//    @ApiOperation("发布招聘岗位")
-//    @PostMapping("/pushPost")
-//    public AjaxResult pushPost(@RequestBody TbPostWithBLOBs tbPostWithBLOBs){
-//        int result=tbPostService.insert(tbPostWithBLOBs);
-//        if(result==1){
-//            return ajaxResult.ok("发布成功");
-//        }
-//        return ajaxResult.error("发布失败");
-//    }
 
     @ApiOperation("发布招聘岗位")
     @PostMapping("/pushPost")
@@ -53,7 +47,6 @@ public class PushController {
             @RequestParam @ApiParam("公司Id") Integer companyId,
             @RequestParam @ApiParam("招聘类型（实习 校招）") String jobType,
             @RequestParam @ApiParam("城市Id") Integer cityId,
-            @RequestParam @ApiParam("发布时间yyyy-MM-dd HH:mm:ss") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date postTime,
             @RequestParam(required = false) @ApiParam("入职时间") String entryTime,
             @RequestParam(required = false) @ApiParam("实习时长") String internshipTime,
             @RequestParam @ApiParam("投递方式") String deliveryMethod,
@@ -70,6 +63,7 @@ public class PushController {
         tbPostWithBLOBs.setCompanyId(companyId);
         tbPostWithBLOBs.setJobType(jobType);
         tbPostWithBLOBs.setCityId(cityId);
+        Date postTime = new Date();
         tbPostWithBLOBs.setPostTime(postTime);
         tbPostWithBLOBs.setEntryTime(entryTime);
         tbPostWithBLOBs.setInternshipTime(internshipTime);
@@ -80,6 +74,7 @@ public class PushController {
         tbPostWithBLOBs.setWorkAddress(workAddress);
         tbPostWithBLOBs.setOpenId(openId);
         tbPostWithBLOBs.setReliability(0);
+        tbPostWithBLOBs.setState(0);
         int result=tbPostService.insert(tbPostWithBLOBs);
         if(result==1){
             return ajaxResult.ok("发布成功");

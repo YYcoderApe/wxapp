@@ -9,7 +9,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,8 +24,6 @@ public class CompanyController {
     private TbCompanyServiceImpl tbCompanyService;
     @Autowired
     private AjaxResult ajaxResult;
-    @Autowired
-    private FileServiceImpl fileService;
 
     @ApiOperation("展示所以公司")
     @GetMapping("/showCompany")
@@ -42,6 +39,7 @@ public class CompanyController {
     @GetMapping("/search")
     public AjaxResult searchCompany(
             @RequestParam @ApiParam("公司名称")String companyName){
+
         List<CompanyVo> companyVos=tbCompanyService.selectByName(companyName);
         if (!companyVos.isEmpty()){
             return ajaxResult.ok(companyVos);

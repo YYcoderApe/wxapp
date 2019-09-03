@@ -1,7 +1,5 @@
 package com.zczp.service_cancer.Impl;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.zczp.dao.TbUserMapper;
 import com.zczp.entity.TbUser;
 import com.zczp.entity.WxAccount;
@@ -11,7 +9,7 @@ import com.zczp.util.JsonUtils;
 import com.zczp.util.JwtUtil;
 import com.zczp.util.WeChatUtil;
 import com.zczp.vo_cancer.AuthorizeVO;
-import com.zczp.vo_cancer.JwtToken;
+import com.zczp.vo_yycoder.UserDetailVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +38,11 @@ public class WxUserServiceImpl implements WxUserService {
             Map<String, Object> userInfoMap = JsonUtils.json2object(result, Map.class, String.class, Object.class);
             tbUser.setOpenId(userInfoMap.get("openId").toString());
             tbUser.setUserName(userInfoMap.get("nickName").toString());
-            tbUser.setUserGender(userInfoMap.get("gender").toString());
+            if (userInfoMap.get("gender").toString().equals("1")){
+                tbUser.setUserGender("男");
+            }else{
+                tbUser.setUserGender("女");
+            }
             tbUser.setCity(userInfoMap.get("city").toString());
             tbUser.setProvince(userInfoMap.get("province").toString());
             tbUser.setCountry(userInfoMap.get("country").toString());
@@ -48,6 +50,8 @@ public class WxUserServiceImpl implements WxUserService {
             tbUser.setLanguage(userInfoMap.get("language").toString());
             tbUser.setState(0);
         }
+        UserDetailVo userDetailVo=tbUserMapper.getUserByOpenId(wxAccount.getWxOpenid());
+        if (userDetailVo!=null)return "用户已存在";
         Integer result1=tbUserMapper.insert(tbUser);
         if (result1!=0){
             logger.info("授权保存tbUser is{}",tbUser.toString());

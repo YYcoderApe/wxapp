@@ -1,14 +1,11 @@
 package com.zczp.controller_cancer;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.zczp.service_cancer.Impl.TbCollectServiceImpl;
 import com.zczp.service_cancer.Impl.TbCommentServiceImpl;
 import com.zczp.service_cancer.Impl.TbPostServiceImpl;
 import com.zczp.service_cancer.Impl.TbReliabilityServiceImpl;
 import com.zczp.util.AjaxResult;
-import com.zczp.util.JwtUtil;
 import com.zczp.util.TokenUtil;
-import com.zczp.util.WeChatUtil;
 import com.zczp.vo_cancer.CommentVo;
 import com.zczp.vo_cancer.PostDetailsVo;
 import io.swagger.annotations.Api;
@@ -62,7 +59,6 @@ public class PostController {
             @RequestParam  @ApiParam("内容") String content,
             @RequestParam  @ApiParam("用户token") String token,
             @RequestParam  @ApiParam("回复的用户ID") String toId,
-            @RequestParam  @ApiParam("评论时间yyyy-MM-dd HH:mm:ss") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date commentTime,
             @RequestParam(required = false)  @ApiParam("回复的评论ID") Integer replyId){
         CommentVo commentVo=new CommentVo();
         String openId=tokenUtil.getOpenId(token);
@@ -71,6 +67,7 @@ public class PostController {
         commentVo.setContent(content);
         commentVo.setFromId(openId);
         commentVo.setToId(toId);
+        Date commentTime=new Date();
         commentVo.setCommentTime(commentTime);
         commentVo.setReplyId(replyId);
         int result=tbCommentService.insert(commentVo);
