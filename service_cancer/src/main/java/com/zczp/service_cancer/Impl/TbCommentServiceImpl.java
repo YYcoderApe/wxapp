@@ -19,7 +19,7 @@ public class TbCommentServiceImpl implements TbCommentService {
     @Autowired(required = false)
     private TbAskReplyMapper tbAskReplyMapper;
 
-    //提问时reply_id为空，回复时不为空
+    //提问时reply_id为null，回复时不为空
     public int insert(CommentVo commentVo) {
         TbAskReply tbAskReply=new TbAskReply(commentVo.getFromId(),commentVo.getPostId(),new Date());
         Integer result=tbAskReplyMapper.selectByPostIdAndOpenId(tbAskReply.getPostId(),tbAskReply.getOpenId());

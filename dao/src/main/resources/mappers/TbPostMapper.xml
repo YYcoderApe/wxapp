@@ -85,7 +85,7 @@
     </select>
     <select id="getPostDetail" resultType="com.zczp.vo_yycoder.PostDetailVo">
         select
-        tp.post_id as  'postId', tp.title,tpt.type_name as 'postType',tc.company_name as 'companyName',
+        tp.post_id as  'postId', tp.open_id as 'openId',tp.title,tpt.type_name as 'postType',tc.company_name as 'companyName',
         tc.company_logo as 'companyLogo',tp.job_type as 'jobType',reliability , tcy.city_name as 'cityName',
         tp.post_time as 'postTime' ,tp.Internship_time as 'internshipTime',entry_time as 'entryTime'
         from tb_post tp

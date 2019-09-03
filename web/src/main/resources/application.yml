@@ -16,8 +16,8 @@ qiniu:
 
 wx:
   url: https://api.weixin.qq.com/sns/jscode2session
-  app-id: wxc40a3086249c6c6ca
-  app-secret: af039eb11f5f62fa1d52bcd9aeedaefda
+  app-id: wx13c3796263aed8b0
+  app-secret: 85dd83b58e7e7fd1111bb21b170f6d0e
 
 
 #pagehelper:

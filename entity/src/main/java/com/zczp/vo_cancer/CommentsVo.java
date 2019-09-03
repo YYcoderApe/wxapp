@@ -23,7 +23,7 @@ public class CommentsVo {
     private String content;
 
     @ApiModelProperty("用户ID")
-    private Integer fromId;
+    private String fromId;
 
     @ApiModelProperty("用户头像")
     private String userImage;
@@ -35,7 +35,7 @@ public class CommentsVo {
     private Date commentTime;
 
     @ApiModelProperty("回复的评论ID")
-    private Integer replyId;
+    private String replyId;
 
     @ApiModelProperty("回复列表")
     private List<CommentsVo> commentList;
