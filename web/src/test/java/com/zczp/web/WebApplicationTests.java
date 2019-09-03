@@ -24,18 +24,23 @@ import sun.misc.BASE64Encoder;
 
 import java.io.File;
 import java.security.MessageDigest;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class WebApplicationTests {
 
+
+
   @Test
   public void test(){
-    String a="dssfsfsdfdfs";
-    String b="dsfsdfsdfsdfs";
-    System.out.println(a+"        "+b);
+    Date date = new Date();
+    SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    System.out.println(dateFormat.format(date));
+    System.out.println(date);
   }
 //MD5加密
   @Test

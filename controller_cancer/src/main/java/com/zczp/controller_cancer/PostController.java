@@ -59,7 +59,6 @@ public class PostController {
             @RequestParam  @ApiParam("内容") String content,
             @RequestParam  @ApiParam("用户token") String token,
             @RequestParam  @ApiParam("回复的用户ID") String toId,
-            @RequestParam  @ApiParam("评论时间yyyy-MM-dd HH:mm:ss") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date commentTime,
             @RequestParam(required = false)  @ApiParam("回复的评论ID") Integer replyId){
         CommentVo commentVo=new CommentVo();
         String openId=tokenUtil.getOpenId(token);
@@ -68,6 +67,7 @@ public class PostController {
         commentVo.setContent(content);
         commentVo.setFromId(openId);
         commentVo.setToId(toId);
+        Date commentTime=new Date();
         commentVo.setCommentTime(commentTime);
         commentVo.setReplyId(replyId);
         int result=tbCommentService.insert(commentVo);

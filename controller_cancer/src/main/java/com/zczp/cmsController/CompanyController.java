@@ -23,8 +23,6 @@ public class CompanyController {
     private TbCompanyServiceImpl tbCompanyService;
     @Autowired
     private AjaxResult ajaxResult;
-    @Autowired
-    private FileServiceImpl fileService;
 
 //    PageResult pageResult;
 //    //每次展示条数
@@ -32,11 +30,8 @@ public class CompanyController {
     @ApiOperation("展示所以公司")
     @GetMapping("/showCompany")
     public AjaxResult showComopany(){
-//        PageHelper.startPage(pageNum,pageSize);
         List<CompanyVo> companyVos=tbCompanyService.selectAll();
-//        int totalTags=tbCompanyService.getTotalTags();
         if (!companyVos.isEmpty()){
-//            pageResult=new PageResult(companyVos,totalTags,pageSize,pageNum);
             return ajaxResult.ok(companyVos);
         }
         return ajaxResult.error("操作失败");
@@ -47,11 +42,8 @@ public class CompanyController {
     public AjaxResult searchCompany(
             @RequestParam @ApiParam("公司名称")String companyName){
 
-//        PageHelper.startPage(pageNum,pageSize);
         List<CompanyVo> companyVos=tbCompanyService.selectByName(companyName);
-//        int totalTags=tbCompanyService.getSearchTags(companyName);
         if (!companyVos.isEmpty()){
-//            pageResult=new PageResult(companyVos,totalTags,pageSize,pageNum);
             return ajaxResult.ok(companyVos);
         }
         return ajaxResult.ok("没有此公司");
@@ -62,10 +54,7 @@ public class CompanyController {
     public AjaxResult addCompany(
             @RequestParam @ApiParam("公司logoUrl") String companyLogoUrl ,
             @RequestParam @ApiParam("公司名称") String companyName) {
-//        File file = new File(url + upfile.getOriginalFilename());
         Map<String,Object> map = new HashMap<>();
-//        //将MulitpartFile文件转化为file文件格式
-//        upfile.transferTo(file);
         CompanyVo companyVo=new CompanyVo();
         companyVo.setCompanyLogo(companyLogoUrl);
         companyVo.setCompanyName(companyName);
@@ -88,9 +77,6 @@ public class CompanyController {
             @RequestParam @ApiParam("公司名称")String companyName,
             @RequestParam @ApiParam("公司logoUrl") String companyLogoUrl){
         Map<String,Object> map = new HashMap<>();
-//        File file = new File(url + upfile.getOriginalFilename());
-//        //将MulitpartFile文件转化为file文件格式
-//        upfile.transferTo(file);
         CompanyVo companyVo=new CompanyVo();
         companyVo.setCompanyLogo(companyLogoUrl);
         companyVo.setCompanyName(companyName);

@@ -38,7 +38,7 @@ public class WxUserServiceImpl implements WxUserService {
             Map<String, Object> userInfoMap = JsonUtils.json2object(result, Map.class, String.class, Object.class);
             tbUser.setOpenId(userInfoMap.get("openId").toString());
             tbUser.setUserName(userInfoMap.get("nickName").toString());
-            if (userInfoMap.get("gender").toString()=="1"){
+            if (userInfoMap.get("gender").toString().equals("1")){
                 tbUser.setUserGender("男");
             }else{
                 tbUser.setUserGender("女");

@@ -13,6 +13,8 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 
 @RestController
 @Api(tags = "招聘信息模块")
@@ -52,7 +54,21 @@ public class PostController {
 
     @ApiOperation("评论")
     @PostMapping("/comment")
-    public  AjaxResult Comment(@RequestBody CommentVo commentVo){
+    public  AjaxResult Comment(
+            @RequestParam  @ApiParam("招聘信息Id") Integer postId,
+            @RequestParam  @ApiParam("内容") String content,
+            @RequestParam  @ApiParam("用户id") String openId,
+            @RequestParam  @ApiParam("回复的用户ID") String toId,
+            @RequestParam(required = false)  @ApiParam("回复的评论ID") Integer replyId
+    ){
+        CommentVo commentVo=new CommentVo();
+        commentVo.setPostId(postId);
+        commentVo.setContent(content);
+        commentVo.setFromId(openId);
+        commentVo.setToId(toId);
+        Date commentTime=new Date();
+        commentVo.setCommentTime(commentTime);
+        commentVo.setReplyId(replyId);
         int result=tbCommentService.insert(commentVo);
         if (result==1){
             return ajaxResult.ok("评论成功");
