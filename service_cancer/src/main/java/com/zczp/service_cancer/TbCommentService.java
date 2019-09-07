@@ -18,4 +18,6 @@ public interface TbCommentService  {
     Integer deleteByCommentId(int commentId);
 
     int getTotalTags(int postId);
+
+
 }

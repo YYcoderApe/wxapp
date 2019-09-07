@@ -1,5 +1,6 @@
 package com.zczp.vo_cancer;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -46,6 +47,7 @@ public class PostDetailsVo {
     private String cityName;
 
     @ApiModelProperty("发布时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" ,timezone = "GMT+8")
     private Date postTime;
 
     @ApiModelProperty("实习时长")

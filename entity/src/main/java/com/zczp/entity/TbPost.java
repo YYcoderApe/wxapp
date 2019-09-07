@@ -1,5 +1,6 @@
 package com.zczp.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
@@ -24,6 +25,7 @@ public class TbPost {
     private Integer cityId;
 
     @ApiModelProperty("发布时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" ,timezone = "GMT+8")
     private Date postTime;
 
     @ApiModelProperty("入职时间")

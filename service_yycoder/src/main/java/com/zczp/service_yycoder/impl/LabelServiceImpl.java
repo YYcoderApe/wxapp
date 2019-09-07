@@ -38,9 +38,7 @@ public class LabelServiceImpl implements LabelService {
 
     @Override
     public int deleteCityLabel(Integer cityId) {
-        int res =tbCityMapper.deleteByPrimaryKey(cityId);
-        tbCityMapper.updateSerialNumber();
-        return res;
+        return  tbCityMapper.deleteByPrimaryKey(cityId);
     }
 
     @Override
@@ -59,8 +57,6 @@ public class LabelServiceImpl implements LabelService {
 
     @Override
     public int deletePostTypeLabel(Integer typeId) {
-        int result = tbPostTypeMapper.deleteByPrimaryKey(typeId);
-        tbPostTypeMapper.updateSerialNumber(typeId);
-        return result;
+        return tbPostTypeMapper.deleteByPrimaryKey(typeId);
     }
 }

@@ -9,6 +9,9 @@ public class UserInfoVo {
     @ApiModelProperty("用户名称")
     private String userName;
 
+    @ApiModelProperty("用户头像")
+    private String userImage;
+
     @ApiModelProperty("用户所在学校")
     private String userSchool;
 
@@ -23,4 +26,5 @@ public class UserInfoVo {
 
     @ApiModelProperty("个性签名")
     private String userSignature;
+
 }

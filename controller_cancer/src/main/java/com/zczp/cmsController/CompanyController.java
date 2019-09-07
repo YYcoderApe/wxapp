@@ -1,5 +1,6 @@
 package com.zczp.cmsController;
 
+
 import com.zczp.service_cancer.Impl.TbCompanyServiceImpl;
 import com.zczp.service_yycoder.impl.FileServiceImpl;
 import com.zczp.util.AjaxResult;
@@ -24,9 +25,6 @@ public class CompanyController {
     @Autowired
     private AjaxResult ajaxResult;
 
-//    PageResult pageResult;
-//    //每次展示条数
-//    int pageSize=10;
     @ApiOperation("展示所以公司")
     @GetMapping("/showCompany")
     public AjaxResult showComopany(){

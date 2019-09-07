@@ -12,9 +12,7 @@ qiniu:
   accessKey: azpIMFH6J4faWNGELmZbLb1p-BYDtuI8-4G51ygr
   secretKey: -IR28ht2qUaOwbUVtTACt7fAstHR6Z5gKHzxMxTk
   bucket: xcx
-  path: http://pvd470736.bkt.clouddn.com
-
-baseUploadUrl: d://temp/
+  path: http://oss.hzycjy.top
 
 wx:
   url: https://api.weixin.qq.com/sns/jscode2session

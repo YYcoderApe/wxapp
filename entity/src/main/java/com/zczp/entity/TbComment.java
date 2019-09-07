@@ -1,5 +1,6 @@
 package com.zczp.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
@@ -21,6 +22,7 @@ public class TbComment {
     private String toId;
 
     @ApiModelProperty("评论时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" ,timezone = "GMT+8")
     private Date commentTime;
 
     @ApiModelProperty("回复的评论ID")
@@ -80,5 +82,18 @@ public class TbComment {
 
     public void setReplyId(Integer replyId) {
         this.replyId = replyId;
+    }
+
+    @Override
+    public String toString() {
+        return "TbComment{" +
+                "commentId=" + commentId +
+                ", postId=" + postId +
+                ", content='" + content + '\'' +
+                ", fromId='" + fromId + '\'' +
+                ", toId='" + toId + '\'' +
+                ", commentTime=" + commentTime +
+                ", replyId=" + replyId +
+                '}';
     }
 }
