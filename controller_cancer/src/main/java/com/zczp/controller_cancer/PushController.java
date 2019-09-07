@@ -74,7 +74,7 @@ public class PushController {
         tbPostWithBLOBs.setWorkAddress(workAddress);
         tbPostWithBLOBs.setOpenId(openId);
         tbPostWithBLOBs.setReliability(0);
-        tbPostWithBLOBs.setState(0);
+        tbPostWithBLOBs.setState(1);
         int result=tbPostService.insert(tbPostWithBLOBs);
         if(result==1){
             return ajaxResult.ok("发布成功");
