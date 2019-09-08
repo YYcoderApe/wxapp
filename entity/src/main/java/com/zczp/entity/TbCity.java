@@ -12,6 +12,8 @@ public class TbCity {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" ,timezone = "GMT+8")
     private Date cityNewDate;
 
+    private Integer cityState;
+
     public Integer getCityId() {
         return cityId;
     }
@@ -34,5 +36,13 @@ public class TbCity {
 
     public void setCityNewDate(Date cityNewDate) {
         this.cityNewDate = cityNewDate;
+    }
+
+    public Integer getCityState() {
+        return cityState;
+    }
+
+    public void setCityState(Integer cityState) {
+        this.cityState = cityState;
     }
 }

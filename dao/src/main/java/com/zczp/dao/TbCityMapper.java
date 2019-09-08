@@ -12,4 +12,6 @@ public interface TbCityMapper extends BaseMapper<TbCity>{
     //查看所有城市的分类
     List<TbCity> selectAllCity();
 
+    Integer getMaxCityId();
+
 }

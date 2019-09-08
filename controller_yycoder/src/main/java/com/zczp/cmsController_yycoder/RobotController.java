@@ -3,12 +3,10 @@ package com.zczp.cmsController_yycoder;
 import com.alibaba.fastjson.JSONObject;
 import com.zczp.entity.TbPostWithBLOBs;
 
-import com.zczp.service_cancer.TbCommentService;
-import com.zczp.service_cancer.TbPostService;
-import com.zczp.service_cancer.TbReliabilityService;
-import com.zczp.service_yycoder.AskReplyService;
-import com.zczp.service_yycoder.FileService;
-import com.zczp.service_yycoder.UserService;
+import com.zczp.service_cancer.Impl.TbCommentServiceImpl;
+import com.zczp.service_cancer.Impl.TbPostServiceImpl;
+import com.zczp.service_cancer.Impl.TbReliabilityServiceImpl;
+import com.zczp.service_yycoder.impl.UserServiceImpl;
 import com.zczp.util.AjaxResult;
 import com.zczp.vo_cancer.CommentVo;
 import com.zczp.vo_yycoder.*;
@@ -19,25 +17,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 @RestController
 @RequestMapping("robot")
-@Api(tags = "自用户管理界面")
+@Api(tags = "内部账号管理界面")
 public class RobotController {
 
     @Autowired
-    private TbCommentService tbCommentService;
+    private TbCommentServiceImpl tbCommentService;
 
     @Autowired
-    private TbReliabilityService tbReliabilityService;
+    private TbReliabilityServiceImpl tbReliabilityService;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
-    private TbPostService tbPostService;
-
+    private TbPostServiceImpl tbPostService;
 
 
     @GetMapping("/getAllRobotUser")
@@ -86,15 +84,46 @@ public class RobotController {
     }
 
 
-    @PostMapping("/pushPostIssue")
-    @ApiOperation("发布情况 --- 虚拟用户新增发布")
-    public AjaxResult pushPostIssue(@ModelAttribute TbPostWithBLOBs tbPostWithBLOBs) {
-        int result = tbPostService.insert(tbPostWithBLOBs);
-        if (result == 1) {
-            return new AjaxResult().ok("发布成功");
-        }
-        return new AjaxResult().error("发布失败");
+@ApiOperation("发布招聘岗位")
+@PostMapping("/pushPost")
+public AjaxResult pushPost(
+        @RequestParam @ApiParam("岗位类型Id") Integer typeId,
+        @RequestParam @ApiParam("公司Id") Integer companyId,
+        @RequestParam @ApiParam("招聘类型（实习 校招）") String jobType,
+        @RequestParam @ApiParam("城市Id") Integer cityId,
+        @RequestParam(required = false) @ApiParam("入职时间") String entryTime,
+        @RequestParam(required = false) @ApiParam("实习时长") String internshipTime,
+        @RequestParam @ApiParam("投递方式") String deliveryMethod,
+        @RequestParam @ApiParam("标题") String title,
+        @RequestParam @ApiParam("用户id") String openId,
+        @RequestParam @ApiParam("岗位要求") String requirement,
+        @RequestParam @ApiParam("招聘描述") String jobDescription,
+        @RequestParam @ApiParam("工作地址") String workAddress
+){
+    TbPostWithBLOBs tbPostWithBLOBs =new TbPostWithBLOBs();
+    tbPostWithBLOBs.setTypeId(typeId);
+    tbPostWithBLOBs.setCompanyId(companyId);
+    tbPostWithBLOBs.setJobType(jobType);
+    tbPostWithBLOBs.setCityId(cityId);
+    Date postTime = new Date();
+    tbPostWithBLOBs.setPostTime(postTime);
+    tbPostWithBLOBs.setEntryTime(entryTime);
+    tbPostWithBLOBs.setInternshipTime(internshipTime);
+    tbPostWithBLOBs.setDeliveryMethod(deliveryMethod);
+    tbPostWithBLOBs.setTitle(title);
+    tbPostWithBLOBs.setRequirement(requirement);
+    tbPostWithBLOBs.setJobDescription(jobDescription);
+    tbPostWithBLOBs.setWorkAddress(workAddress);
+    tbPostWithBLOBs.setOpenId(openId);
+    tbPostWithBLOBs.setReliability(0);
+    tbPostWithBLOBs.setState(0);
+    int result=tbPostService.insert(tbPostWithBLOBs);
+    if(result==1){
+        return new AjaxResult().ok("发布成功");
     }
+    return new AjaxResult().error("发布失败");
+}
+
 
     @ApiOperation("删除招聘信息")
     @DeleteMapping("/deletePost")
@@ -108,14 +137,26 @@ public class RobotController {
 
     @ApiOperation("评论")
     @PostMapping("/comment")
-    public AjaxResult Comment(@RequestBody CommentVo commentVo) {
+    public AjaxResult Comment(
+            @RequestParam @ApiParam("招聘信息Id") Integer postId,
+            @RequestParam @ApiParam("评论内容") String content,
+            @RequestParam @ApiParam("评论来自用户") String fromId,
+            @RequestParam @ApiParam("回复的用户ID") String toId,
+            @RequestParam(required = false) @ApiParam("回复的评论ID") Integer replyId) {
+        CommentVo commentVo = new CommentVo();
+        commentVo.setPostId(postId);
+        commentVo.setContent(content);
+        commentVo.setFromId(fromId);
+        commentVo.setToId(toId);
+        Date commentTime = new Date();
+        commentVo.setCommentTime(commentTime);
+        commentVo.setReplyId(replyId);
         int result = tbCommentService.insert(commentVo);
         if (result == 1) {
             return new AjaxResult().ok("评论成功");
         }
         return new AjaxResult().error("评论失败");
     }
-
 
     @ApiOperation("修改可信度")
     @PutMapping("/reliability")

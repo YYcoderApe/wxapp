@@ -40,6 +40,7 @@ public class UserController {
         return new AjaxResult().error("该用户不存在");
     }
 
+
     @PutMapping("update")
     @ApiOperation("修改编辑用户个人信息")
     public AjaxResult UpdateUserInfo(
@@ -81,7 +82,7 @@ public class UserController {
         return new AjaxResult().error("该用户没有收藏任何东西");
     }
 
-    @DeleteMapping("MyCollection/delete")
+    @PostMapping("MyCollection/delete")
     @ApiOperation("删除个人收藏")
     public AjaxResult deleteCollection(
             @RequestParam @ApiParam("招聘信息ID") Integer postId,
@@ -109,7 +110,7 @@ public class UserController {
         return new AjaxResult().error("该用户没有发布任何招聘信息");
     }
 
-    @DeleteMapping("MyIssue/delete")
+    @PostMapping("MyIssue/delete")
     @ApiOperation("删除个人发布的招聘信息")
     public AjaxResult deleteUserIssue(
             @RequestParam @ApiParam("招聘信息ID") Integer postId,
@@ -161,7 +162,7 @@ public class UserController {
         return new AjaxResult().error("该评论删除失败，请确认是否操作出错");
     }
 
-    @DeleteMapping("Question/delAskReply")
+    @PostMapping("Question/delAskReply")
     @ApiOperation(" 删除评论(招聘信息已删除情况下)  ")
     public AjaxResult deleteComment(
             @RequestParam @ApiParam("postId") Integer postId,
@@ -175,4 +176,35 @@ public class UserController {
         }
         return new AjaxResult().error("该评论删除失败，请确认是否操作出错");
     }
+
+    @GetMapping("/other/userInfo")
+    @ApiOperation("查看他人信息")
+    public AjaxResult getOtherUserInfo(@RequestParam @ApiParam("用户fromId") String fromId) {
+        UserDetailVo userDetailVo = userService.getUserByOpenId(fromId);
+        if (userDetailVo != null) {
+            return new AjaxResult().ok(userDetailVo);
+        }
+        return new AjaxResult().error("该用户不存在");
+    }
+
+    @GetMapping("other/UserIssue")
+    @ApiOperation("查看他人的发布")
+    public AjaxResult getOtherUserIssue(@RequestParam @ApiParam("用户fromId") String fromId) {
+        List<PostDetailVo> postDetailVoList = userService.getUserIssue(fromId);
+        if (postDetailVoList != null) {
+            return new AjaxResult().ok(postDetailVoList);
+        }
+        return new AjaxResult().error("该用户没有发布任何招聘信息");
+    }
+
+    @GetMapping("other/UserAskReply")
+    @ApiOperation("查看他人问答")
+    public AjaxResult getOtherUserAskReply(@RequestParam @ApiParam("fromId") String fromId) {
+        List<MyAskReplyVo> myAskReplyVoList = askReplyService.getMyAskReplyList(fromId);
+        if (myAskReplyVoList != null) {
+            return new AjaxResult().ok(myAskReplyVoList);
+        }
+        return new AjaxResult().error("该用户没有在任何招聘信息上问答");
+    }
+
 }

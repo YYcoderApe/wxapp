@@ -26,8 +26,9 @@ public class LabelServiceImpl implements LabelService {
     public int addCityLabel(String cityName) {
         tbCity.setCityName(cityName);
         tbCity.setCityNewDate(new Date());
-        int result = tbCityMapper.insert(tbCity);
-        return result;
+        tbCity.setCityState(1);
+        tbCity.setCityId(tbCityMapper.getMaxCityId()+1);
+        return tbCityMapper.insert(tbCity);
     }
 
     @Override
@@ -38,7 +39,8 @@ public class LabelServiceImpl implements LabelService {
 
     @Override
     public int deleteCityLabel(Integer cityId) {
-        return  tbCityMapper.deleteByPrimaryKey(cityId);
+        tbCity.setCityState(0);
+        return  tbCityMapper.updateByPrimaryKeySelective(tbCity);
     }
 
     @Override
@@ -46,6 +48,7 @@ public class LabelServiceImpl implements LabelService {
         tbPostType.setTypeName(typeName);
         tbPostType.setTypeNewDate(new Date());
         tbPostType.setTypeId(tbPostTypeMapper.getMaxTypeId()+1);
+        tbPostType.setTypeState(1);
         return tbPostTypeMapper.insert(tbPostType);
     }
 
@@ -57,6 +60,7 @@ public class LabelServiceImpl implements LabelService {
 
     @Override
     public int deletePostTypeLabel(Integer typeId) {
-        return tbPostTypeMapper.deleteByPrimaryKey(typeId);
+        tbPostType.setTypeState(0);
+        return tbPostTypeMapper.updateByPrimaryKeySelective(tbPostType);
     }
 }

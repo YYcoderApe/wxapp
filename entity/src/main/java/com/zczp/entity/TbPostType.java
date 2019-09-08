@@ -12,6 +12,8 @@ public class TbPostType {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" ,timezone = "GMT+8")
     private Date typeNewDate;
 
+    private Integer typeState;
+
     public Integer getTypeId() {
         return typeId;
     }
@@ -34,5 +36,13 @@ public class TbPostType {
 
     public void setTypeNewDate(Date typeNewDate) {
         this.typeNewDate = typeNewDate;
+    }
+
+    public Integer getTypeState() {
+        return typeState;
+    }
+
+    public void setTypeState(Integer typeState) {
+        this.typeState = typeState;
     }
 }

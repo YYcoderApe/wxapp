@@ -5,9 +5,10 @@
     <id column="type_id" jdbcType="INTEGER" property="typeId" />
     <result column="type_name" jdbcType="VARCHAR" property="typeName" />
     <result column="type_new_date" jdbcType="TIMESTAMP" property="typeNewDate" />
+    <result column="type_state" jdbcType="INTEGER" property="typeState" />
   </resultMap>
   <sql id="Base_Column_List">
-    type_id, type_name, type_new_date
+    type_id, type_name, type_new_date, type_state
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -15,29 +16,15 @@
     from tb_post_type
     where type_id = #{typeId,jdbcType=INTEGER}
   </select>
-  <select id="selectAll"  resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from tb_post_type
-  </select>
-    <select id="getAllJobType" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List" />
-        from tb_post_type
-        order by type_new_date asc
-    </select>
-    <select id="getMaxTypeId" resultType="java.lang.Integer">
-    select  MAX(type_id) from tb_post_type
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_post_type
     where type_id = #{typeId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zczp.entity.TbPostType">
-    insert into tb_post_type (type_id, type_name, type_new_date
-      )
-    values (#{typeId,jdbcType=INTEGER}, #{typeName,jdbcType=VARCHAR}, #{typeNewDate,jdbcType=TIMESTAMP}
-      )
+    insert into tb_post_type (type_id, type_name, type_new_date, 
+      type_state)
+    values (#{typeId,jdbcType=INTEGER}, #{typeName,jdbcType=VARCHAR}, #{typeNewDate,jdbcType=TIMESTAMP}, 
+      #{typeState,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.zczp.entity.TbPostType">
     insert into tb_post_type
@@ -51,6 +38,9 @@
       <if test="typeNewDate != null">
         type_new_date,
       </if>
+      <if test="typeState != null">
+        type_state,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="typeId != null">
@@ -61,6 +51,9 @@
       </if>
       <if test="typeNewDate != null">
         #{typeNewDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="typeState != null">
+        #{typeState,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -73,17 +66,40 @@
       <if test="typeNewDate != null">
         type_new_date = #{typeNewDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="typeState != null">
+        type_state = #{typeState,jdbcType=INTEGER},
+      </if>
     </set>
     where type_id = #{typeId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zczp.entity.TbPostType">
     update tb_post_type
     set type_name = #{typeName,jdbcType=VARCHAR},
-      type_new_date = #{typeNewDate,jdbcType=TIMESTAMP}
+      type_new_date = #{typeNewDate,jdbcType=TIMESTAMP},
+      type_state = #{typeState,jdbcType=INTEGER}
     where type_id = #{typeId,jdbcType=INTEGER}
   </update>
-  <!--<update id="updateSerialNumber" parameterType="java.lang.Integer">-->
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_post_type
+    where type_state=1
+    order by type_new_date asc
+  </select>
+    <select id="getAllJobType" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_post_type
+        where type_state = 1
+        order by type_new_date asc
+    </select>
+    <select id="getMaxTypeId" resultType="java.lang.Integer">
+      select  MAX(type_id) from tb_post_type
+    </select>
+
+  <!--&lt;update id="updateSerialNumber" parameterType="java.lang.Integer"&gt;-->
     <!--update tb_post_type set type_id=type_id-1-->
-    <!--where type_id> #{typeId,jdbcType=INTEGER}-->
-  <!--</update>-->
+    <!--where type_id&gt; #{typeId,jdbcType=INTEGER}-->
+  <!--&lt;/update&gt;-->
 </mapper>
