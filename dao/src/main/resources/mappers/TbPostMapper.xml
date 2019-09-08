@@ -339,7 +339,11 @@
     set  reliability = #{reliability,jdbcType=INTEGER}
     where post_id = #{postId,jdbcType=INTEGER}
   </update>
-
+    <update id="updateStateByPostId" parameterType="java.lang.Integer">
+    update tb_post
+    set  state = #{state,jdbcType=INTEGER}
+    where post_id = #{postId,jdbcType=INTEGER}
+  </update>
     <update id="updateByPrimaryKey" parameterType="com.zczp.entity.TbPost">
     update tb_post
     set type_id = #{typeId,jdbcType=INTEGER},

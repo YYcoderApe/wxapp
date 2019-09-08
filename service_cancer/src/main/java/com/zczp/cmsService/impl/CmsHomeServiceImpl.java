@@ -56,13 +56,13 @@ public class CmsHomeServiceImpl implements CmsHomeService {
     }
 
     @Override
-    public Integer deleteByPrimaryKey(int postId) {
-        return tbPostMapper.deleteByPrimaryKey(postId);
+    public int getTotalTags() {
+        return tbPostMapper.getTotalTags();
     }
 
     @Override
-    public int getTotalTags() {
-        return tbPostMapper.getTotalTags();
+    public Integer updateStateByPostId(int postId) {
+        return tbPostMapper.updateStateByPostId(postId,-1);
     }
 
 }

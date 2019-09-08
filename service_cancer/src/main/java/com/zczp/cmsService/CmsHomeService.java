@@ -25,7 +25,7 @@ public interface CmsHomeService {
     //根据城市cityName 进行字段查询
     List<PostDetailVo> getPostByCondition(ConditionVo conditionVo);
 
-    Integer deleteByPrimaryKey(int postId);
-
     int getTotalTags();
+
+    Integer updateStateByPostId(int postId);
 }

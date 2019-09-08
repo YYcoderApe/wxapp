@@ -46,4 +46,6 @@ public interface TbPostMapper  extends BaseMapper<TbPostWithBLOBs>{
     List<PostDetailVo> selectByCompany(String company);
 
     int getTotalTags();
+
+    Integer updateStateByPostId(int postId,int state);
 }
