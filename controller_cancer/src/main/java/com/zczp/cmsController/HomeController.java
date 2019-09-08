@@ -54,8 +54,8 @@ public class HomeController {
     @DeleteMapping(value="/delete")
     @ApiOperation("删除招聘信息")
     public AjaxResult delete(@RequestParam int postId) {
-        Integer result = homeService.deleteByPrimaryKey(postId);
-        if (result==0){
+        Integer result = homeService.updateStateByPostId(postId);
+        if (result!=1){
             return ajaxResult.ok("操作失败");
         }
         return ajaxResult.ok("删除成功");
