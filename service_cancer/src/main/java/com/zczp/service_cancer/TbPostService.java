@@ -21,9 +21,11 @@ public interface TbPostService {
 
     void transReliabilityCountToDB();
 
-    List<PostDetailVo> selectByCompany(String company);
+    List<PostDetailVo> selectByCompanyAndState(String company);
 
     int deletePostById(int postId);
+
+    List<PostDetailVo> selectByCompany(String company);
 
 //    List<String> getSearchHistory();
 //

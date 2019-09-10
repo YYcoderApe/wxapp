@@ -43,6 +43,8 @@ public interface TbPostMapper  extends BaseMapper<TbPostWithBLOBs>{
     //根据post_id查找post信息
     CollectPostDetailVo getPostDetailById(@Param("postId") Integer postId);
 
+    List<PostDetailVo> selectByCompanyAndState(String company);
+
     List<PostDetailVo> selectByCompany(String company);
 
     int getTotalTags();

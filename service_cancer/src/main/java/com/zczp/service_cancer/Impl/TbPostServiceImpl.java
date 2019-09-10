@@ -112,20 +112,18 @@ public class TbPostServiceImpl implements TbPostService {
     }
 
     @Override
-    public List<PostDetailVo> selectByCompany(String company) {
-//        String openId=new TokenUtil().getOpenId("Authorization");
-//        if (openId!=null){
-//             long count=redisUtil.lpush(0,"history_"+openId,company);
-//             if (count>=12){
-//                 redisUtil.rpop("history_"+openId,0);
-//             }
-//        }
-        return tbPostMapper.selectByCompany(company);
+    public List<PostDetailVo> selectByCompanyAndState(String company) {
+        return tbPostMapper.selectByCompanyAndState(company);
     }
 
     @Override
     public int deletePostById(int postId) {
         return tbPostMapper.deleteByPrimaryKey(postId);
+    }
+
+    @Override
+    public List<PostDetailVo> selectByCompany(String company) {
+        return tbPostMapper.selectByCompany(company);
     }
 
 //    @Override
