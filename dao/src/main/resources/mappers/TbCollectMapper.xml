@@ -37,11 +37,12 @@
             <if test="openId !=null">
                 and tu.open_id=#{openId,jdbcType=VARCHAR}
             </if>
+
         </where>
         order by  tp.post_time desc
     </select>
-  <delete id="deleteCollectionById"  >
-    delete from tb_collect
+  <update id="deleteCollectionById"  >
+    update tb_collect set state=0
     <where>
       <if test="openId!=null">
         and open_id = #{openId,jdbcType=VARCHAR}
@@ -50,8 +51,7 @@
         and post_id=#{postId,jdbcType=INTEGER}
       </if>
     </where>
-
-  </delete>
+  </update>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_collect
     where collect_id = #{collectId,jdbcType=INTEGER}

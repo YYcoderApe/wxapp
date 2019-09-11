@@ -84,7 +84,7 @@ public class CommonController {
         return new AjaxResult().error("该用户没有发布任何招聘信息");
     }
 
-    @DeleteMapping("deleteUserIssue")
+    @PostMapping("deleteUserIssue")
     @ApiOperation("发布情况 --- 删除用户的发布消息")
     public AjaxResult deleteUserIssue(
             @RequestParam @ApiParam("当前用户ID") String openId,

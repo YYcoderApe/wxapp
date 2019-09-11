@@ -6,8 +6,12 @@ import com.zczp.entity.TbReliability;
 import com.zczp.service_cancer.TbReliabilityService;
 import com.zczp.util.RedisKeyUtil;
 import com.zczp.util.RedisUtil;
+import com.zczp.vo_yycoder.CollectPostDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+
+import java.io.Serializable;
 import java.util.Map;
 
 @Service
@@ -16,7 +20,8 @@ public class TbReliabilityServiceImpl implements TbReliabilityService {
     private TbReliabilityMapper tbReliabilityMapper;
     @Autowired
     RedisUtil redisUtil;
-
+    @Autowired
+    private RedisTemplate<String, Serializable> redisCacheTemplate;
 
     @Override
     public Integer selectByPostIdAndUserId(int postId, String openId) {
@@ -34,6 +39,9 @@ public class TbReliabilityServiceImpl implements TbReliabilityService {
         String postid=String.valueOf(postId);
         redisUtil.hset(RedisKeyUtil.MAP_KEY_RELIABILITY,key, ReliabilityStatusEnum.RELIABILITY.getCode().toString());
         redisUtil.hincrby(RedisKeyUtil.MAP_KEY_RELIABILITY_COUNT,postid,value);
+//        Serializable serializable = redisCacheTemplate.opsForValue().get(key);
+//
+//        redisUtil.hset("collect:" + openId + ":"+postId,((CollectPostDetailVo)serializable).getReliability()+"",RedisKeyUtil.MAP_KEY_RELIABILITY_COUNT);
     }
 
     //保存取消点击可信状态

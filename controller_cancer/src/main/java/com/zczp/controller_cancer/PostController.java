@@ -82,9 +82,11 @@ public class PostController {
     public  AjaxResult reliability(
             @RequestParam @ApiParam("0-取消 1-可信") int r,
             @RequestParam @ApiParam("招聘信息表Id") int postId,
-            @RequestParam @ApiParam ("用户token") String token){
-        String openId=tokenUtil.getOpenId(token);
-        if (openId==null) return ajaxResult.error("token失效");
+//            @RequestParam @ApiParam ("用户token") String token){
+//        String openId=tokenUtil.getOpenId(token);
+//        if (openId==null) return ajaxResult.error("token失效");
+            @RequestParam @ApiParam ("用户token") String openId){
+
             if (r==1){
                 tbReliabilityService.saveReliabilityState(openId,postId);
                 return ajaxResult.ok("点击可信");

@@ -28,11 +28,6 @@ public class HomeServiceImpl implements HomeService {
 
     List<PostDetailVo> postDetailVoList=null;
 
-    @Override
-    public List<PostDetailVo> getPostDetail() {
-        postDetailVoList= tbPostMapper.getPostDetail();
-        return postDetailVoList;
-    }
 
     @Override
     public List<TbCity> getAllCitySort() {
@@ -44,6 +39,13 @@ public class HomeServiceImpl implements HomeService {
     public List<TbPostType> getAllJobTypeSort() {
         List<TbPostType> tbPostTypeMapperList= tbPostTypeMapper.getAllJobType();
         return tbPostTypeMapperList;
+    }
+
+    @Override
+    public List<PostDetailVo> getPostDetail() {
+        postDetailVoList= tbPostMapper.getPostDetail();
+
+        return postDetailVoList;
     }
 
     @Override
