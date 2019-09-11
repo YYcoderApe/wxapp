@@ -1,5 +1,6 @@
 package com.zczp.vo_cancer;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -32,6 +33,7 @@ public class CommentsVo {
     private String userName;
 
     @ApiModelProperty("评论时间")
+    @JsonFormat(pattern = "yyyy.MM.dd" ,timezone = "GMT+8")
     private Date commentTime;
 
     @ApiModelProperty("回复的评论ID")

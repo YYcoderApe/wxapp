@@ -25,7 +25,7 @@ public class SearchController {
     @ApiOperation("查询招聘岗位")
     @GetMapping("/searchPost")
     public AjaxResult searchPost(@RequestParam @ApiParam("公司名称") String company){
-        List<PostDetailVo> postDetailVoList=tbPostService.selectByCompany(company);
+        List<PostDetailVo> postDetailVoList=tbPostService.selectByCompanyAndState(company);
         if (!postDetailVoList.isEmpty()){
             return ajaxResult.ok(postDetailVoList);
         }
