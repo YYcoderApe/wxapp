@@ -13,6 +13,7 @@ public interface TbCollectMapper extends BaseMapper<TbCollect>{
     //根据postId进行查找对应的post信息(多表关联)
     List<CollectPostDetailVo> getPostDetailById(String openId);
 
+
     //用户删除自己收藏的post招聘表
     int deleteCollectionById(
             @Param("openId") String openId,

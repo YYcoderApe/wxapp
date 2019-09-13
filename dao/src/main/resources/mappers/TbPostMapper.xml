@@ -71,6 +71,7 @@
         LEFT JOIN tb_post_type tpt on tp.type_id =tpt.type_id
         LEFT JOIN tb_city tcy  on tcy.city_id=tp.city_id
         where tc.company_name like CONCAT(CONCAT('%',#{company},'%')) and tp.state=1
+        order by tp.post_time desc
     </select>
     <select id="selectByCompany" parameterType="java.lang.String" resultType="com.zczp.vo_yycoder.PostDetailVo">
         select
@@ -144,7 +145,7 @@
                 and tpt.type_name = #{postType}
             </if>
             <if test="companyName!= null and companyName!=''">
-                and tc.company_name = #{companyName}
+                and tc.company_name like CONCAT(CONCAT('%',#{companyName},'%'))
             </if>
 
         </where>

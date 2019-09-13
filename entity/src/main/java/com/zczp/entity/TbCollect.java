@@ -6,6 +6,9 @@ public class TbCollect {
         this.openId = openId;
         this.state = state;
     }
+    public TbCollect(){
+
+    }
 
     private Integer collectId;
 

@@ -1,6 +1,7 @@
 package com.zczp.service_yycoder.impl;
 
 import com.zczp.dao.*;
+import com.zczp.entity.TbCollect;
 import com.zczp.service_yycoder.UserService;
 import com.zczp.util.MathUtils;
 import com.zczp.util.RedisKeyUtil;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Service
@@ -89,31 +91,32 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<CollectPostDetailVo> getUserCollection(String openId) {
-        List<CollectPostDetailVo> collectPostDetailVoList= tbCollectMapper.getPostDetailById(openId);
-        List<CollectPostDetailVo> list = new ArrayList<>();
-        for(CollectPostDetailVo collectPostDetailVo:collectPostDetailVoList){
-            String key = RedisKeyUtil.getKey(openId,collectPostDetailVo.getPostId());
-            if(key==null||key.equals("")){
-                break;
-            }else{
-                collectPostDetailVo.setState(StringToInteger(key));
-                if (collectPostDetailVo.getState()!=0){
-                    list.add(collectPostDetailVo);
-                }
-            }
-
-        }
-
-        return list;
-
+        transCollectToDB();
+        List<CollectPostDetailVo> collectPostDetailVoList = tbCollectMapper.getPostDetailById(openId);
+        return collectPostDetailVoList;
     }
-    private Integer StringToInteger(String key){
-        try {
-            return Integer.parseInt(redisUtil.hget(RedisKeyUtil.MAP_KEY_COLLECT,key));
-        }catch (Exception e){
-            System.out.println(e.getMessage());
+
+    @Override
+    public void transCollectToDB() {
+        Map<String,String> collect= redisUtil.hgetall(RedisKeyUtil.MAP_KEY_COLLECT,0);
+        for(Map.Entry<String,String> entry:collect.entrySet()){
+            String key=entry.getKey();
+            String[] split = key.split("::");
+            String openId = split[0];
+            int postId = Integer.valueOf(split[1]);
+            int value =Integer.valueOf(entry.getValue());
+            //创建tbColllect对象
+            TbCollect tbCollect =new TbCollect(postId,openId,value);
+            //删除缓存数据
+            redisUtil.hdel(RedisKeyUtil.MAP_KEY_COLLECT,key);
+            //插入数据库
+            Integer result = tbCollectMapper.selectByPostIdAndUserId(postId,openId);
+            if (result==null){
+                tbCollectMapper.insert(tbCollect);
+            }else {
+                tbCollectMapper.updateByPostIdAndOpenId(tbCollect);
+            }
         }
-        return null;
     }
     @Override
     @Transactional

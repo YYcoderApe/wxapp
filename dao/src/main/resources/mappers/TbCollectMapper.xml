@@ -37,7 +37,7 @@
             <if test="openId !=null">
                 and tu.open_id=#{openId,jdbcType=VARCHAR}
             </if>
-
+            and tc.state=1
         </where>
         order by  tp.post_time desc
     </select>

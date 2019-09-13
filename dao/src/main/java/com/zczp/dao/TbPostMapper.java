@@ -6,8 +6,6 @@ import com.zczp.vo_cancer.PostDetailsVo;
 import com.zczp.vo_yycoder.CollectPostDetailVo;
 import com.zczp.vo_yycoder.ConditionVo;
 import com.zczp.vo_yycoder.PostDetailVo;
-import io.swagger.models.auth.In;
-import javafx.geometry.Pos;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

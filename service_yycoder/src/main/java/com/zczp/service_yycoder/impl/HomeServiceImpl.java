@@ -6,6 +6,8 @@ import com.zczp.dao.TbPostTypeMapper;
 import com.zczp.entity.TbCity;
 import com.zczp.entity.TbPostType;
 import com.zczp.service_yycoder.HomeService;
+import com.zczp.util.RedisKeyUtil;
+import com.zczp.util.RedisUtil;
 import com.zczp.vo_yycoder.ConditionVo;
 import com.zczp.vo_yycoder.PostDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ public class HomeServiceImpl implements HomeService {
     @Autowired(required = false)
     private TbPostTypeMapper tbPostTypeMapper;
 
+    @Autowired
+    RedisUtil redisUtil;
+
     List<PostDetailVo> postDetailVoList=null;
 
 
@@ -44,13 +49,24 @@ public class HomeServiceImpl implements HomeService {
     @Override
     public List<PostDetailVo> getPostDetail() {
         postDetailVoList= tbPostMapper.getPostDetail();
-
+        for(PostDetailVo  postDetailVo:postDetailVoList){
+            String reliability =redisUtil.hget(RedisKeyUtil.MAP_KEY_RELIABILITY_COUNT,postDetailVo.getPostId().toString());
+            if (reliability!=null){
+                postDetailVo.setReliability(postDetailVo.getReliability()+Integer.valueOf(reliability));
+            }
+        }
         return postDetailVoList;
     }
 
     @Override
     public List<PostDetailVo> getPostByCondition(ConditionVo conditionVo) {
         postDetailVoList=tbPostMapper.getPostByCondition(conditionVo);
+        for(PostDetailVo  postDetailVo:postDetailVoList){
+            String reliability =redisUtil.hget(RedisKeyUtil.MAP_KEY_RELIABILITY_COUNT,postDetailVo.getPostId().toString());
+            if (reliability!=null){
+                postDetailVo.setReliability(postDetailVo.getReliability()+Integer.valueOf(reliability));
+            }
+        }
         return postDetailVoList;
     }
 

@@ -41,7 +41,7 @@ public class UserController {
     }
 
 
-    @PutMapping("update")
+    @PostMapping("update")
     @ApiOperation("修改编辑用户个人信息")
     public AjaxResult UpdateUserInfo(
             @RequestParam @ApiParam("用户token") String token,
@@ -71,11 +71,10 @@ public class UserController {
 
     @GetMapping("MyCollection/index")
     @ApiOperation("查看个人的收藏")
-//    public AjaxResult getUserCollection(@RequestParam @ApiParam("token") String token) {
-//        String openId = tokenUtil.getOpenId(token);
-//        if (openId == null)
-//            return new AjaxResult().error("token失效，请重新输入");
-    public AjaxResult getUserCollection(@RequestParam @ApiParam("token") String openId) {
+    public AjaxResult getUserCollection(@RequestParam @ApiParam("token") String token) {
+        String openId = tokenUtil.getOpenId(token);
+        if (openId == null)
+            return new AjaxResult().error("token失效，请重新输入");
         List<CollectPostDetailVo> postDetailVoList = userService.getUserCollection(openId);
         if (postDetailVoList != null) {
             return new AjaxResult().ok(postDetailVoList);

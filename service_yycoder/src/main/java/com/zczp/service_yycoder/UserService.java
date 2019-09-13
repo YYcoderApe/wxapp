@@ -34,4 +34,7 @@ public interface UserService {
 
     //销户操作（删除用户信息）
     int deleteUserById(String openId);
+
+    //更新收藏情况
+    void transCollectToDB();
 }
