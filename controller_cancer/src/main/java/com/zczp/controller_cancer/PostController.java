@@ -5,6 +5,7 @@ import com.zczp.service_cancer.Impl.TbCommentServiceImpl;
 import com.zczp.service_cancer.Impl.TbPostServiceImpl;
 import com.zczp.service_cancer.Impl.TbReliabilityServiceImpl;
 import com.zczp.util.AjaxResult;
+import com.zczp.util.CreateCodeUtil;
 import com.zczp.util.TokenUtil;
 import com.zczp.vo_cancer.CommentVo;
 import com.zczp.vo_cancer.PostDetailsVo;
@@ -14,10 +15,11 @@ import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
@@ -36,6 +38,8 @@ public class PostController {
     private TokenUtil tokenUtil;
     @Autowired
     private AjaxResult ajaxResult;
+    @Autowired
+    private CreateCodeUtil createCodeUtil;
 
     private final Logger logger = LoggerFactory.getLogger(PostController.class);
     @ApiOperation("招聘信息详情")
@@ -78,7 +82,7 @@ public class PostController {
     }
     //未完成
     @ApiOperation("修改可信度")
-    @PutMapping("/reliability")
+    @PostMapping("/reliability")
     public  AjaxResult reliability(
             @RequestParam @ApiParam("0-取消 1-可信") int r,
             @RequestParam @ApiParam("招聘信息表Id") int postId,
@@ -113,10 +117,13 @@ public class PostController {
         return ajaxResult.error("操作失败");
     }
 
-//    @ApiOperation("生成海报")
-//    @GetMapping("/poster")
-//    public  AjaxResult poster(){
-//
-//        return ajaxResult.ok("成功");
-//    }
+    @ApiOperation("生成小程序码")
+    @GetMapping("/createCode")
+    public  Map<String, Object> poster(@RequestParam(required = false) @ApiParam("page路径") String page){
+        Map response=createCodeUtil.CreateCode(page);
+        Map<String,Object> map=new HashMap();
+        map.put("state","SUCESS");
+        map.put("return_url", response.get("return_url"));
+        return map;
+    }
 }
