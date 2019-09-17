@@ -17,7 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -70,7 +69,7 @@ public class CreateCodeUtil {
         JsonObject json=new JsonObject();
         json.addProperty("width",430);
         json.addProperty("scene","a=3");
-        if (!page.isEmpty()){
+        if (page!=null){
             json.addProperty("page",page);
         }
         // 创建Httpclient对象
