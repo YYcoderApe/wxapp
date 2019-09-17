@@ -1,8 +1,10 @@
 package com.zczp.controller_cancer;
 
+import com.zczp.service_cancer.Impl.TbCompanyServiceImpl;
 import com.zczp.service_cancer.Impl.TbPostServiceImpl;
 import com.zczp.util.AjaxResult;
 import com.zczp.util.RedisUtil;
+import com.zczp.vo_cancer.CompanyVo;
 import com.zczp.vo_yycoder.PostDetailVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,19 +19,19 @@ import java.util.List;
 @RequestMapping("/api/search")
 public class SearchController {
     @Autowired
-    private TbPostServiceImpl tbPostService;
+    private TbCompanyServiceImpl tbCompanyService;
     @Autowired
     RedisUtil redisUtil;
     @Autowired
     AjaxResult ajaxResult;
-    @ApiOperation("查询招聘岗位")
+    @ApiOperation("查询公司")
     @GetMapping("/searchPost")
-    public AjaxResult searchPost(@RequestParam @ApiParam("公司名称") String company){
-        List<PostDetailVo> postDetailVoList=tbPostService.selectByCompanyAndState(company);
-        if (!postDetailVoList.isEmpty()){
-            return ajaxResult.ok(postDetailVoList);
+    public AjaxResult searchPost(@RequestParam @ApiParam("公司名称") String companyName){
+        List<CompanyVo> companyVos = tbCompanyService.selectByName(companyName);
+        if (!companyVos.isEmpty()){
+            return ajaxResult.ok(companyVos);
         }
-        return ajaxResult.error("没有该招聘信息");
+        return ajaxResult.error("没有此公司");
     }
 
 //    @ApiOperation("历史记录")

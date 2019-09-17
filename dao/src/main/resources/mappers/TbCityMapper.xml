@@ -22,7 +22,7 @@
     <include refid="Base_Column_List" />
     from tb_city
     where city_state=1
-    order by city_new_date asc
+    order by city_id asc
   </select>
     <select id="getMaxCityId" resultType="java.lang.Integer">
       select  MAX(city_id) from tb_city
@@ -38,9 +38,9 @@
     where city_id = #{cityId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zczp.entity.TbCity">
-    insert into tb_city (city_id, city_name, city_new_date, 
+    insert into tb_city (city_id, city_name, city_new_date,
       city_state)
-    values (#{cityId,jdbcType=INTEGER}, #{cityName,jdbcType=CHAR}, #{cityNewDate,jdbcType=TIMESTAMP}, 
+    values (#{cityId,jdbcType=INTEGER}, #{cityName,jdbcType=CHAR}, #{cityNewDate,jdbcType=TIMESTAMP},
       #{cityState,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.zczp.entity.TbCity">

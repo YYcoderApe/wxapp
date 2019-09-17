@@ -16,14 +16,29 @@
     from tb_post_type
     where type_id = #{typeId,jdbcType=INTEGER}
   </select>
+  <select id="selectAll"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_post_type
+    order by type_id asc
+  </select>
+    <select id="getAllJobType" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_post_type
+        order by type_new_date asc
+    </select>
+    <select id="getMaxTypeId" resultType="java.lang.Integer">
+    select  MAX(type_id) from tb_post_type
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_post_type
     where type_id = #{typeId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zczp.entity.TbPostType">
-    insert into tb_post_type (type_id, type_name, type_new_date, 
+    insert into tb_post_type (type_id, type_name, type_new_date,
       type_state)
-    values (#{typeId,jdbcType=INTEGER}, #{typeName,jdbcType=VARCHAR}, #{typeNewDate,jdbcType=TIMESTAMP}, 
+    values (#{typeId,jdbcType=INTEGER}, #{typeName,jdbcType=VARCHAR}, #{typeNewDate,jdbcType=TIMESTAMP},
       #{typeState,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.zczp.entity.TbPostType">
