@@ -21,8 +21,16 @@ public class TbCommentServiceImpl implements TbCommentService {
     //提问时reply_id为null，回复时不为空
     public int insert(CommentVo commentVo) {
         TbAskReply tbAskReply=new TbAskReply(commentVo.getFromId(),commentVo.getPostId(),new Date());
+        //查询是否有评论
         Integer result=tbAskReplyMapper.selectByPostIdAndOpenId(tbAskReply.getPostId(),tbAskReply.getOpenId());
         tbAskReply.setId(result);
+        //更新被回复者时间
+        if (commentVo.getReplyId()!=null){
+            TbAskReply tbAskReply1=new TbAskReply(commentVo.getToId(),commentVo.getPostId(),new Date());
+            Integer result1=tbAskReplyMapper.selectByPostIdAndOpenId(tbAskReply1.getPostId(),tbAskReply1.getOpenId());
+            tbAskReply1.setId(result1);
+            tbAskReplyMapper.updateByPrimaryKeySelective(tbAskReply1);
+        }
         if (result==null){
             tbAskReplyMapper.insert(tbAskReply);
         }else {
