@@ -2,6 +2,7 @@ package com.zczp.dao;
 
 import com.zczp.entity.TbCompany;
 import com.zczp.vo_cancer.CompanyVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -22,4 +23,6 @@ public interface TbCompanyMapper extends BaseMapper<TbCompany>{
     int getSearchTags(String companyName);
 
     void updateCountByCompanyId(CompanyVo companyVo);
+
+    int updateStateByCompanyId(@Param("companyId") Integer companyId);
 }

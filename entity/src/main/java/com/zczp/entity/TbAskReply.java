@@ -49,4 +49,14 @@ public class TbAskReply {
     public void setTime(Date time) {
         this.time = time;
     }
+
+    @Override
+    public String toString() {
+        return "TbAskReply{" +
+                "id=" + id +
+                ", openId='" + openId + '\'' +
+                ", postId=" + postId +
+                ", time=" + time +
+                '}';
+    }
 }

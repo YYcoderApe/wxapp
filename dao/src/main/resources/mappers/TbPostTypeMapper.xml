@@ -16,21 +16,6 @@
     from tb_post_type
     where type_id = #{typeId,jdbcType=INTEGER}
   </select>
-  <select id="selectAll"  resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from tb_post_type
-    order by type_id asc
-  </select>
-    <select id="getAllJobType" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List" />
-        from tb_post_type
-        order by type_new_date asc
-    </select>
-    <select id="getMaxTypeId" resultType="java.lang.Integer">
-    select  MAX(type_id) from tb_post_type
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_post_type
     where type_id = #{typeId,jdbcType=INTEGER}
@@ -100,7 +85,7 @@
     <include refid="Base_Column_List" />
     from tb_post_type
     where type_state=1
-    order by type_new_date asc
+    order by type_id asc
   </select>
     <select id="getAllJobType" resultMap="BaseResultMap">
         select

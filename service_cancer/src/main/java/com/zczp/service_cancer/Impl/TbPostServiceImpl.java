@@ -118,7 +118,7 @@ public class TbPostServiceImpl implements TbPostService {
 
     @Override
     public int deletePostById(int postId) {
-        return tbPostMapper.deleteByPrimaryKey(postId);
+        return tbPostMapper.updateStateByPostId(postId,-1);
     }
 
     @Override

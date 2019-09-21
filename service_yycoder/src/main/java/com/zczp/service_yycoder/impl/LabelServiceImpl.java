@@ -40,6 +40,7 @@ public class LabelServiceImpl implements LabelService {
     @Override
     public int deleteCityLabel(Integer cityId) {
         tbCity.setCityState(0);
+        tbCity.setCityId(cityId);
         return  tbCityMapper.updateByPrimaryKeySelective(tbCity);
     }
 
@@ -61,6 +62,7 @@ public class LabelServiceImpl implements LabelService {
     @Override
     public int deletePostTypeLabel(Integer typeId) {
         tbPostType.setTypeState(0);
+        tbPostType.setTypeId(typeId);
         return tbPostTypeMapper.updateByPrimaryKeySelective(tbPostType);
     }
 }

@@ -79,6 +79,7 @@ public class CompanyController {
         companyVo.setCompanyLogo(companyLogoUrl);
         companyVo.setCompanyName(companyName);
         companyVo.setCompanyId(companyId);
+        companyVo.setCompanyState(1);
         Integer result=tbCompanyService.updateCompany(companyVo);
         if (result!=0){
             map.put("公司logoUrl", companyVo.getCompanyLogo());

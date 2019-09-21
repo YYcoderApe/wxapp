@@ -13,6 +13,7 @@ import com.zczp.vo_yycoder.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,9 +58,12 @@ public class RobotController {
 
     @PostMapping("addRobotUser")
     @ApiOperation("用户信息  --- 添加虚拟用户")
-    public AjaxResult addRobotUser(@ModelAttribute UserInfoVo userInfoVo) throws IOException {
+    public AjaxResult addRobotUser(
+            @ModelAttribute UserInfoVo userInfoVo,
+            @RequestParam @ApiParam("userGender") String userGender) throws IOException {
         String userInfoStr = JSONObject.toJSONString(userInfoVo);
         UserDetailVo userDetailVo = JSONObject.parseObject(userInfoStr, UserDetailVo.class);
+        userDetailVo.setUserGender(userGender);
         int result = userService.addRobotUserIfo(userDetailVo);
         if (result > 0) {
             return new AjaxResult().ok("新增成功");

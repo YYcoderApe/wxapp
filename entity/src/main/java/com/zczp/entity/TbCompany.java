@@ -9,6 +9,8 @@ public class TbCompany {
 
     private Integer count;
 
+    private Integer companyState;
+
     public Integer getCompanyId() {
         return companyId;
     }
@@ -39,5 +41,13 @@ public class TbCompany {
 
     public void setCount(Integer count) {
         this.count = count;
+    }
+
+    public Integer getCompanyState() {
+        return companyState;
+    }
+
+    public void setCompanyState(Integer companyState) {
+        this.companyState = companyState;
     }
 }

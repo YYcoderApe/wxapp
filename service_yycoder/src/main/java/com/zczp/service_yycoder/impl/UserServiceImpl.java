@@ -56,7 +56,6 @@ public class UserServiceImpl implements UserService {
     public int addRobotUserIfo(UserDetailVo userDetailVo) {
         String s = MathUtils.makeUpNewData(Thread.currentThread().hashCode()+"", 3)+   MathUtils.randomDigitNumber(7);
         userDetailVo.setOpenId(s);
-        userDetailVo.setUserGender("男");
         userDetailVo.setState(1);
         return tbUserMapper.addRobotUserIfo(userDetailVo);
     }

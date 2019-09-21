@@ -17,4 +17,7 @@ public class CompanyVo {
 
     @ApiModelProperty("搜索次数")
     private Integer count;
+
+    @ApiModelProperty("状态")
+    private Integer companyState;
 }

@@ -125,4 +125,39 @@ public class WebApplicationTests {
 //            myAskReplyVoList.add(myAskReplyVo);
 //    }}
 
+  @Test
+  public void test1(){
+    TbComment tbComment = new TbComment();
+    List<MyAskReplyVo> myAskReplyVoList = new ArrayList<MyAskReplyVo>();
+    List<TbAskReply> askReplyList = tbAskReplyMapper.getAskReplyByOpenId("oO5mm5G_GRsyvYOAT1Uc_UfMnmuA");
+    for(TbAskReply tb :askReplyList)
+      System.out.println(tb.toString());
+    System.out.println();
+    tbComment.setFromId("oO5mm5G_GRsyvYOAT1Uc_UfMnmuA");
+    for (TbAskReply tbAskReply : askReplyList) {
+      tbCommentsVoList = new ArrayList<TbCommentsVo>();
+      //
+      System.out.println();
+      tbComment.setPostId(tbAskReply.getPostId());
+      CommentsVoList = tbCommentMapper.selectTbCommentList(tbComment);
+      int index = 0;
+      while (CommentsVoList.size() > index) {
+        tbComment.setReplyId(CommentsVoList.get(index).getCommentId());
+        tbComment.setToId("oO5mm5G_GRsyvYOAT1Uc_UfMnmuA");
+        tbCommentsVo.setCommentList(tbCommentMapper.selectCommentList(tbComment));
+        CommentsVoList.get(index).setCommentList(tbCommentsVo.getCommentList());
+        if (CommentsVoList.get(index).getCommentList().size() > 0)
+          tbCommentsVoList.add(CommentsVoList.get(index));
+        index++;
+      }
+      collectPostDetailVo = tbPostMapper.getPostDetailById(tbAskReply.getPostId());
+      MyAskReplyVo myAskReplyVo = new MyAskReplyVo();
+      myAskReplyVo.setPostDetailList(collectPostDetailVo);
+      myAskReplyVo.setCommentList(tbCommentsVoList);
+      if (myAskReplyVo.getCommentList() != null & myAskReplyVo.getCommentList().size() != 0)
+        myAskReplyVoList.add(myAskReplyVo);
+    }
+
+    System.out.println(myAskReplyVoList);
+  }
 }

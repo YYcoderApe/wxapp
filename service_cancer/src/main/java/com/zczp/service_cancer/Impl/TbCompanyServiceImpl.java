@@ -51,7 +51,7 @@ public class TbCompanyServiceImpl implements TbCompanyService {
 
     @Override
     public Integer deleteCompanyById(int companyId) {
-        return tbCompanyMapper.deleteByPrimaryKey(companyId);
+        return tbCompanyMapper.updateStateByCompanyId(companyId);
     }
 
     @Override

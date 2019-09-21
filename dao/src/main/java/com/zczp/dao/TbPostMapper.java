@@ -47,5 +47,5 @@ public interface TbPostMapper  extends BaseMapper<TbPostWithBLOBs>{
 
     int getTotalTags();
 
-    Integer updateStateByPostId(int postId,int state);
+    Integer updateStateByPostId(@Param("postId") int postId,@Param("state") int state);
 }

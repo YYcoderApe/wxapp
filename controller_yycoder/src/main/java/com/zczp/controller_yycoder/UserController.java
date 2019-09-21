@@ -140,10 +140,10 @@ public class UserController {
 
     @GetMapping("Question/MyReplyMsg")
     @ApiOperation("查看我的问一问(回复消息)")
-    public AjaxResult getUserReplyMsg(@RequestParam @ApiParam("token") String token) {
-        String openId = tokenUtil.getOpenId(token);
-        if (openId == null)
-            return new AjaxResult().error("token失效，请重新输入");
+    public AjaxResult getUserReplyMsg(@RequestParam @ApiParam("token") String openId) {
+//        String openId = tokenUtil.getOpenId(token);
+//        if (openId == null)
+//            return new AjaxResult().error("token失效，请重新输入");
         List<MyAskReplyVo> myAskReplyVoList = askReplyService.getMyReplyMsgList(openId);
 
         if (myAskReplyVoList != null) {

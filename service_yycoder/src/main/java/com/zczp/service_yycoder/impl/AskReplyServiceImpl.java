@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.alibaba.fastjson.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.xml.crypto.Data;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class AskReplyServiceImpl implements AskReplyService {
@@ -75,10 +77,12 @@ public class AskReplyServiceImpl implements AskReplyService {
     public List<MyAskReplyVo> getMyReplyMsgList(String openId) {
         TbComment tbComment = new TbComment();
         List<MyAskReplyVo> myAskReplyVoList = new ArrayList<MyAskReplyVo>();
+        //去问答表找openId 和postId
         List<TbAskReply> askReplyList = tbAskReplyMapper.getAskReplyByOpenId(openId);
         tbComment.setFromId(openId);
         for (TbAskReply tbAskReply : askReplyList) {
             tbCommentsVoList = new ArrayList<TbCommentsVo>();
+
             tbComment.setPostId(tbAskReply.getPostId());
             CommentsVoList = tbCommentMapper.selectTbCommentList(tbComment);
             int index = 0;
@@ -90,6 +94,7 @@ public class AskReplyServiceImpl implements AskReplyService {
                 if (CommentsVoList.get(index).getCommentList().size() > 0)
                     tbCommentsVoList.add(CommentsVoList.get(index));
                 index++;
+
             }
             collectPostDetailVo = tbPostMapper.getPostDetailById(tbAskReply.getPostId());
             MyAskReplyVo myAskReplyVo = new MyAskReplyVo();
@@ -98,6 +103,7 @@ public class AskReplyServiceImpl implements AskReplyService {
             if (myAskReplyVo.getCommentList() != null & myAskReplyVo.getCommentList().size() != 0)
                 myAskReplyVoList.add(myAskReplyVo);
         }
+        QuickSort.quickSort(myAskReplyVoList.toArray(new MyAskReplyVo[myAskReplyVoList.size()]),0,myAskReplyVoList.size()-1);
         return myAskReplyVoList;
     }
 

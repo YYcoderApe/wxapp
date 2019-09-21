@@ -44,7 +44,7 @@ public class PostController {
 
     @ApiOperation("删除招聘信息")
     @DeleteMapping("/deletePost")
-    public  AjaxResult deletePost(@RequestParam int postId){
+    public  AjaxResult deletePost(@RequestParam @ApiParam("postId") Integer postId){
         int result=tbPostService.deletePostById(postId);
         if (result==1){
             return ajaxResult.ok("删除成功");
