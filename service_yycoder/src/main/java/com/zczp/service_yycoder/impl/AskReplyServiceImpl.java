@@ -36,6 +36,8 @@ public class AskReplyServiceImpl implements AskReplyService {
     List<TbCommentsVo> tbCommentsVoList = null;
     //评论表对象
     TbCommentsVo tbCommentsVo = new TbCommentsVo();
+    static int replyCount = 0;
+    Map<String, Object> map = new HashMap<String, Object>();
 
     @Override
     public List<MyAskReplyVo> getMyAskReplyList(String openId) {
@@ -75,6 +77,7 @@ public class AskReplyServiceImpl implements AskReplyService {
 
     @Override
     public List<MyAskReplyVo> getMyReplyMsgList(String openId) {
+        replyCount=0;
         TbComment tbComment = new TbComment();
         List<MyAskReplyVo> myAskReplyVoList = new ArrayList<MyAskReplyVo>();
         //去问答表找openId 和postId
@@ -91,8 +94,11 @@ public class AskReplyServiceImpl implements AskReplyService {
                 tbComment.setToId(openId);
                 tbCommentsVo.setCommentList(tbCommentMapper.selectCommentList(tbComment));
                 CommentsVoList.get(index).setCommentList(tbCommentsVo.getCommentList());
-                if (CommentsVoList.get(index).getCommentList().size() > 0)
+                if (CommentsVoList.get(index).getCommentList().size() > 0){
+                    replyCount+=CommentsVoList.get(index).getCommentList().size();
                     tbCommentsVoList.add(CommentsVoList.get(index));
+                }
+
                 index++;
 
             }
@@ -103,8 +109,15 @@ public class AskReplyServiceImpl implements AskReplyService {
             if (myAskReplyVo.getCommentList() != null & myAskReplyVo.getCommentList().size() != 0)
                 myAskReplyVoList.add(myAskReplyVo);
         }
-        QuickSort.quickSort(myAskReplyVoList.toArray(new MyAskReplyVo[myAskReplyVoList.size()]),0,myAskReplyVoList.size()-1);
+        //QuickSort.quickSort(myAskReplyVoList.toArray(new MyAskReplyVo[myAskReplyVoList.size()]),0,myAskReplyVoList.size()-1);
         return myAskReplyVoList;
+    }
+
+    @Override
+    public Integer getMyReplyCount(String openId) {
+        getMyReplyMsgList(openId);
+
+        return replyCount;
     }
 
     //删除评论
@@ -149,8 +162,6 @@ public class AskReplyServiceImpl implements AskReplyService {
                 userAskReplyVoList.add(userAskReplyVo);
                 index++;
             }
-
-
         }
         return userAskReplyVoList;
     }

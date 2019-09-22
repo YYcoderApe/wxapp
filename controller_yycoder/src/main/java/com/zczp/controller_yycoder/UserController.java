@@ -27,6 +27,7 @@ public class UserController {
     @Autowired
     private AskReplyService askReplyService;
 
+    static int count=0;
     @GetMapping("/index")
     @ApiOperation("展示用户个人信息")
     public AjaxResult getUserInfo(@RequestParam @ApiParam("token") String token) {
@@ -39,7 +40,6 @@ public class UserController {
         }
         return new AjaxResult().error("该用户不存在");
     }
-
 
     @PostMapping("update")
     @ApiOperation("修改编辑用户个人信息")
@@ -140,16 +140,34 @@ public class UserController {
 
     @GetMapping("Question/MyReplyMsg")
     @ApiOperation("查看我的问一问(回复消息)")
-    public AjaxResult getUserReplyMsg(@RequestParam @ApiParam("token") String openId) {
-//        String openId = tokenUtil.getOpenId(token);
-//        if (openId == null)
-//            return new AjaxResult().error("token失效，请重新输入");
+    public AjaxResult getUserReplyMsg(@RequestParam @ApiParam("token") String token) {
+        String openId = tokenUtil.getOpenId(token);
+        if (openId == null)
+            return new AjaxResult().error("token失效，请重新输入");
         List<MyAskReplyVo> myAskReplyVoList = askReplyService.getMyReplyMsgList(openId);
-
+        Integer myReplyCount = askReplyService.getMyReplyCount(openId);
+        count=myReplyCount;
         if (myAskReplyVoList != null) {
             return new AjaxResult().ok(myAskReplyVoList);
         }
         return new AjaxResult().error("该用户没有在任何招聘信息上问答");
+    }
+
+    @GetMapping("Question/ReplyCount")
+    @ApiOperation("查看回复的消息的更新的数量")
+    public AjaxResult getReplyCount(@RequestParam @ApiParam("token") String token){
+        String openId = tokenUtil.getOpenId(token);
+        if (openId == null)
+            return new AjaxResult().error("token失效，请重新输入");
+        Integer myReplyCount = askReplyService.getMyReplyCount(openId);
+        Integer num=0;
+        if(myReplyCount>=count){
+            num=myReplyCount-count;
+        }else{
+            count=myReplyCount;
+            num=0;
+        }
+        return new AjaxResult().ok(num);
     }
 
     @DeleteMapping("Question/deleteComment")
