@@ -19,5 +19,7 @@ public interface TbCommentService  {
 
     int getTotalTags(int postId);
 
+    String getNewsCount(String openId);
 
+    int delNewsCount(String openId);
 }
