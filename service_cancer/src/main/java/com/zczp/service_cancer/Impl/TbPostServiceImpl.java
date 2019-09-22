@@ -48,9 +48,18 @@ public class TbPostServiceImpl implements TbPostService {
         if (pageNum!=null){
             PageHelper.startPage(pageNum,pageSize);
         }
+        //提问列表
         List<CommentsVo> commentsVoList =tbCommentService.selectAllByPrimaryPostId(postDetailsVo.getPostId());
+        //回复列表
         for (CommentsVo commentVo:commentsVoList){
-            commentVo.setCommentList(tbCommentService.selectAllByPrimaryReplyId(commentVo.getCommentId()));
+            List<CommentsVo> commentsVos=tbCommentService.selectAllByPrimaryReplyId(commentVo.getCommentId());
+            commentVo.setCommentList(commentsVos);
+            int size=commentsVos.size();
+            if (size>=2){
+                commentVo.setReplyState(1);
+            }else {
+                commentVo.setReplyState(0);
+            }
         }
         postDetailsVo.setCommentsVoList(commentsVoList);
         if (openId!=null){

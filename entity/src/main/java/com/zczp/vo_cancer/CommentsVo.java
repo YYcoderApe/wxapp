@@ -39,6 +39,9 @@ public class CommentsVo {
     @ApiModelProperty("回复的评论ID")
     private String replyId;
 
+    @ApiModelProperty("回复数量状态（0~1条返回0，1条以上返回1）")
+    private int replyState;
+
     @ApiModelProperty("回复列表")
     private List<CommentsVo> commentList;
 

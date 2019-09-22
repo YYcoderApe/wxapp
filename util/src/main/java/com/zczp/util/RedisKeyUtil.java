@@ -2,6 +2,8 @@ package com.zczp.util;
 
 public class RedisKeyUtil {
 
+    //消息回复key
+    public static final  String KEY_NEWS="NEWS_COUNT";
     //保存用户点可信数据的key
     public static final String MAP_KEY_RELIABILITY = "MAP_RELIABILITY";
     //保存招聘信息被点可信数量的key
