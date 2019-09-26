@@ -26,7 +26,8 @@ public class SearchController {
     AjaxResult ajaxResult;
     @ApiOperation("查询公司")
     @GetMapping("/searchPost")
-    public AjaxResult searchPost(@RequestParam @ApiParam("公司名称") String companyName){
+    public AjaxResult searchPost(@RequestParam(required = false) @ApiParam("公司名称") String companyName){
+        if (companyName==null||companyName==" ") return ajaxResult.error("没有此公司");
         List<CompanyVo> companyVos = tbCompanyService.selectByName(companyName);
         if (!companyVos.isEmpty()){
             return ajaxResult.ok(companyVos);
