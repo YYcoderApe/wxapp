@@ -20,11 +20,13 @@ public interface TbPostMapper  extends BaseMapper<TbPostWithBLOBs>{
 
     PostDetailsVo selectDetailByPrimaryKey(@Param("postId") Integer postId);
 
-    List<PostDetailVo> selectByTitle(String title);
+    List<PostDetailVo> selectByTitleAndCompany(String key);
 
     List<TbPost> getAllPost();
 
     int updateReliabilityByPrimaryKey(TbPostWithBLOBs record);
+
+    int updateCountByPrimaryKey(TbPostWithBLOBs record);
 
     //取出对应用户openId发布的招聘信息
     List<PostDetailVo> getPostIssueByOpenId(String openId);

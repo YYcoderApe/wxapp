@@ -47,4 +47,7 @@ public class PostDetailVo {
     @ApiModelProperty("入职时间")
     private String entryTime;
 
+    @ApiModelProperty("浏览数")
+    private int count;
+
 }

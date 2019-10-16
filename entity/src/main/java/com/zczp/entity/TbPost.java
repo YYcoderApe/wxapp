@@ -49,12 +49,22 @@ public class TbPost {
     @ApiModelProperty("岗位要求")
     private String requirement;
 
+    private Integer count;
+
     public Integer getPostId() {
         return postId;
     }
 
     public void setPostId(Integer postId) {
         this.postId = postId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
     }
 
     public Integer getTypeId() {
@@ -97,20 +107,20 @@ public class TbPost {
         this.cityId = cityId;
     }
 
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId == null ? null : openId.trim();
+    }
+
     public Date getPostTime() {
         return postTime;
     }
 
     public void setPostTime(Date postTime) {
         this.postTime = postTime;
-    }
-
-    public String getEntryTime() {
-        return entryTime;
-    }
-
-    public void setEntryTime(String entryTime) {
-        this.entryTime = entryTime == null ? null : entryTime.trim();
     }
 
     public String getInternshipTime() {
@@ -121,28 +131,20 @@ public class TbPost {
         this.internshipTime = internshipTime == null ? null : internshipTime.trim();
     }
 
+    public String getEntryTime() {
+        return entryTime;
+    }
+
+    public void setEntryTime(String entryTime) {
+        this.entryTime = entryTime == null ? null : entryTime.trim();
+    }
+
     public String getDeliveryMethod() {
         return deliveryMethod;
     }
 
     public void setDeliveryMethod(String deliveryMethod) {
         this.deliveryMethod = deliveryMethod == null ? null : deliveryMethod.trim();
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
-    }
-
-    public String getOpenId() {
-        return openId;
-    }
-
-    public void setOpenId(String openId) {
-        this.openId = openId == null ? null : openId.trim();
     }
 
     public Integer getState() {
@@ -159,5 +161,13 @@ public class TbPost {
 
     public void setRequirement(String requirement) {
         this.requirement = requirement == null ? null : requirement.trim();
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 }

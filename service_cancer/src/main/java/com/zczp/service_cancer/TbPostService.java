@@ -17,7 +17,7 @@ public interface TbPostService {
 
     PostDetailsVo selectDetailByPrimaryKey(Integer postId,String openId,Integer pageNum);
 
-    List<PostDetailVo> selectByTitle(String title);
+    List<PostDetailVo> selectByTitleAndCompany(String key);
 
     void transReliabilityCountToDB();
 
@@ -26,6 +26,10 @@ public interface TbPostService {
     int deletePostById(int postId);
 
     List<PostDetailVo> selectByCompany(String company);
+
+    String updateTbPostCount(int postId);
+
+    void transCountToDB();
 
 //    List<String> getSearchHistory();
 //

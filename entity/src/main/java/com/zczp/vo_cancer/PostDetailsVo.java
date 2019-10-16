@@ -74,6 +74,9 @@ public class PostDetailsVo {
     @ApiModelProperty("收藏Id 0-未收藏 1-已收藏")
     private int collectState;
 
+    @ApiModelProperty("浏览数")
+    private int count;
+
     //总记录数
     private int totalCount;
     //每页记录数
