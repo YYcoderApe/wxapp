@@ -17,6 +17,7 @@
     <result column="state" jdbcType="INTEGER" property="state" />
     <result column="requirement" jdbcType="VARCHAR" property="requirement" />
     <result column="count" jdbcType="INTEGER" property="count" />
+    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.zczp.entity.TbPostWithBLOBs">
     <result column="job_description" jdbcType="LONGVARCHAR" property="jobDescription" />
@@ -24,7 +25,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     post_id, title, type_id, company_id, job_type, reliability, city_id, open_id, post_time, 
-    Internship_time, entry_time, delivery_method, state, requirement, count
+    Internship_time, entry_time, delivery_method, state, requirement, count, company_name
   </sql>
   <sql id="Blob_Column_List">
     job_description, work_address
@@ -43,24 +44,22 @@
     tp.post_id as postId, tp.title ,tp.requirement , tp.open_id as openId ,tp.job_type as jobType ,
     tp.reliability ,tp.post_time as postTime , tp.Internship_time as internshipTime ,tp.entry_time as entryTime ,
     tp.delivery_method as deliveryMethod , tp.state , tp.count , tp.job_description as jobDescription ,tp.work_address as workAddress,
-    tpt.type_name as typeName , tpt.type_name as typeName , tc.company_name as companyName , tc.company_logo as companyLogo,
+    tpt.type_name as typeName , tpt.type_name as typeName , tp.company_name as companyName ,
     t.city_name as cityName
     from tb_post tp
     left join tb_post_type tpt on tp.type_id = tpt.type_id
-    left join tb_company tc on tp.company_id = tc.company_id
     left join tb_city t on tp.city_id = t.city_id
     where post_id = #{postId,jdbcType=INTEGER}
   </select>
     <select id="selectByTitleAndCompany" parameterType="java.lang.String" resultType="com.zczp.vo_yycoder.PostDetailVo">
         select
-        tp.post_id as  'postId', tp.open_id as 'openId',tp.count as 'count',tp.title,tpt.type_name as 'postType',tc.company_name as 'companyName',
-        tc.company_logo as 'companyLogo',tp.job_type as 'jobType',reliability , tcy.city_name as 'cityName',
+        tp.post_id as  'postId', tp.open_id as 'openId',tp.count as 'count',tp.title,tpt.type_name as 'postType',tp.company_name as 'companyName',
+        tp.job_type as 'jobType',reliability , tcy.city_name as 'cityName',
         tp.post_time as 'postTime' ,tp.Internship_time as 'internshipTime',entry_time as 'entryTime'
         from tb_post tp
-        LEFT JOIN tb_company tc on tp.company_id=tc.company_id
         LEFT JOIN tb_post_type tpt on tp.type_id =tpt.type_id
         LEFT JOIN tb_city tcy  on tcy.city_id=tp.city_id
-        where tp.title like CONCAT(CONCAT('%',#{key},'%')) or tc.company_name like CONCAT(CONCAT('%',#{key},'%'))
+        where tp.title like CONCAT(CONCAT('%',#{key},'%')) or tp.company_name like CONCAT(CONCAT('%',#{key},'%'))
         order by tp.post_time desc
     </select>
     <select id="selectByCompanyAndState" parameterType="java.lang.String" resultType="com.zczp.vo_yycoder.PostDetailVo">
@@ -160,19 +159,21 @@
     delete from tb_post
     where post_id = #{postId,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" parameterType="com.zczp.entity.TbPostWithBLOBs">
-    insert into tb_post (type_id, company_id,
-      job_type, reliability, city_id,
-      post_time, Internship_time, entry_time,
-      delivery_method, title, open_id,
-      state, requirement, job_description,
-      work_address)
-    values (#{typeId,jdbcType=INTEGER}, #{companyId,jdbcType=INTEGER},
-      #{jobType,jdbcType=VARCHAR}, #{reliability,jdbcType=INTEGER}, #{cityId,jdbcType=INTEGER},
-      #{postTime,jdbcType=TIMESTAMP}, #{internshipTime,jdbcType=VARCHAR}, #{entryTime,jdbcType=VARCHAR},
-      #{deliveryMethod,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR},
-      #{state,jdbcType=INTEGER}, #{requirement,jdbcType=VARCHAR}, #{jobDescription,jdbcType=LONGVARCHAR},
-      #{workAddress,jdbcType=LONGVARCHAR})
+  <insert id="insert" parameterType="com.zczp.entity.TbPostWithBLOBs">
+    insert into tb_post (post_id, title, type_id, 
+      company_id, job_type, reliability, 
+      city_id, open_id, post_time, 
+      Internship_time, entry_time, delivery_method, 
+      state, requirement, count, 
+      company_name, job_description, work_address
+      )
+    values (#{postId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{typeId,jdbcType=INTEGER}, 
+      #{companyId,jdbcType=INTEGER}, #{jobType,jdbcType=VARCHAR}, #{reliability,jdbcType=INTEGER}, 
+      #{cityId,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, #{postTime,jdbcType=TIMESTAMP}, 
+      #{internshipTime,jdbcType=VARCHAR}, #{entryTime,jdbcType=VARCHAR}, #{deliveryMethod,jdbcType=VARCHAR}, 
+      #{state,jdbcType=INTEGER}, #{requirement,jdbcType=VARCHAR}, #{count,jdbcType=INTEGER}, 
+      #{companyName,jdbcType=VARCHAR}, #{jobDescription,jdbcType=LONGVARCHAR}, #{workAddress,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.zczp.entity.TbPostWithBLOBs">
     insert into tb_post
@@ -221,6 +222,9 @@
       </if>
       <if test="count != null">
         count,
+      </if>
+      <if test="companyName != null">
+        company_name,
       </if>
       <if test="jobDescription != null">
         job_description,
@@ -275,6 +279,9 @@
       <if test="count != null">
         #{count,jdbcType=INTEGER},
       </if>
+      <if test="companyName != null">
+        #{companyName,jdbcType=VARCHAR},
+      </if>
       <if test="jobDescription != null">
         #{jobDescription,jdbcType=LONGVARCHAR},
       </if>
@@ -328,6 +335,9 @@
       <if test="count != null">
         count = #{count,jdbcType=INTEGER},
       </if>
+      <if test="companyName != null">
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
       <if test="jobDescription != null">
         job_description = #{jobDescription,jdbcType=LONGVARCHAR},
       </if>
@@ -353,6 +363,7 @@
       state = #{state,jdbcType=INTEGER},
       requirement = #{requirement,jdbcType=VARCHAR},
       count = #{count,jdbcType=INTEGER},
+      company_name = #{companyName,jdbcType=VARCHAR},
       job_description = #{jobDescription,jdbcType=LONGVARCHAR},
       work_address = #{workAddress,jdbcType=LONGVARCHAR}
     where post_id = #{postId,jdbcType=INTEGER}
@@ -387,7 +398,8 @@
       delivery_method = #{deliveryMethod,jdbcType=VARCHAR},
       state = #{state,jdbcType=INTEGER},
       requirement = #{requirement,jdbcType=VARCHAR},
-      count = #{count,jdbcType=INTEGER}
+      count = #{count,jdbcType=INTEGER},
+      company_name = #{companyName,jdbcType=VARCHAR}
     where post_id = #{postId,jdbcType=INTEGER}
   </update>
     <update id="deleteUserIssueById" parameterType="java.lang.Object">

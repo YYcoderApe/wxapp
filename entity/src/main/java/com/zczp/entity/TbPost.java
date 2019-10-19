@@ -49,7 +49,11 @@ public class TbPost {
     @ApiModelProperty("岗位要求")
     private String requirement;
 
+    @ApiModelProperty("浏览数")
     private Integer count;
+
+    @ApiModelProperty("公司名称")
+    private String companyName;
 
     public Integer getPostId() {
         return postId;
@@ -169,5 +173,13 @@ public class TbPost {
 
     public void setCount(Integer count) {
         this.count = count;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName == null ? null : companyName.trim();
     }
 }
