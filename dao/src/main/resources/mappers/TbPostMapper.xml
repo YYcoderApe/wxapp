@@ -64,7 +64,7 @@
     </select>
     <select id="selectByCompanyAndState" parameterType="java.lang.String" resultType="com.zczp.vo_yycoder.PostDetailVo">
         select
-        tp.post_id as 'postId',tp.open_id as 'openId',tp.title,tpt.type_name as 'postType',tc.company_name as
+        tp.post_id as 'postId',tp.open_id as 'openId',tp.title,tpt.type_name as 'postType',tp.company_name as
         'companyName',
         tc.company_logo as 'companyLogo',tp.job_type as 'jobType',reliability , tcy.city_name as 'cityName',
         tp.post_time as 'postTime' ,tp.Internship_time as 'internshipTime',entry_time as 'entryTime'
@@ -72,12 +72,12 @@
         LEFT JOIN tb_post tp on tc.company_id=tp.company_id
         LEFT JOIN tb_post_type tpt on tp.type_id =tpt.type_id
         LEFT JOIN tb_city tcy on tcy.city_id=tp.city_id
-        where tc.company_name like CONCAT(CONCAT('%',#{company},'%')) and tp.state=1
+        where tp.company_name like CONCAT(CONCAT('%',#{company},'%')) and tp.state=1
         order by tp.post_time desc
     </select>
     <select id="selectByCompany" parameterType="java.lang.String" resultType="com.zczp.vo_yycoder.PostDetailVo">
         select
-        tp.post_id as 'postId',tp.open_id as 'openId',tp.title,tpt.type_name as 'postType',tc.company_name as
+        tp.post_id as 'postId',tp.open_id as 'openId',tp.title,tpt.type_name as 'postType',tp.company_name as
         'companyName',tp.count,
         tc.company_logo as 'companyLogo',tp.job_type as 'jobType',reliability , tcy.city_name as 'cityName',
         tp.post_time as 'postTime' ,tp.Internship_time as 'internshipTime',entry_time as 'entryTime'
@@ -85,12 +85,12 @@
         LEFT JOIN tb_post tp on tc.company_id=tp.company_id
         LEFT JOIN tb_post_type tpt on tp.type_id =tpt.type_id
         LEFT JOIN tb_city tcy on tcy.city_id=tp.city_id
-        where tc.company_name like CONCAT(CONCAT('%',#{company},'%'))
+        where tp.company_name like CONCAT(CONCAT('%',#{company},'%'))
     </select>
     <select id="getPostDetailById" parameterType="java.lang.Integer"
             resultType="com.zczp.vo_yycoder.CollectPostDetailVo">
         select
-        tp.post_id as 'postId',tp.open_id as 'openId', tp.title,tpt.type_name as 'postType',tc.company_name as
+        tp.post_id as 'postId',tp.open_id as 'openId', tp.title,tpt.type_name as 'postType',tp.company_name as
         'companyName',tp.count,
         tc.company_logo as 'companyLogo',tp.job_type as 'jobType',reliability , tcy.city_name as 'cityName',
         tp.post_time as 'postTime' ,tp.Internship_time as 'internshipTime',tp.entry_time as 'entryTime',tp.state as
@@ -103,7 +103,7 @@
     </select>
     <select id="getPostDetail" resultType="com.zczp.vo_yycoder.PostDetailVo">
         select
-        tp.post_id as 'postId', tp.open_id as 'openId',tp.title,tpt.type_name as 'postType',tc.company_name as
+        tp.post_id as 'postId', tp.open_id as 'openId',tp.title,tpt.type_name as 'postType',tp.company_name as
         'companyName',tp.count,
         tc.company_logo as 'companyLogo',tp.job_type as 'jobType',reliability , tcy.city_name as 'cityName',
         tp.post_time as 'postTime' ,tp.Internship_time as 'internshipTime',entry_time as 'entryTime'
@@ -115,7 +115,7 @@
         order by tp.post_time desc
     </select>
     <select id="getPostIssueByOpenId" parameterType="java.lang.String" resultType="com.zczp.vo_yycoder.PostDetailVo">
-        SELECT tp.post_id as 'postId',tp.open_id as 'openId', tp.title,tpt.type_name as 'postType',tc.company_name as
+        SELECT tp.post_id as 'postId',tp.open_id as 'openId', tp.title,tpt.type_name as 'postType',tp.company_name as
         'companyName',tp.count,
         tc.company_logo as 'companyLogo',tp.job_type as 'jobType',reliability , tcy.city_name as 'cityName',
         tp.post_time as 'postTime' ,tp.Internship_time as 'internshipTime',tp.entry_time as 'entryTime',tp.state
@@ -134,7 +134,7 @@
     </select>
     <select id="getPostByCondition" parameterType="java.lang.String" resultType="com.zczp.vo_yycoder.PostDetailVo">
         select
-        tp.post_id as 'postId',tp.open_id as 'openId', tp.title,tpt.type_name as 'postType',tc.company_name as
+        tp.post_id as 'postId',tp.open_id as 'openId', tp.title,tpt.type_name as 'postType',tp.company_name as
         'companyName', tc.company_logo as 'companyLogo',tp.job_type as 'jobType',reliability , tcy.city_name as 'cityName',
         tp.count, tp.post_time as 'postTime' ,tp.Internship_time as 'internshipTime',entry_time as 'entryTime'
         from tb_post tp
@@ -153,7 +153,7 @@
                 and tpt.type_name = #{postType}
             </if>
             <if test="companyName!= null and companyName!=''">
-                and tc.company_name like CONCAT(CONCAT('%',#{companyName},'%'))
+                and tp.company_name like CONCAT(CONCAT('%',#{companyName},'%'))
             </if>
         </where>
         <choose>
