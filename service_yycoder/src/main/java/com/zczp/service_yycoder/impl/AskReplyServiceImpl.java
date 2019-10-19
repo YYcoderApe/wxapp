@@ -1,21 +1,24 @@
 package com.zczp.service_yycoder.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zczp.dao.TbAskReplyMapper;
 import com.zczp.dao.TbCommentMapper;
 import com.zczp.dao.TbPostMapper;
 import com.zczp.entity.TbAskReply;
 import com.zczp.entity.TbComment;
 import com.zczp.service_yycoder.AskReplyService;
-import com.zczp.vo_yycoder.*;
+import com.zczp.vo_yycoder.CollectPostDetailVo;
+import com.zczp.vo_yycoder.MyAskReplyVo;
+import com.zczp.vo_yycoder.TbCommentsVo;
+import com.zczp.vo_yycoder.UserAskReplyVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.alibaba.fastjson.JSONObject;
 
-import javax.xml.crypto.Data;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class AskReplyServiceImpl implements AskReplyService {
@@ -27,6 +30,9 @@ public class AskReplyServiceImpl implements AskReplyService {
 
     @Autowired(required = false)
     private TbPostMapper tbPostMapper;
+
+    @Autowired(required = false)
+    private CommonServiceImpl commonService;
 
     //collectPostDeatailVo只是比postDeatilVo类多了个state
     CollectPostDetailVo collectPostDetailVo;
@@ -48,6 +54,7 @@ public class AskReplyServiceImpl implements AskReplyService {
      */
     @Override
     public List<MyAskReplyVo> getMyAskReplyList(String openId) {
+        commonService.transCountToDB();
         TbComment tbComment = new TbComment();
         //含评论表和post表
         List<MyAskReplyVo> myAskReplyVoList = new ArrayList<MyAskReplyVo>();
@@ -68,6 +75,7 @@ public class AskReplyServiceImpl implements AskReplyService {
                 tbCommentsVo.setCommentList(tbCommentMapper.selectCommentList(tbComment));
 
                 CommentsVoList.get(index).setCommentList(tbCommentsVo.getCommentList());
+                CommentsVoList.get(index).setReplyState(tbCommentsVo.getCommentList().size()>1?1:0);
                 if (CommentsVoList.get(index).getCommentList().size() > 0
                         | CommentsVoList.get(index).getFromId().equals(openId)) {
                     tbCommentsVoList.add(CommentsVoList.get(index));
@@ -87,6 +95,7 @@ public class AskReplyServiceImpl implements AskReplyService {
 
     @Override
     public List<MyAskReplyVo> getMyReplyMsgList(String openId) {
+        commonService.transCountToDB();
         replyCount = 0;
         TbComment tbComment = new TbComment();
         List<MyAskReplyVo> myAskReplyVoList = new ArrayList<MyAskReplyVo>();
@@ -104,6 +113,7 @@ public class AskReplyServiceImpl implements AskReplyService {
                 tbComment.setToId(openId);
                 tbCommentsVo.setCommentList(tbCommentMapper.selectCommentList(tbComment));
                 CommentsVoList.get(index).setCommentList(tbCommentsVo.getCommentList());
+                CommentsVoList.get(index).setReplyState(tbCommentsVo.getCommentList().size()>1?1:0);
                 if (CommentsVoList.get(index).getCommentList().size() > 0) {
                     replyCount += CommentsVoList.get(index).getCommentList().size();
                     tbCommentsVoList.add(CommentsVoList.get(index));

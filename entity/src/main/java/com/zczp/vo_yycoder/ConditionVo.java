@@ -1,11 +1,14 @@
 package com.zczp.vo_yycoder;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 /**
  * 用于作为条件筛选
  *
+ * @author YYcoder
  */
+@Data
 public class ConditionVo {
 
     @ApiModelProperty("城市名称")
@@ -20,35 +23,8 @@ public class ConditionVo {
     @ApiModelProperty("公司名称")
     private String companyName;
 
-    public String getCityName() {
-        return cityName;
-    }
+    @ApiModelProperty("排序方式")
+    private String sortWay;
 
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
-    }
 
-    public String getJobType() {
-        return jobType;
-    }
-
-    public void setJobType(String jobType) {
-        this.jobType = jobType;
-    }
-
-    public String getPostType() {
-        return postType;
-    }
-
-    public void setPostType(String postType) {
-        this.postType = postType;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
 }

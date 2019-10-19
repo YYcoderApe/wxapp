@@ -12,7 +12,6 @@ import com.zczp.vo_yycoder.ConditionVo;
 import com.zczp.vo_yycoder.PostDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -27,6 +26,9 @@ public class HomeServiceImpl implements HomeService {
 
     @Autowired(required = false)
     private TbPostTypeMapper tbPostTypeMapper;
+
+    @Autowired(required = false)
+    private CommonServiceImpl commonService;
 
     @Autowired
     RedisUtil redisUtil;
@@ -46,6 +48,7 @@ public class HomeServiceImpl implements HomeService {
         return tbPostTypeMapperList;
     }
 
+
     @Override
     public List<PostDetailVo> getPostDetail() {
         postDetailVoList= tbPostMapper.getPostDetail();
@@ -60,6 +63,7 @@ public class HomeServiceImpl implements HomeService {
 
     @Override
     public List<PostDetailVo> getPostByCondition(ConditionVo conditionVo) {
+        commonService.transCountToDB();
         postDetailVoList=tbPostMapper.getPostByCondition(conditionVo);
         for(PostDetailVo  postDetailVo:postDetailVoList){
             String reliability =redisUtil.hget(RedisKeyUtil.MAP_KEY_RELIABILITY_COUNT,postDetailVo.getPostId().toString());
