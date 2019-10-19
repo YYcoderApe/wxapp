@@ -93,6 +93,9 @@ public class TbPostServiceImpl implements TbPostService {
         //查询评论数
         int totalCount=tbCommentService.getTotalTags(postId);
         postDetailsVo.setTotalCount(totalCount);
+        //修改并返回浏览数
+        String count=updateTbPostCount(postId);
+        postDetailsVo.setCount(postDetailsVo.getCount()+Integer.valueOf(count));
         //
         if (pageNum!=null) {
             postDetailsVo.setCurrPage(pageNum);
@@ -103,8 +106,14 @@ public class TbPostServiceImpl implements TbPostService {
     }
 
     @Override
-    public List<PostDetailVo> selectByTitle(String title){
-        return tbPostMapper.selectByTitle(title);
+    public List<PostDetailVo> selectByTitleAndCompany(String key){
+        List<PostDetailVo> postDetailVoList= tbPostMapper.selectByTitleAndCompany(key);
+        for (PostDetailVo postDetailVo:postDetailVoList){
+            String result=redisUtil.hget(RedisKeyUtil.KEY_POST_COUNT,String.valueOf(postDetailVo.getPostId()));
+            if (result!=null)
+            postDetailVo.setCount(postDetailVo.getCount()+Integer.valueOf(redisUtil.hget(RedisKeyUtil.KEY_POST_COUNT,String.valueOf(postDetailVo.getPostId()))));
+        }
+        return postDetailVoList;
     }
 
     //更新可信度数到数据库
@@ -117,6 +126,19 @@ public class TbPostServiceImpl implements TbPostService {
             tbPostWithBLOBs.setReliability(tbPostWithBLOBs.getReliability()+count);
             tbPostMapper.updateReliabilityByPrimaryKey(tbPostWithBLOBs);
             redisUtil.hdel(RedisKeyUtil.MAP_KEY_RELIABILITY_COUNT,entry.getKey());
+        }
+    }
+
+    @Override
+    public void transCountToDB() {
+        Map<String,String> postCount=redisUtil.hgetall(RedisKeyUtil.KEY_POST_COUNT,0);
+        for(Map.Entry<String,String> entry:postCount.entrySet()){
+            int postId=Integer.valueOf(entry.getKey());
+            int count=Integer.valueOf(entry.getValue());
+            TbPostWithBLOBs tbPostWithBLOBs=tbPostMapper.selectByPrimaryKey(postId);
+            tbPostWithBLOBs.setCount(tbPostWithBLOBs.getCount()+count);
+            tbPostMapper.updateCountByPrimaryKey(tbPostWithBLOBs);
+            redisUtil.hdel(RedisKeyUtil.KEY_POST_COUNT,entry.getKey());
         }
     }
 
@@ -134,6 +156,16 @@ public class TbPostServiceImpl implements TbPostService {
     public List<PostDetailVo> selectByCompany(String company) {
         return tbPostMapper.selectByCompany(company);
     }
+
+    @Override
+    public String updateTbPostCount(int postId) {
+        String key=String.valueOf(postId);
+        Long value = new Long(1);
+        redisUtil.hincrby(RedisKeyUtil.KEY_POST_COUNT,key,value);
+        return redisUtil.hget(RedisKeyUtil.KEY_POST_COUNT,key);
+    }
+
+
 
 //    @Override
 //    public List<String> getSearchHistory() {

@@ -1,7 +1,8 @@
 package com.zczp.util;
 
 public class RedisKeyUtil {
-
+    //浏览数
+    public static final String KEY_POST_COUNT="POST_COUNT";
     //消息回复key
     public static final  String KEY_NEWS="NEWS_COUNT";
     //保存用户点可信数据的key

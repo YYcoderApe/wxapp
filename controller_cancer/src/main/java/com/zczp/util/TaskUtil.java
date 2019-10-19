@@ -37,6 +37,8 @@ public class TaskUtil extends QuartzJobBean {
         tbPostService.transReliabilityCountToDB();
         //将redis里的收藏信息同步到数据库
         tbCollectService.transCollectToDB();
+        //将redis中post浏览数同步到数据库
+        tbPostService.transCountToDB();
     }
 }
 
