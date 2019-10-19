@@ -42,7 +42,7 @@ public class PushController {
     @PostMapping("/pushPost")
     public AjaxResult pushPost(
             @RequestParam @ApiParam("岗位类型Id") Integer typeId,
-            @RequestParam @ApiParam("公司Id") Integer companyId,
+            @RequestParam @ApiParam("公司名") String companyName,
             @RequestParam @ApiParam("招聘类型（实习 校招）") String jobType,
             @RequestParam @ApiParam("城市Id") Integer cityId,
             @RequestParam(required = false) @ApiParam("入职时间") String entryTime,
@@ -51,14 +51,13 @@ public class PushController {
             @RequestParam @ApiParam("标题") String title,
             @RequestParam @ApiParam("用户token") String token,
             @RequestParam @ApiParam("岗位要求") String requirement,
-            @RequestParam @ApiParam("招聘描述") String jobDescription,
-            @RequestParam @ApiParam("工作地址") String workAddress
+            @RequestParam @ApiParam("招聘描述") String jobDescription
             ){
         String openId=tokenUtil.getOpenId(token);
         if (openId==null) return ajaxResult.error("token失效");
         TbPostWithBLOBs tbPostWithBLOBs =new TbPostWithBLOBs();
         tbPostWithBLOBs.setTypeId(typeId);
-        tbPostWithBLOBs.setCompanyId(companyId);
+        tbPostWithBLOBs.setCompanyName(companyName);
         tbPostWithBLOBs.setJobType(jobType);
         tbPostWithBLOBs.setCityId(cityId);
         Date postTime = new Date();
@@ -69,7 +68,6 @@ public class PushController {
         tbPostWithBLOBs.setTitle(title);
         tbPostWithBLOBs.setRequirement(requirement);
         tbPostWithBLOBs.setJobDescription(jobDescription);
-        tbPostWithBLOBs.setWorkAddress(workAddress);
         tbPostWithBLOBs.setOpenId(openId);
         tbPostWithBLOBs.setReliability(0);
         tbPostWithBLOBs.setState(1);
@@ -91,20 +89,20 @@ public class PushController {
         return tbPostTypeService.selectAll();
     }
 
-    @ApiOperation("搜索公司")
-    @GetMapping("/searchCompany")
-    public AjaxResult searchPost(@RequestParam(required = false) @ApiParam("公司名称") String companyName){
-        if (companyName==null||companyName==" ") return ajaxResult.error("没有此公司");
-        List<CompanyVo> companyVos = tbCompanyService.selectByName(companyName);
-        if (!companyVos.isEmpty()){
-            return ajaxResult.ok(companyVos);
-        }
-        return ajaxResult.error("没有此公司");
-    }
+//    @ApiOperation("搜索公司")
+//    @GetMapping("/searchCompany")
+//    public AjaxResult searchPost(@RequestParam(required = false) @ApiParam("公司名称") String companyName){
+//        if (companyName==null||companyName==" ") return ajaxResult.error("没有此公司");
+//        List<CompanyVo> companyVos = tbCompanyService.selectByName(companyName);
+//        if (!companyVos.isEmpty()){
+//            return ajaxResult.ok(companyVos);
+//        }
+//        return ajaxResult.error("没有此公司");
+//    }
 
-    @ApiOperation("展示搜索前12名")
-    @GetMapping("/showCompany")
-    public List<CompanyVo> showCompany(){
-        return tbCompanyService.selectByCount();
-    }
+//    @ApiOperation("展示搜索前12名")
+//    @GetMapping("/showCompany")
+//    public List<CompanyVo> showCompany(){
+//        return tbCompanyService.selectByCount();
+//    }
 }

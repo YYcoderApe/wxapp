@@ -1,11 +1,8 @@
 package com.zczp.entity;
 
-import io.swagger.annotations.ApiModelProperty;
-
 public class TbPostWithBLOBs extends TbPost {
-    @ApiModelProperty("招聘描述")
     private String jobDescription;
-    @ApiModelProperty("工作地址")
+
     private String workAddress;
 
     public String getJobDescription() {
