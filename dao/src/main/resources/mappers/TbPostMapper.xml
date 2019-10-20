@@ -153,6 +153,44 @@
                 and tpt.type_name = #{postType}
             </if>
             <if test="companyName!= null and companyName!=''">
+                and tp.title like CONCAT(CONCAT('%',#{companyName},'%')) or tp.company_name like CONCAT(CONCAT('%',#{companyName},'%'))
+            </if>
+        </where>
+        <choose>
+            <when test=" sortWay=='浏览量'">
+                order by tp.count desc,tp.post_time desc
+            </when>
+            <!-- 浏览量排序 -->
+            <when test="sortWay=='时间'">
+                order by tp.post_time desc,tp.count desc
+            </when>
+            <otherwise>
+                order by tp.count desc,tp.post_time desc
+            </otherwise>
+        </choose>
+
+    </select>
+    <select id="getPostsByCondition" parameterType="java.lang.String" resultType="com.zczp.vo_yycoder.PostDetailVo">
+        select
+        tp.post_id as 'postId',tp.open_id as 'openId', tp.title,tpt.type_name as 'postType',tp.company_name as
+        'companyName', tc.company_logo as 'companyLogo',tp.job_type as 'jobType',reliability , tcy.city_name as 'cityName',
+        tp.count, tp.post_time as 'postTime' ,tp.Internship_time as 'internshipTime',entry_time as 'entryTime'
+        from tb_post tp
+        LEFT JOIN tb_company tc on tp.company_id=tc.company_id
+        LEFT JOIN tb_post_type tpt on tp.type_id =tpt.type_id
+        LEFT JOIN tb_city tcy on tcy.city_id=tp.city_id
+        <where>
+            tp.state=1
+            <if test="cityName != null and cityName != ''and cityName!='全国'">
+                and tcy.city_name = #{cityName}
+            </if>
+            <if test="jobType != null and jobType!=''and jobType!='综合'">
+                and tp.job_type=#{jobType}
+            </if>
+            <if test="postType != null and postType!=''and postType!='全部'">
+                and tpt.type_name = #{postType}
+            </if>
+            <if test="companyName!= null and companyName!=''">
                 and tp.company_name like CONCAT(CONCAT('%',#{companyName},'%'))
             </if>
         </where>

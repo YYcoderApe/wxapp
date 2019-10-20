@@ -40,6 +40,9 @@ public interface TbPostMapper  extends BaseMapper<TbPostWithBLOBs>{
     //根据条件展示招聘信息;
     List<PostDetailVo> getPostByCondition(ConditionVo conditionVo);
 
+    //后台管理根据条件展示招聘信息;
+    List<PostDetailVo> getPostsByCondition(ConditionVo conditionVo);
+
     //根据post_id查找post信息
     CollectPostDetailVo getPostDetailById(@Param("postId") Integer postId);
 
