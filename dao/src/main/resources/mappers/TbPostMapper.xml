@@ -153,7 +153,7 @@
                 and tpt.type_name = #{postType}
             </if>
             <if test="companyName!= null and companyName!=''">
-                and tp.title like CONCAT(CONCAT('%',#{companyName},'%')) or tp.company_name like CONCAT(CONCAT('%',#{companyName},'%'))
+                and (tp.title like CONCAT(CONCAT('%',#{companyName},'%')) or tp.company_name like CONCAT(CONCAT('%',#{companyName},'%')))
             </if>
         </where>
         <choose>

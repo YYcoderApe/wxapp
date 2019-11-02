@@ -31,7 +31,7 @@ public class WxUserServiceImpl implements WxUserService {
     public String authorize(AuthorizeVO authorizeVO) {
         WxAccount wxAccount=weChatUtil.authorize(authorizeVO);
         UserDetailVo userDetailVo=tbUserMapper.getUserByOpenId(wxAccount.getWxOpenid());
-        if (userDetailVo!=null)return "用户已存在";
+        if (userDetailVo!=null)return "User already exists";
         //解密用户信息
         String result =AesCbcUtil.decrypt(authorizeVO.getData(),"\""+wxAccount.getSessionKey()+"\"",authorizeVO.getIv(),"UTF-8");
         TbUser tbUser =new TbUser();
@@ -52,6 +52,7 @@ public class WxUserServiceImpl implements WxUserService {
             tbUser.setLanguage(userInfoMap.get("language").toString());
             tbUser.setState(0);
         }
+        logger.info("用户信息："+tbUser.toString());
         Integer result1=tbUserMapper.insert(tbUser);
         if (result1!=0){
             logger.info("授权保存tbUser is{}",tbUser.toString());
